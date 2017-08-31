@@ -1,11 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import classNames from 'classnames';
 
 import { Layout, Menu, Icon } from 'antd';
-const { Header, Sider, Content } = Layout;
-// import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
+import { DatePicker, message } from 'antd';
 
+const { Content } = Layout;
+import "./App.css";
+
+import SideMenu from "./SideMenu.jsx";
+import Header from "./Header.jsx";
 
 // withRouter IssueList can use this.props.router to access the router object.(this.props.location)
 class App extends React.Component {
@@ -13,6 +18,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             collapsed: false,
+            date: '',
         };
 
         this.toggle = this.toggle.bind(this);
@@ -22,43 +28,24 @@ class App extends React.Component {
             collapsed: !this.state.collapsed,
         });
     }
+    handleChange(date) {
+        message.info('Selected Date: ' + date.toString());
+        this.setState({ date });
+    }
     render() {
         const classes = this.props.classes;
 
         return (
-            <Layout>
-                <Sider
-                    trigger={null}
-                    collapsible
-                    collapsed={this.state.collapsed}
-                >
-                    <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                        <Menu.Item key="1">
-                            <Icon type="user" />
-                            <span>nav 1</span>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <Icon type="video-camera" />
-                            <span>nav 2</span>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Icon type="upload" />
-                            <span>nav 3</span>
-                        </Menu.Item>
-                    </Menu>
-                </Sider>
+            <Layout className={classNames("app", "ant-layout-has-sider")}>
+                <SideMenu collapsed={this.state.collapsed} />
                 <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }}>
-                        <Icon
-                            className="trigger"
-                            type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                            onClick={this.toggle}
-                        />
-                    </Header>
+                    <Header toggleMenu={this.toggle} collapsed={this.state.collapsed} />
                     <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
-                        Content
-          </Content>
+                        <div style={{ width: 400, margin: '100px auto' }}>
+                            <DatePicker onChange={value => this.handleChange(value)} />
+                            <div style={{ marginTop: 20 }}>Date: {this.state.date.toString()}</div>
+                        </div>
+                    </Content>
                 </Layout>
             </Layout>
         );

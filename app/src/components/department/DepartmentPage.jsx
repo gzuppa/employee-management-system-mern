@@ -4,8 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import SwipeableViews from 'react-swipeable-views';
+
 
 import DepartmentTable from './department-table/DepartmentTable.jsx'
 import EmployeeTable from '../employee/employee-table/EmployeeTable.jsx'
@@ -49,7 +48,7 @@ class DepartmentPage extends React.Component {
     render() {
         return (
             <div>
-                <EmployeeTable />
+                <DepartmentTable />
             </div>
         );
     }
