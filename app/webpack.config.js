@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -12,13 +14,20 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "static"),
     // filename: "[name].js"
-    filename: 'app.bundle.js'
+    filename: '[name].[hash].min.js',
+    sourceMapFilename: '[name].[hash].js.map',
+    chunkFilename: '[id].[hash].min.js',
+    publicPath: '/'
   },
   plugins: [
+    new ProgressBarPlugin(),
+    new HtmlWebpackPlugin({
+      template: './static/index.html',
+      inject: 'body',
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
       filename: "vendor.bundle.js",
-      minChunks: Infinity
       // (with more entries, this ensures that no other module goes into the vendor chunk)
     }),
     // compile time plugins
@@ -69,7 +78,7 @@ module.exports = {
     },
     historyApiFallback: true
   },
-  devtool: 'source-map',
+  devtool: 'cheap-module-eval-source-map',
   watchOptions: {
     poll: true
   }

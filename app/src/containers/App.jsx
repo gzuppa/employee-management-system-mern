@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { Layout, Menu, Icon } from 'antd';
 const { Header, Sider, Content } = Layout;
-
+// import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 
 
 // withRouter IssueList can use this.props.router to access the router object.(this.props.location)
