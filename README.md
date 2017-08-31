@@ -1,8 +1,10 @@
-# EmployeeManagement
+# Employee Management System
+
+In alpah version, due to the immaturity of latest Material UI v1-beta06, the project is changed to use Ant Design
 
 ## Front-end
 
-ReactJS, Redux, Material-UI
+ReactJS, Redux, Ant Design UI
 
 ## Back-end
 
@@ -19,7 +21,3 @@ MongoDb
 
 
 
-# Reference
-https://web.wpi.edu/Pubs/E-project/Available/E-project-042710-223328/unrestricted/WPI_Helpdesk_Employee_Management_System.pdf
-
-http://www.academia.edu/8480922/EMPLOYEE_MANAGEMENT_SYSTEM
