@@ -11,6 +11,7 @@ import "./App.css";
 import SideMenu from "./SideMenu.jsx";
 import Header from "./Header.jsx";
 import Routes from "./Routes.jsx";
+import Notification from "./Notification.jsx";
 
 // withRouter IssueList can use this.props.router to access the router object.(this.props.location)
 class App extends React.Component {

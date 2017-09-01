@@ -215,12 +215,10 @@ exports.generate_employees = function (req, res) {
   for (var i = 0; i < 1000; i++) {
     var firstName = faker.name.firstName();
     var lastName = faker.name.lastName();
-
+    var title = faker.name.jobTitle();
+    var department = faker.commerce.department();
     var randomGender = gender[Math.floor(Math.random() * 2)];
-    console.log('randomGender',randomGender);
-
     var randomEmail = faker.internet.email(); // Rusty@arne.info
-
     var randomDate = faker.date.recent();
 
     var employee = {
@@ -230,6 +228,8 @@ exports.generate_employees = function (req, res) {
       },
       gender: randomGender,
       email: randomEmail,
+      title: title,
+      department: department,
       createdAt: randomDate,
     }
     employees.push(employee);

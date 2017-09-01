@@ -1,12 +1,11 @@
 import * as types from './actionTypes'
-import {
-  addNotification
-} from './notificationActions'
 import employeeApi from '../api/employeeApi';
 import queryString from 'query-string';
 import reduxStore from '../store/reduxStore';
 
-
+import {
+  notification
+} from 'antd';
 
 export const requestEmployeesError = error => ({
   type: types.REQUEST_SERVER_ERROR,
@@ -42,7 +41,7 @@ export const turnOnFilter = () => ({
   type: types.TURN_ON_FILTER
 })
 export const turnOffFilter = () => ({
-    type: types.TURN_OFF_FILTER
+  type: types.TURN_OFF_FILTER
 })
 
 const convertedEmployee = employee => {
@@ -52,6 +51,7 @@ const convertedEmployee = employee => {
   }
   return employee;
 }
+
 export const fetchEmployees = (location, page_size) => dispatch => {
   const query = Object.assign({}, queryString.parse(location.search));
   const pageStr = query._page;
@@ -80,17 +80,35 @@ export const fetchEmployees = (location, page_size) => dispatch => {
         employees,
         totalCount: data.metadata.totalCount
       }));
-      dispatch(addNotification('Load employees successfully', 'success'));
-
+      notification.success({
+        message: 'Load employees successfull'
+      });
     });
   }).catch(err => {
     const errorMsg = `Error in fetching data from server: ${err.message}`;
     console.log('errorMsg', errorMsg);
     dispatch(requestEmployeesError(errorMsg))
-    dispatch(addNotification(errorMsg, 'error'));
+    notification.error({
+      message: errorMsg
+    });
   });
 };
 
+const shouldFetchEmployees = (location, state) => {
+  const employeeState = state.employeeState;
+  if (!employeeState.employees.length) {
+    return true
+  } else if (employeeState.isFetching) {
+    return false
+  }
+  return false;
+};
+
+export const fetchEmployeesIfNeeded = (location, page_size) => (dispatch, getState) => {
+  if (shouldFetchEmployees(location, getState())) {
+    return dispatch(fetchEmployees(location, page_size))
+  }
+}
 
 export const createEmployee = (employee, history) => {
   return dispatch => {
@@ -101,13 +119,17 @@ export const createEmployee = (employee, history) => {
         return response.json().then(error => {
           const errorMsg = `Failed to add employee: ${error.message}`;
           dispatch(requestEmployeesError(errorMsg))
-          dispatch(addNotification(errorMsg, 'error'));;
+          notification.error({
+            message: errorMsg
+          });
         });
       }
       response.json().then(updatedEmployee => {
         updatedEmployee = convertedEmployee(updatedEmployee);
         dispatch(createEmployeeSuccess(updatedEmployee, history));
-        dispatch(addNotification('Create employee successfully', 'success'));
+        notification.success({
+          message: 'Create employee successfully'
+        });
       })
     }).catch(error => {
       const errorMsg = `Error in sending data to server: ${error.message}`;

@@ -2,10 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addNotification } from '../actions/notificationActions';
-import Snackbar from '../components/notification/Snackbar.jsx';
 
-class NotificationContainer extends Component {
+import { message } from 'antd';
 
+const Success = (props) => {
+  message.success(props.msg);
+};
+
+class Notification extends Component {
   constructor(props) {
     super(props);
   }
@@ -15,7 +19,7 @@ class NotificationContainer extends Component {
     const message = this.props.notification.message ? this.props.notification.message : "";
 
     return (
-      <Snackbar open={open} message={message} />
+      <Success msg={message} />
     );
   }
 }
@@ -29,4 +33,4 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps
-)(NotificationContainer);
+)(Notification);

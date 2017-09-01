@@ -8,16 +8,18 @@ import qs from 'query-string';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchEmployees } from '../../../actions/employeeActions'
+import { fetchEmployees, fetchEmployeesIfNeeded } from '../../../actions/employeeActions'
 
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
+
+import EnhancedTableHead from './EnhancedTableHead.jsx'
 
 const columns = [{
   title: 'Name',
   dataIndex: 'name',
   sorter: true,
-  render: name => `${name.firstName} ${name.lastName}`,
-  width: '20%',
+  render: (name, record) => <Link to={`/employee/${record._id}`}>{name.firstName} {name.lastName}</Link>,
+  width: 150,
 }, {
   title: 'Gender',
   dataIndex: 'gender',
@@ -25,8 +27,17 @@ const columns = [{
     { text: 'Male', value: 'male' },
     { text: 'Female', value: 'female' },
   ],
-  width: '20%',
-}, {
+  width: 150,
+},
+{
+  title: 'Department',
+  dataIndex: 'department',
+},
+{
+  title: 'Title',
+  dataIndex: 'title',
+},
+{
   title: 'Email',
   dataIndex: 'email',
 }, {
@@ -57,44 +68,58 @@ class EmployeeTable extends Component {
     this.setState({ selected: newSelected });
   }
   componentDidMount() {
+    console.log('componentDidMount');
     this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.location.search != this.props.location.search
-      || prevProps.deletedEmployees.length != this.props.deletedEmployees.length) {
-      const { employees } = this.props;
-      this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));
-    }
+    console.log('componentDidUpdate');
+    // if (prevProps.location.search != this.props.location.search
+    //   || prevProps.deletedEmployees.length != this.props.deletedEmployees.length) {
+    //   this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));
+    // }
   }
   handleTableChange(pagination, filters, sorter) {
-    const pager = { ...this.state.pagination };
-    pager.current = pagination.current;
-    this.setState({
-      pagination: pager,
-    });
-    this.fetch({
-      results: pagination.pageSize,
-      page: pagination.current,
-      sortField: sorter.field,
-      sortOrder: sorter.order,
-      ...filters,
-    });
+    const { total, current, pageSize } = pagination
+    // console.log('pagination', pagination);
+    console.log('filters', filters);
+    console.log('sorter', sorter);
+    // const pager = { ...this.state.pagination };
+    // pager.current = pagination.current;
+    // this.setState({
+    //   pagination: pager,
+    // });
+
+    // console.log('location', this.props.location.search);
+    const { search } = this.props.location;
+    const query = Object.assign(qs.parse(search), { _page: current });
+    this.props.history.push({ pathname: this.props.location.pathname, search: qs.stringify(query) })
+    // // this.fetch({
+    //   results: pagination.pageSize,
+    //   page: pagination.current,
+    //   sortField: sorter.field,
+    //   sortOrder: sorter.order,
+    //   ...filters,
+    // });
   }
 
   render() {
-    const { classes, isFetching, employees, totalCount } = this.props;
+    const { classes, isFetching, employees, totalCount, pageNum } = this.props;
     const { order, orderBy, selected } = this.state;
 
-
     return (
-      <Table columns={columns}
-        rowKey={record => record._id}
-        dataSource={employees}
-        pagination={{ total: totalCount }}
-        loading={this.props.isFetching}
-        onChange={this.handleTableChange}
-      />
+      <div>
+        {/* <Button className="editable-add-btn" onClick={this.handleAdd}>Add</Button> */}
+        <EnhancedTableHead />
+        <Table
+          columns={columns}
+          rowKey={record => record._id}
+          dataSource={employees}
+          pagination={{ total: totalCount, current: pageNum, }}
+          loading={this.props.isFetching}
+          onChange={this.handleTableChange}
+        />
+      </div>
     );
   }
 }

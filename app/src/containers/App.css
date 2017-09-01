@@ -6,7 +6,6 @@
   clear: both;
 }
 
-
 .app .logo {
   height: 32px;
   background: #333;
@@ -14,11 +13,14 @@
   margin: 16px;
 }
 
-.app .ant-row > div {
-  background: transparent;
-  border: 0;
+.app .ant-table-title {
+  font-size: 16px;
 }
-.gutter-box {
-  background: #00A0E9;
-  padding: 5px 0;
+
+.app .table-title {
+  font-size: 16px;
+}
+
+.app .align-right {
+  float: right;
 }
