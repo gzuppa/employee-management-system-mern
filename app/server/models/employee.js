@@ -4,14 +4,14 @@ var Schema = mongoose.Schema;
 var employeeSchema = new Schema({
   id: Number,
   name: {
-    type: String,
+    type: Object,
     required: true
   },
+  gender: String,
+  age: Number,
   managerId: Number,
   reports: Number,
   managerName: String,
-  age: Number,
-  sex: String,
   title: String,
   department: String,
   email: String,

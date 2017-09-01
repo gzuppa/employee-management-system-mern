@@ -3,28 +3,51 @@ import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Badge } from 'antd';
 const { Header, Sider, Content } = Layout;
+
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
+import "./Header.css";
+
+const AdminMenu = (props) => {
+  return (
+    <Menu
+      mode="horizontal"
+      defaultSelectedKeys={['2']}
+      className="header-item"
+    >
+      <Menu.Item key="mail">
+        <Badge count={5}>
+          <Icon type="mail" />
+        </Badge>
+      </Menu.Item>
+      <Menu.Item key="user">
+        <Icon type="user" />{"guest"}
+      </Menu.Item>
+
+    </Menu>
+  );
+}
+
+
 
 class AppHeader extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      open: true,
-      docked: true
-    };
-
   }
   render() {
     return (
       <Header style={{ background: '#fff', padding: 0 }}>
         <Icon
-          className="trigger"
+          className="trigger header-item"
           type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.props.toggleMenu}
         />
+
+        <AdminMenu />
       </Header>
     );
   }

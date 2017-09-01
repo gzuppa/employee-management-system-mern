@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Employee from "../models/employee";
-
+import faker from 'faker';
 
 // TODO: should implement range pagination instead of using skip to result in better server performance
 exports.employee_list = function (req, res) {
@@ -207,4 +207,39 @@ exports.employee_delete = function (req, res) {
       message: `Internal Server Error: ${error}`
     });
   });
+};
+
+exports.generate_employees = function (req, res) {
+  var gender = ['Male', 'Female'];
+  var employees = [];
+  for (var i = 0; i < 1000; i++) {
+    var firstName = faker.name.firstName();
+    var lastName = faker.name.lastName();
+
+    var randomGender = gender[Math.floor(Math.random() * 2)];
+    console.log('randomGender',randomGender);
+
+    var randomEmail = faker.internet.email(); // Rusty@arne.info
+
+    var randomDate = faker.date.recent();
+
+    var employee = {
+      name: {
+        firstName,
+        lastName
+      },
+      gender: randomGender,
+      email: randomEmail,
+      createdAt: randomDate,
+    }
+    employees.push(employee);
+  }
+  Employee.insertMany(employees).then(docs => {
+      res.json({
+        docs
+      });
+    })
+    .catch(error => {
+      console.error(`error: ${error}`);
+    });
 };
