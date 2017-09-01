@@ -4,21 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { createEmployee } from '../../../actions/employeeActions'
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
-import ModeEditIcon from 'material-ui-icons/ModeEdit';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import IconButton from 'material-ui/IconButton';
-import Add from 'material-ui-icons/Add';
-import TextField from 'material-ui/TextField';
-import FormControl from 'material-ui/Form/FormControl';
 
-
+import { Button, Modal } from 'antd';
 
 import AddEmployeeForm from '../forms/AddEmployeeForm.jsx';
 
@@ -44,23 +31,43 @@ class EmployeeAddTableItem extends React.Component {
     super(props);
 
     this.state = {
-      showing: false,
-
+      visible: false,
     };
     this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.submit = this.submit.bind(this);
+    this.handleCreate = this.handleCreate.bind(this);
+    this.saveFormRef = this.saveFormRef.bind(this);
   }
   showModal() {
-    this.setState({ open: true });
+    this.setState({ visible: true });
   }
-  hideModal() {
-    this.setState({ open: false });
+  handleCancel() {
+    this.setState({ visible: false });
+  }
+  handleCreate() {
+    const form = this.form;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+
+      console.log('Received values of form: ', values);
+
+      // form.resetFields();
+      // this.setState({ visible: false });
+
+      const newEmployee = values;
+      this.props.dispatch(createEmployee(newEmployee, this.props.history));
+    });
+  }
+  saveFormRef(form) {
+    this.form = form;
   }
 
   submit(values) {
     // e.preventDefault();
-    this.hideModal();
+    this.handleCancel();
 
     const newEmployee = {
       name: values.name,
@@ -73,20 +80,20 @@ class EmployeeAddTableItem extends React.Component {
   }
 
   render() {
-    const classes = this.props.classes;
+
+    const { visible, confirmLoading, ModalText } = this.state;
     return (
       <div>
-        <IconButton aria-label="Add issue" onClick={this.showModal}>
-          <Add />
-        </IconButton>
-        <Dialog open={this.state.open} classes={{ paper: classes.dialog }} onRequestClose={this.handleRequestClose}>
-          <DialogTitle>
-            {"Create Employee"}
-          </DialogTitle>
-          <DialogContent>
-            <AddEmployeeForm handleCancel={this.hideModal} onSubmit={this.submit} />
-          </DialogContent>
-        </Dialog>
+        <Button onClick={this.showModal}>Add</Button>
+
+        <AddEmployeeForm
+          ref={this.saveFormRef}
+          confirmLoading={this.props.isFetching}
+          visible={this.state.visible}
+          onCancel={this.handleCancel}
+          onCreate={this.handleCreate}
+        />
+
       </div>
     )
   }
@@ -95,16 +102,17 @@ EmployeeAddTableItem.propTypes = {
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { updatedEmployee, error } = state.employeeState;
+  const { updatedEmployee, error, isFetching } = state.employeeState;
   return {
     updatedEmployee: updatedEmployee,
+    isFetching: isFetching,
     error: error,
   }
 };
 
-const componentWithStyles = withStyles(styleSheet)(EmployeeAddTableItem);
-export default withRouter(connect(mapStateToProps)(componentWithStyles));
+export default withRouter(connect(mapStateToProps)(EmployeeAddTableItem));

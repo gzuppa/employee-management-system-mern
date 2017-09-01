@@ -7,7 +7,8 @@ module.exports = {
 		port: 8080
 	},
 	db: {
-		uri: 'mongodb://localhost:27018/EMS',
+		// uri: 'mongodb://localhost:27018/EMS',
+		uri: 'mongodb://admin:admind@ds163053.mlab.com:63053/ems-mern',
 		options: {
 			useMongoClient: true
 		}

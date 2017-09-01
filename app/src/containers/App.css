@@ -12,15 +12,19 @@
   border-radius: 6px;
   margin: 16px;
 }
-
-.app .ant-table-title {
+.app .table-header {
+  display: flex;
+  justify-content: space-between;
+}
+.app .table-header .ant-table-title {
   font-size: 16px;
 }
 
-.app .table-title {
-  font-size: 16px;
+.app .table-header .table-header-menu{
+  display: flex;
+  justify-content: space-between;
 }
 
-.app .align-right {
-  float: right;
+.app .table-header .table-header-menu .menu-item{
+  padding: 16px 8px;
 }

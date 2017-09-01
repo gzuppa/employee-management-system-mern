@@ -112,16 +112,21 @@ export const fetchEmployeesIfNeeded = (location, page_size) => (dispatch, getSta
 
 export const createEmployee = (employee, history) => {
   return dispatch => {
+
     dispatch(sendRequest());
 
     employeeApi.createEmployee(employee).then(response => {
       if (!response.ok) {
         return response.json().then(error => {
-          const errorMsg = `Failed to add employee: ${error.message}`;
-          dispatch(requestEmployeesError(errorMsg))
-          notification.error({
-            message: errorMsg
-          });
+
+          setTimeout(() => {
+            const errorMsg = `Failed to add employee: ${error.message}`;
+            dispatch(requestEmployeesError(errorMsg))
+            notification.error({
+              message: errorMsg
+            });
+          }, 2000);
+
         });
       }
       response.json().then(updatedEmployee => {
