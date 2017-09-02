@@ -54,10 +54,13 @@ class EmployeeAddTableItem extends React.Component {
 
       console.log('Received values of form: ', values);
 
-      // form.resetFields();
-      // this.setState({ visible: false });
-
+      const name = {
+        firstName: values.firstName,
+        lastName: values.lastName
+      }
       const newEmployee = values;
+      newEmployee.name = name;
+
       this.props.dispatch(createEmployee(newEmployee, this.props.history));
     });
   }

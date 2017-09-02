@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter, Link } from 'react-router-dom';
+import { Breadcrumb, Alert } from 'antd';
 
 import App from './App.jsx';
 // import IssueList from './IssueList.jsx';
@@ -19,7 +20,17 @@ import DashboardPage from '../components/dashboard/DashboardPage.jsx';
 
 const NoMatch = () => <p>Page Not Found</p>;
 
+function itemRender(route, params, routes, paths) {
+  // console.log('route', route);
+  // console.log('params', params);
+  // const last = routes.indexOf(route) === routes.length - 1;
+
+  // return last ? <span>{route.breadcrumbName}</span> : <Link to={paths.join('/')}>{route.breadcrumbName}</Link>;
+  return <Link to="/about">About</Link>;
+}
+
 const Routes = (props) => (
+
   <Switch>
     <Redirect exact from="/" to="/employee" />
     <Route exact path="/dashboard" component={withRouter(DashboardPage)} />

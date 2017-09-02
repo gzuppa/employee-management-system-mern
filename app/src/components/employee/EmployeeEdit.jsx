@@ -19,10 +19,6 @@ class EmployeeEdit extends React.Component {
 			employee: {
 				title: '', name: '',
 			},
-			invalidFields: {},
-			showingValidation: false,
-			toastMessage: '',
-			toastType: 'success',
 			open: true,
 			isFetching: false
 		};
@@ -138,16 +134,6 @@ class EmployeeEdit extends React.Component {
 	}
 	render() {
 		const employee = this.state.employee;
-		let validationMessage = null;
-		if (Object.keys(this.state.invalidFields).length !== 0 && this.state.showingValidation) {
-			validationMessage = (
-				<Alert bsStyle="danger" onDismiss={this.dismissValidation}>
-					Please correct invalid fields before submitting.
-				</Alert>
-			);
-		}
-
-		const { classes } = this.props;
 		return (
 			<div>
 				<EditEmployeeForm employee={employee} initialValues={employee} onSubmit={this.onSubmit} />

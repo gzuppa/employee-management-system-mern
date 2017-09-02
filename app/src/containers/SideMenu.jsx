@@ -16,9 +16,7 @@ class SideMenu extends Component {
   }
 
   handleClick(item) {
-    this.props.history.push({
-      pathname: item.key
-    });
+    this.props.history.push( `/${item.key}`);
   }
 
   render() {

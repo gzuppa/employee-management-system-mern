@@ -21,9 +21,16 @@ const AddEmployeeForm = Form.create()(
                 maskClosable={false}
             >
                 <Form layout="vertical">
-                    <FormItem label="Name">
-                        {getFieldDecorator('name', {
-                            rules: [{ required: true, message: 'Please Enter user name' }],
+                    <FormItem label="First Name">
+                        {getFieldDecorator('firstName', {
+                            rules: [{ required: true, message: 'Please Enter your first name' }],
+                        })(
+                            <Input />
+                            )}
+                    </FormItem>
+                    <FormItem label="Last Name">
+                        {getFieldDecorator('lastName', {
+                            rules: [{ required: true, message: 'Please Enter your last name' }],
                         })(
                             <Input />
                             )}

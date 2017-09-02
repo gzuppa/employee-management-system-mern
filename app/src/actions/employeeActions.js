@@ -24,7 +24,7 @@ export const requestEmployeesSuccess = data => ({
 });
 export const createEmployeeSuccess = (employee, history) => {
   history.push({
-    pathname: `/employees/${employee._id}`
+    pathname: `/employee/${employee._id}`
   })
   return {
     type: types.CREATE_EMPLOYEE_SUCCESS,
