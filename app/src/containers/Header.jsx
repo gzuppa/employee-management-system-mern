@@ -46,7 +46,7 @@ class AppHeader extends React.Component {
           type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.props.toggleMenu}
         />
-
+        <span className="header-title">{"Employee Management"}</span>
         <AdminMenu />
       </Header>
     );

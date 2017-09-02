@@ -7,7 +7,7 @@ import App from './App.jsx';
 // import DeparmentEdit from '../components/department/DepartmentEdit.jsx';
 
 import EmployeePage from '../components/employee/EmployeePage.jsx';
-// import EmployeeEdit from '../components/employee/EmployeeEdit.jsx';
+import EmployeeEdit from '../components/employee/EmployeeEdit.jsx';
 
 // import RelationPage from '../components/relation/RelationPage.jsx';
 
@@ -25,6 +25,7 @@ const Routes = (props) => (
     <Route exact path="/dashboard" component={withRouter(DashboardPage)} />
 
     <Route exact path="/employee" component={withRouter(EmployeePage)} />
+    <Route exact path="/employee/:id" component={withRouter(EmployeeEdit)} />
 
     {/* <Redirect exact from="/" to="/department" /> */}
     {/* <Route exact path="/dashboard" component={withRouter(IssueReport)} /> */}

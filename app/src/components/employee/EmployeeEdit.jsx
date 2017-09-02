@@ -2,38 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { submit } from 'redux-form';
-import { addNotification } from '../../actions/notificationActions'
-
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
-import Dialog from 'material-ui/Dialog';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
-import CloseIcon from 'material-ui-icons/Close';
-import Slide from 'material-ui/transitions/Slide';
-
 
 import EditEmployeeForm from './forms/EditEmployeeForm.jsx';
-import UploadImage from './UploadImage.jsx';
 
-
-
-const styleSheet = theme => ({
-	appBar: {
-		position: 'relative',
-	},
-	formSession: {
-		justifyContent: 'center',
-		padding: theme.spacing.unit * 2,
-	},
-	flex: {
-		flex: 1,
-	}
-});
 
 class EmployeeEdit extends React.Component {
 	static dataFetcher({ params, urlBase }) {
@@ -179,30 +150,7 @@ class EmployeeEdit extends React.Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<Dialog
-					fullScreen
-					open={this.state.open}
-					onRequestClose={this.hideModal}
-					transition={<Slide direction="up" />}>
-
-					<AppBar className={classes.appBar}>
-						<Toolbar>
-							<IconButton color="contrast" onClick={this.hideModal} aria-label="Close">
-								<CloseIcon />
-							</IconButton>
-							<Typography type="title" color="inherit" className={classes.flex}>
-								Edit Employee
-							</Typography>
-							<Button color="contrast" onClick={this.submitForm}>
-								save
-              </Button>
-						</Toolbar>
-					</AppBar>
-					<div className={classes.formSession}>
-						<EditEmployeeForm employee={employee} initialValues={employee} onSubmit={this.onSubmit} />
-						<UploadImage />
-					</div>
-				</Dialog>
+				<EditEmployeeForm employee={employee} initialValues={employee} onSubmit={this.onSubmit} />
 			</div>
 		);
 	}
@@ -211,5 +159,4 @@ EmployeeEdit.propTypes = {
 	match: PropTypes.object.isRequired
 };
 
-const componentWithStyles = withStyles(styleSheet)(EmployeeEdit);
-export default connect()(componentWithStyles);
+export default connect()(EmployeeEdit);

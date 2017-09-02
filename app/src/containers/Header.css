@@ -4,6 +4,9 @@
   cursor: pointer;
   transition: color .3s;
 }
+.ant-layout-header .header-title {
+  font-size:20px;
+}
 
 .ant-layout-header .anticon {
   font-size: 18px;

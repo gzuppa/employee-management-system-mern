@@ -1,169 +1,177 @@
-import React from 'react'
-import { Field, reduxForm } from 'redux-form'
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import { FormGroup, FormControlLabel } from 'material-ui/Form';
-import Divider from 'material-ui/Divider';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
+import React from 'react';
+import { connect } from 'react-redux';
 
+import {
+  Form, Select, InputNumber, Switch, Radio,
+  Slider, Button, Upload, Icon,
+} from 'antd';
+const FormItem = Form.Item;
+const Option = Select.Option;
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 
-const styleSheet = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  FormGroup: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    margin: theme.spacing.unit,
-  },
-  formTitle: {
-    margin: theme.spacing.unit,
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    maxWidth: 400,
-  },
-  title: {
-    flex: 1,
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  root: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16
-  }),
-});
+class EditEmployeeForm extends React.Component {
+  handleSubmit(e){
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+      }
+    });
+  }
+  normFile (e) {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  }
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const formItemLayout = {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 14 },
+    };
+    return (
+      <Form onSubmit={this.handleSubmit}>
+        <FormItem
+          {...formItemLayout}
+          label="Plain Text"
+        >
+          <span className="ant-form-text">China</span>
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Select"
+          hasFeedback
+        >
+          {getFieldDecorator('select', {
+            rules: [
+              { required: true, message: 'Please select your country!' },
+            ],
+          })(
+            <Select placeholder="Please select a country">
+              <Option value="china">China</Option>
+              <Option value="use">U.S.A</Option>
+            </Select>
+          )}
+        </FormItem>
 
-const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
-  <TextField
-    label={label}
-    helperText={touched && error}
-    {...input}
-    {...custom}
-  />
-)
+        <FormItem
+          {...formItemLayout}
+          label="Select[multiple]"
+        >
+          {getFieldDecorator('select-multiple', {
+            rules: [
+              { required: true, message: 'Please select your favourite colors!', type: 'array' },
+            ],
+          })(
+            <Select mode="multiple" placeholder="Please select favourite colors">
+              <Option value="red">Red</Option>
+              <Option value="green">Green</Option>
+              <Option value="blue">Blue</Option>
+            </Select>
+          )}
+        </FormItem>
 
+        <FormItem
+          {...formItemLayout}
+          label="InputNumber"
+        >
+          {getFieldDecorator('input-number', { initialValue: 3 })(
+            <InputNumber min={1} max={10} />
+          )}
+          <span className="ant-form-text"> machines</span>
+        </FormItem>
 
-let EditEmployeeForm = props => {
-  const { handleSubmit, employee, initialValues } = props;
-  const classes = props.classes;
+        <FormItem
+          {...formItemLayout}
+          label="Switch"
+        >
+          {getFieldDecorator('switch', { valuePropName: 'checked' })(
+            <Switch />
+          )}
+        </FormItem>
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className={classes.formTitle}>
-          <Typography type="title" color="secondary" className={classes.title} gutterBottom={true}>
-            ID: {employee._id}
-          </Typography>
+        <FormItem
+          {...formItemLayout}
+          label="Slider"
+        >
+          {getFieldDecorator('slider')(
+            <Slider marks={{ 0: 'A', 20: 'B', 40: 'C', 60: 'D', 80: 'E', 100: 'F' }} />
+          )}
+        </FormItem>
 
-          <Typography type="title" color="secondary" className={classes.title} gutterBottom={true}>
-            Created At: {employee.createdAt ? employee.createdAt.toDateString() : ''}
-          </Typography>
-        </div>
+        <FormItem
+          {...formItemLayout}
+          label="Radio.Group"
+        >
+          {getFieldDecorator('radio-group')(
+            <RadioGroup>
+              <Radio value="a">item 1</Radio>
+              <Radio value="b">item 2</Radio>
+              <Radio value="c">item 3</Radio>
+            </RadioGroup>
+          )}
+        </FormItem>
 
-        <Grid container>
-          <Grid item xs={3}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="name" label="Name" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
+        <FormItem
+          {...formItemLayout}
+          label="Radio.Button"
+        >
+          {getFieldDecorator('radio-button')(
+            <RadioGroup>
+              <RadioButton value="a">item 1</RadioButton>
+              <RadioButton value="b">item 2</RadioButton>
+              <RadioButton value="c">item 3</RadioButton>
+            </RadioGroup>
+          )}
+        </FormItem>
 
-          <Grid item xs={3}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="title" label="Title" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
+        <FormItem
+          {...formItemLayout}
+          label="Upload"
+          extra="longgggggggggggggggggggggggggggggggggg"
+        >
+          {getFieldDecorator('upload', {
+            valuePropName: 'fileList',
+            getValueFromEvent: this.normFile,
+          })(
+            <Upload name="logo" action="/upload.do" listType="picture">
+              <Button>
+                <Icon type="upload" /> Click to upload
+              </Button>
+            </Upload>
+          )}
+        </FormItem>
 
-          <Grid item xs={3}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="age" label="Age" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
+        <FormItem
+          {...formItemLayout}
+          label="Dragger"
+        >
+          <div className="dropbox">
+            {getFieldDecorator('dragger', {
+              valuePropName: 'fileList',
+              getValueFromEvent: this.normFile,
+            })(
+              <Upload.Dragger name="files" action="/upload.do">
+                <p className="ant-upload-drag-icon">
+                  <Icon type="inbox" />
+                </p>
+                <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
+              </Upload.Dragger>
+            )}
+          </div>
+        </FormItem>
 
-          <Grid item xs={3}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="sex" label="Sex" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
-        </Grid>
-
-
-
-        <Grid container>
-          <Grid item xs={4}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="department" label="Deparment" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={4}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="startDate" label="Start Date" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
-
-          <Grid item xs={4}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="leaveData" label="Leave Date" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
-        </Grid>
-
-
-        <Grid container>
-          <Grid item xs={3}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="zipcode" label="Zip Code" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
-
-          <Grid item xs={3}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="email" label="Email" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
-
-          <Grid item xs={3}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="phone" label="Phone" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
-
-          <Grid item xs={3}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <Field name="address" label="Address" component={renderTextField} className={classes.textField} fullWidth={true} />
-            </FormGroup>
-          </Grid>
-
-          {/* <Grid item xs={4}>
-            <FormGroup className={classes.FormGroup} row={true}>
-              <label className={classes.textField}>Status</label>
-              <div className={classes.textField}>
-                <Field name="status" component="select">
-                  <option value="Online">Online</option>
-                  <option value="Offline">Offline</option>
-                </Field>
-              </div>
-            </FormGroup>
-          </Grid> */}
-        </Grid>
-
-      </form>
-    </div>
-  )
+        <FormItem
+          wrapperCol={{ span: 12, offset: 6 }}
+        >
+          <Button type="primary" htmlType="submit">Submit</Button>
+        </FormItem>
+      </Form>
+    );
+  }
 }
-
-const componentWithStyles = withStyles(styleSheet)(EditEmployeeForm);
-EditEmployeeForm = reduxForm({
-  // a unique name for the form
-  form: 'EditEmployeeForm',
-  enableReinitialize: true
-})(componentWithStyles)
-
-export default EditEmployeeForm;
+export default connect()(Form.create()(EditEmployeeForm));

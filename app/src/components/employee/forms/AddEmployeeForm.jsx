@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, Form, Input, Radio, Modal } from 'antd';
+import { Button, Form, Input, Radio, Modal, Select } from 'antd';
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 
 
@@ -20,17 +21,27 @@ const AddEmployeeForm = Form.create()(
                 maskClosable={false}
             >
                 <Form layout="vertical">
-                    <FormItem label="Title">
-                        {getFieldDecorator('title', {
-                            rules: [{ required: true, message: 'Please input the title of collection!' }],
+                    <FormItem label="Name">
+                        {getFieldDecorator('name', {
+                            rules: [{ required: true, message: 'Please Enter user name' }],
                         })(
                             <Input />
                             )}
                     </FormItem>
-                    <FormItem label="Description">
-                        {getFieldDecorator('description')(<Input type="textarea" />)}
+                    <FormItem label="Age">
+                        {getFieldDecorator('age')(<Input type="number" />)}
                     </FormItem>
-                    <FormItem className="collection-create-form_last-form-item">
+                    <FormItem label="Gender">
+                        {getFieldDecorator('gender', {
+                            rules: [{ required: true, message: 'Please select your gender!' }],
+                        })(
+                            <Select>
+                                <Option value="male">male</Option>
+                                <Option value="female">female</Option>
+                            </Select>
+                            )}
+                    </FormItem>
+                    {/* <FormItem className="collection-create-form_last-form-item">
                         {getFieldDecorator('modifier', {
                             initialValue: 'public',
                         })(
@@ -39,7 +50,7 @@ const AddEmployeeForm = Form.create()(
                                 <Radio value="private">Private</Radio>
                             </Radio.Group>
                             )}
-                    </FormItem>
+                    </FormItem> */}
                 </Form>
             </Modal>
         );
