@@ -5,22 +5,25 @@ import { connect } from 'react-redux';
 
 import { Layout, Menu, Icon } from 'antd';
 const { Sider } = Layout;
+import "./SideMenu.css";
 
 
 class SideMenu extends Component {
 
   constructor(props) {
     super(props);
-
+    console.log('match',this.props.match);
+    console.log('location',this.props.location);
+    console.log('history',this.props.history);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(item) {
-    this.props.history.push( `/${item.key}`);
+    this.props.history.push(`${item.key}`);
   }
 
   render() {
-    const { classes, history, isDocked } = this.props;
+    const { history ,location} = this.props;
 
     return (
       <Sider
@@ -28,21 +31,24 @@ class SideMenu extends Component {
         collapsible
         collapsed={this.props.collapsed}
       >
-        <div className="logo"></div>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} onClick={item => this.handleClick(item)}>
-          <Menu.Item key="dashboard">
+        <div className="logo">
+          <img src="/images/michael_icon.png"></img>
+          {this.props.collapsed ? "" : <span>{"ANTD ADMIN"}</span>}
+        </div>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={[location.pathname]} onClick={item => this.handleClick(item)}>
+          <Menu.Item key="/dashboard">
             <Icon type="user" />
             <span>Dashboard</span>
           </Menu.Item>
-          <Menu.Item key="notice">
+          <Menu.Item key="/notice">
             <Icon type="video-camera" />
             <span>Notice</span>
           </Menu.Item>
-          <Menu.Item key="department">
+          <Menu.Item key="/department">
             <Icon type="upload" />
             <span>Department</span>
           </Menu.Item>
-          <Menu.Item key="employee">
+          <Menu.Item key="/employee">
             <Icon type="video-camera" />
             <span>Employees</span>
           </Menu.Item>

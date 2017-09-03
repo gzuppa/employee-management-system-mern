@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import enUS from 'antd/lib/locale-provider/en_US';
 import { Layout, Menu, Icon, LocaleProvider } from 'antd';
-const { Content } = Layout;
+const { Content, Sider } = Layout;
 import "./App.css";
 
 import SideMenu from "./SideMenu.jsx";
