@@ -1,17 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import qs from 'query-string';
 
-import { Select, Spin, Icon, Button, Input, AutoComplete } from 'antd';
+import { Select, Spin ,Icon, Button, Input, AutoComplete} from 'antd';
 import debounce from 'lodash.debounce';
 const Option = Select.Option;
 
-import Highlighter from 'react-highlight-words';
 
-
-
+function onSelect(value) {
+  console.log('onSelect', value);
+}
 
 function getRandomInt(max, min = 0) {
   return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
@@ -27,14 +24,19 @@ function searchResult(query) {
 }
 
 function renderOption(item) {
-  console.log('renderOption');
   return (
-    <Option key={item.id} text={item.text} value={item.text}>
-      <Highlighter
-        highlightClassName='highlight'
-        searchWords={[item.search]}
-        textToHighlight={item.text}
-      />
+    <Option key={item.id} title={item.text}>
+      {/* {item.query} 在
+      <a
+        href={`https://s.taobao.com/search?q=${item.query}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {item.category}
+      </a>
+      区块中
+      <span className="global-search-item-count">约 {item.count} 个结果</span> */}
+      <div>{item.text}</div>
     </Option>
   );
 }
@@ -51,10 +53,8 @@ class EmployeeSearch extends React.Component {
     }
 
     this.fetchUser = debounce(this.fetchUser, 800);
-
-    this.onSelect = this.onSelect.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    this.findEmployee = this.findEmployee.bind(this);
   }
 
   fetchUser(value) {
@@ -70,33 +70,25 @@ class EmployeeSearch extends React.Component {
         // }
         const data = body.records.map(user => ({
           id: user._id,
-          search: value,
           text: `${user.name.firstName} ${user.name.lastName}`,
           fetching: false,
         }));
         this.setState({ data });
       });
   }
-  handleSearch(value) {
+  handleSearch (value){
     console.log('handleSearch', value)
     this.setState({
       data: value ? searchResult(value) : [],
     });
     // this.fetchUser()
   }
-  onSelect(value, option) {
-    console.log('onSelect', value);
+  handleChange(value) {
     this.setState({
       value,
       data: [],
       fetching: false,
     });
-  }
-
-  findEmployee() {
-    const { search } = this.props.location;
-    const query = Object.assign(qs.parse(search), { search: this.state.value });
-    this.props.history.push({ pathname: this.props.location.pathname, search: qs.stringify(query) })
   }
   render() {
     const { fetching, data, value } = this.state;
@@ -107,14 +99,14 @@ class EmployeeSearch extends React.Component {
           size="large"
           style={{ width: '100%' }}
           dataSource={data.map(renderOption)}
-          onSelect={this.onSelect}
+          onSelect={onSelect}
           onSearch={this.fetchUser.bind(this)}
           placeholder="Find by name"
           optionLabelProp="text"
         >
           <Input
             suffix={(
-              <Button className="search-btn" size="large" type="primary" onClick={() => this.findEmployee()}>
+              <Button className="search-btn" size="large" type="primary">
                 <Icon type="search" />
               </Button>
             )}
@@ -127,12 +119,12 @@ class EmployeeSearch extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   const employeeState = state.employeeState;
   return {
-    employees: employeeState.employees,
-    totalCount: employeeState.totalCount,
-    isFetching: employeeState.isFetching,
-    lastUpdated: employeeState.lastUpdated,
-    updatedEmployee: employeeState.updatedIssue,
+      employees: employeeState.employees,
+      totalCount: employeeState.totalCount,
+      isFetching: employeeState.isFetching,
+      lastUpdated: employeeState.lastUpdated,
+      updatedEmployee: employeeState.updatedIssue,
   }
 };
 
-export default withRouter(connect(mapStateToProps)(EmployeeSearch));
+export default connect(mapStateToProps)(EmployeeSearch);

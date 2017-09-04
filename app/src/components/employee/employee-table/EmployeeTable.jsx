@@ -1,6 +1,3 @@
-// @flow weak
-/* eslint-disable react/no-multi-comp */
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'query-string';
