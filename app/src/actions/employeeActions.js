@@ -4,7 +4,8 @@ import queryString from 'query-string';
 import reduxStore from '../store/reduxStore';
 
 import {
-  notification
+  notification,
+  message
 } from 'antd';
 
 export const requestEmployeesError = error => ({
@@ -80,9 +81,7 @@ export const fetchEmployees = (location, page_size) => dispatch => {
         employees,
         totalCount: data.metadata.totalCount
       }));
-      notification.success({
-        message: 'Load employees successfull'
-      });
+      message.success( 'Load employees successfull');
     });
   }).catch(err => {
     const errorMsg = `Error in fetching data from server: ${err.message}`;

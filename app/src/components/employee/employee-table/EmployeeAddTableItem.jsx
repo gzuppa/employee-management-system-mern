@@ -9,22 +9,6 @@ import { Button, Modal } from 'antd';
 
 import AddEmployeeForm from '../forms/AddEmployeeForm.jsx';
 
-const styleSheet = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-  },
-  dialog: {
-    width: "100%"
-  }
-});
-
 
 class EmployeeAddTableItem extends React.Component {
   constructor(props) {
@@ -87,7 +71,7 @@ class EmployeeAddTableItem extends React.Component {
     const { visible, confirmLoading, ModalText } = this.state;
     return (
       <div>
-        <Button onClick={this.showModal}>Add</Button>
+        <Button type="primary" onClick={this.showModal}>Add</Button>
 
         <AddEmployeeForm
           ref={this.saveFormRef}

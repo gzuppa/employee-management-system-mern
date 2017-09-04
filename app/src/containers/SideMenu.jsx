@@ -40,14 +40,14 @@ class SideMenu extends Component {
             <Icon type="user" />
             <span>Dashboard</span>
           </Menu.Item>
-          <Menu.Item key="/notice">
+          {/* <Menu.Item key="/notice">
             <Icon type="video-camera" />
             <span>Notice</span>
           </Menu.Item>
           <Menu.Item key="/department">
             <Icon type="upload" />
             <span>Department</span>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item key="/employee">
             <Icon type="video-camera" />
             <span>Employees</span>

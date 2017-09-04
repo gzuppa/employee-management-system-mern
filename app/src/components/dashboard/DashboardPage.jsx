@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import qs from 'query-string';
 
-import { Row, Col } from 'antd';
+import { Card, Row, Col } from 'antd';
 
 import EventTracker from './event/EventTracker.jsx'
 
@@ -16,11 +16,17 @@ class DashboardPage extends React.Component {
   render() {
     return (
       <div>
-        <Row>
-          <Col span={6}>col-6</Col>
-          <Col span={6}>col-6</Col>
-          <Col span={6}>col-6</Col>
-          <Col span={6}>col-6</Col>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Card title="Total Employee">Card content</Card>
+          </Col>
+          <Col span={8}>
+            <Card title="Leave Requests">Card content</Card>
+          </Col>
+          <Col span={8}>
+            <Card title="On Leave">Card content</Card>
+          </Col>
+
         </Row>
         <Row>
           <Col span={24}> <EventTracker /></Col>

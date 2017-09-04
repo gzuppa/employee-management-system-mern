@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { Button } from 'antd';
 
 import EmployeeAddTableItem from "./EmployeeAddTableItem.jsx";
+import EmployeeSearch from "./EmployeeSearch.jsx";
 
 
 export default class EnhancedTableHead extends Component {
@@ -15,19 +16,14 @@ export default class EnhancedTableHead extends Component {
     render() {
         return (
             <div className="table-header">
-                <div className="ant-table-title">
-                    {"Employees"}
+                <div className={classnames("table-header-menu", "table-header-item")}>
+                    <EmployeeAddTableItem />
                 </div>
-                <div className="table-header-menu">
-                    <div className="menu-item">
-                        <Button shape="circle" icon="search" />
-                    </div>
-                    <div className="menu-item ">
-                        {/* <Button>Add</Button> */}
-                        <EmployeeAddTableItem />
-                    </div>
+                <div className={classnames("table-header-item", "search-bar")}>
+                    <EmployeeSearch />
                 </div>
-            </div>
+
+            </div >
         );
     }
 }

@@ -9,16 +9,54 @@ exports.employee_list = function (req, res) {
   if (req.query.effort_lte || req.query.effort_gte) filter.effort = {};
   if (req.query.effort_lte) filter.effort.$lte = parseInt(req.query.effort_lte, 10);
   if (req.query.effort_gte) filter.effort.$gte = parseInt(req.query.effort_gte, 10);
-  if (req.query.search) filter.$text = {
-    $search: req.query.search
-  };
+  // if (req.query.search) filter.$text = {
+  //   $search: req.query.search
+  // };
+  if (req.query.search) filter.$or = [{
+      'name.firstName': new RegExp(req.query.search, 'i')
+    },
+    {
+      'name.lastName': new RegExp(req.query.search, 'i')
+    }
+  ];
 
+  // if (req.query.search) {
+  //   // Employee.aggregate([{
+  //   //     $project: {
+  //   //       "name": {
+  //   //         $concat: ["$firstName", " ", "$lastName"]
+  //   //       }
+  //   //     }
+  //   //   },
+  //   //   {
+  //   //     $match: {
+  //   //       "name": {
+  //   //         $regex:  /michael/i
+  //   //       }
+  //   //     }
+  //   //   }
+  //   // ]).exec(function (err, result) {
+  //   //   console.log(result);
+  //   // });
+  //   Employee.find({
+  //     '$or': [{
+  //         'name.firstName': new RegExp(req.query.search, 'i')
+  //       },
+  //       {
+  //         'name.lastName': new RegExp(req.query.search, 'i')
+  //       }
+  //     ]
+  //   }).exec(function (err, results) { // Do something 
+  //     console.log(results);
+  //   });
+  // } else {
   if (req.query._summary === undefined) {
     const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
     let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
 
     console.log('offset', offset);
     console.log('limit', limit);
+    console.log('filter', filter);
 
     if (limit > 50) limit = 50;
     const cursor = Employee.find(filter).sort({
@@ -27,6 +65,7 @@ exports.employee_list = function (req, res) {
 
     // ensures that the effects of skip() and limit() will be ignored
     cursor.exec().then(emploees => {
+      console.log('emploees', emploees);
       Employee.count().then(totalCount => {
         res.json({
           metadata: {

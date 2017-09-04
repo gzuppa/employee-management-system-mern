@@ -5,7 +5,8 @@ var employeeSchema = new Schema({
   id: Number,
   name: {
     type: Object,
-    required: true
+    required: true,
+    text : true
   },
   gender: String,
   age: Number,
@@ -28,6 +29,7 @@ employeeSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
   next();
 });
+employeeSchema.index({name: 'text'});
 const Employee = mongoose.model("employees", employeeSchema);
 
 module.exports = Employee;

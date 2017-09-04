@@ -17,10 +17,14 @@ class EmployeePage extends React.Component {
             employees: [],
             totalCount: 0,
         };
-    }  
+    }
     render() {
         return (
-            <EmployeeTable employees={this.props.employees} isFetching={this.props.isFetching} />
+            <div>
+                <h1 className="page-title">{"Employees"}</h1>
+                <EmployeeTable employees={this.props.employees} isFetching={this.props.isFetching} />
+            </div>
+
         );
     }
 }
