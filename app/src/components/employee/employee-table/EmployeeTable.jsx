@@ -50,20 +50,16 @@ class EmployeeTable extends Component {
     this.state = {
       order: 'asc',
       orderBy: 'created',
-      selected: [],
       pageSize: 10,
       pageNum: 1,
       pagination: {},
+      filteredInfo: null,
+      sortedInfo: null,
     };
 
-    this.handleTableChange = this.handleTableChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  componentWillReceiveProps(nextPros) {
-    const newSelected = this.state.selected.filter(function (id) {
-      return nextPros.deletedEmployees.indexOf(id) === -1;
-    });
-    this.setState({ selected: newSelected });
-  }
+
   componentDidMount() {
     console.log('componentDidMount');
     this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));
@@ -76,21 +72,22 @@ class EmployeeTable extends Component {
     //   this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));
     // }
   }
-  handleTableChange(pagination, filters, sorter) {
+  handleChange(pagination, filters, sorter) {
     const { total, current, pageSize } = pagination
-    // console.log('pagination', pagination);
-    console.log('filters', filters);
-    console.log('sorter', sorter);
-    // const pager = { ...this.state.pagination };
-    // pager.current = pagination.current;
+   
     // this.setState({
-    //   pagination: pager,
+    //   filteredInfo: filters,
+    //   sortedInfo: sorter,
     // });
-
-    // console.log('location', this.props.location.search);
+    console.log('Various parameters', pagination, filters, sorter);
+    this.setState({
+      filteredInfo: filters,
+      sortedInfo: sorter,
+    });
     const { search } = this.props.location;
+    console.log('search',search);
     const query = Object.assign(qs.parse(search), { _page: current });
-    this.props.history.push({ pathname: this.props.location.pathname, search: qs.stringify(query) })
+    // this.props.history.push({ pathname: this.props.location.pathname, search: qs.stringify(query) });
     // // this.fetch({
     //   results: pagination.pageSize,
     //   page: pagination.current,
@@ -99,6 +96,23 @@ class EmployeeTable extends Component {
     //   ...filters,
     // });
   }
+  clearFilters(){
+    this.setState({ filteredInfo: null });
+  }
+  clearAll(){
+    this.setState({
+      filteredInfo: null,
+      sortedInfo: null,
+    });
+  }
+  setAgeSort() {
+    this.setState({
+      sortedInfo: {
+        order: 'descend',
+        columnKey: 'age',
+      },
+    });
+  }
 
   render() {
     const { classes, isFetching, employees, totalCount, pageNum } = this.props;
@@ -106,7 +120,6 @@ class EmployeeTable extends Component {
 
     return (
       <div>
-        {/* <Button className="editable-add-btn" onClick={this.handleAdd}>Add</Button> */}
         <EnhancedTableHead />
         <Table
           columns={columns}

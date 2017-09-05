@@ -36,8 +36,6 @@ class EmployeeAddTableItem extends React.Component {
         return;
       }
 
-      console.log('Received values of form: ', values);
-
       const name = {
         firstName: values.firstName,
         lastName: values.lastName

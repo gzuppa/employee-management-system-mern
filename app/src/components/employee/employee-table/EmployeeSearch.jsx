@@ -27,7 +27,6 @@ function searchResult(query) {
 }
 
 function renderOption(item) {
-  console.log('renderOption');
   return (
     <Option key={item.id} text={item.text} value={item.text}>
       <Highlighter
@@ -39,53 +38,54 @@ function renderOption(item) {
   );
 }
 
+let lastFetchId = 0;
 class EmployeeSearch extends React.Component {
   constructor(props) {
     super(props);
-    this.lastFetchId = 0;
-
+   
     this.state = {
       data: [],
       value: [],
       fetching: false,
     }
 
-    this.fetchUser = debounce(this.fetchUser, 800);
+    this.fetchUser = debounce(this.fetchUser, 500);
 
-    this.onSelect = this.onSelect.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.findEmployee = this.findEmployee.bind(this);
   }
 
   fetchUser(value) {
     console.log('fetching user', value);
-    // this.lastFetchId += 1;
-    // const fetchId = this.lastFetchId;
+    lastFetchId += 1;
+    const fetchId = lastFetchId;
     this.setState({ fetching: true });
+
     fetch(`/api/employee?_limit=5&search=${value}`)
       .then(response => response.json())
       .then((body) => {
-        // if (fetchId !== this.lastFetchId) { // for fetch callback order
+        // if (fetchId !== lastFetchId) { // for fetch callback order
         //   return;
         // }
         const data = body.records.map(user => ({
-          id: user._id,
-          search: value,
+          // id: user._id,
+          // search: value,
+          value: user._id,
           text: `${user.name.firstName} ${user.name.lastName}`,
           fetching: false,
         }));
-        this.setState({ data });
+        console.log('data',data)
+        this.setState({ data});
       });
   }
   handleSearch(value) {
-    console.log('handleSearch', value)
     this.setState({
-      data: value ? searchResult(value) : [],
+      data: value ? fetchUser(value) : [],
     });
-    // this.fetchUser()
   }
-  onSelect(value, option) {
-    console.log('onSelect', value);
+  handleChange(value, option) {
+    console.log('handleChange', value);
     this.setState({
       value,
       data: [],
@@ -94,33 +94,29 @@ class EmployeeSearch extends React.Component {
   }
 
   findEmployee() {
-    const { search } = this.props.location;
-    const query = Object.assign(qs.parse(search), { search: this.state.value });
-    this.props.history.push({ pathname: this.props.location.pathname, search: qs.stringify(query) })
+    if (!this.state.fetching) {
+      const { search } = this.props.location;
+      const query = Object.assign(qs.parse(search), { search: this.state.value });
+      this.props.history.push({ pathname: this.props.location.pathname, search: qs.stringify(query) })
+    }
   }
   render() {
     const { fetching, data, value } = this.state;
+
     return (
-      <div className="global-search-wrapper" style={{ width: 300 }}>
-        <AutoComplete
-          className="global-search"
-          size="large"
-          style={{ width: '100%' }}
-          dataSource={data.map(renderOption)}
-          onSelect={this.onSelect}
-          onSearch={this.fetchUser.bind(this)}
-          placeholder="Find by name"
-          optionLabelProp="text"
-        >
-          <Input
-            suffix={(
-              <Button className="search-btn" size="large" type="primary" onClick={() => this.findEmployee()}>
-                <Icon type="search" />
-              </Button>
-            )}
-          />
-        </AutoComplete>
-      </div>
+      <Select
+        mode="multiple"
+        labelInValue
+        value={value}
+        placeholder="Select users"
+        notFoundContent={fetching ? <Spin size="small" /> : null}
+        filterOption={false}
+        onSearch={this.fetchUser.bind(this)}
+        onChange={this.handleChange}
+        style={{ width: '100%' }}
+      >
+        {data.map(d => <Option key={d.value}>{d.text}</Option>)}
+      </Select>
     );
   }
 }

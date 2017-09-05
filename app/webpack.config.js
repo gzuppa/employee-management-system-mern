@@ -17,7 +17,6 @@ module.exports = {
     filename: '[name].[hash].min.js',
     sourceMapFilename: '[name].[hash].js.map',
     chunkFilename: '[id].[hash].min.js',
-    publicPath: '/'
   },
   plugins: [
     new ProgressBarPlugin(),

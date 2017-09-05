@@ -12,9 +12,7 @@ class SideMenu extends Component {
 
   constructor(props) {
     super(props);
-    console.log('match',this.props.match);
-    console.log('location',this.props.location);
-    console.log('history',this.props.history);
+  
     this.handleClick = this.handleClick.bind(this);
   }
 

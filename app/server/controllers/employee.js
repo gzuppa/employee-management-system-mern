@@ -22,7 +22,7 @@ const getSearchReg = (search) => {
 
   return new RegExp(regexString, 'ig');
 }
-const search = (req, filter) => {
+const search = (req, res, filter) => {
   const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
   let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
 
@@ -59,24 +59,11 @@ exports.employee_list = function (req, res) {
   if (req.query.effort_lte || req.query.effort_gte) filter.effort = {};
   if (req.query.effort_lte) filter.effort.$lte = parseInt(req.query.effort_lte, 10);
   if (req.query.effort_gte) filter.effort.$gte = parseInt(req.query.effort_gte, 10);
-  // if (req.query.search) filter.$text = {
-  //   $search: req.query.search
-  // };
-  if (req.query.search) filter.$or = [{
-      'name.firstName': getSearchReg(req.query.search)
-    },
-    {
-      'name.lastName': getSearchReg(req.query.search)
-    }
-  ];
 
-
-  if (req.query.search) {
-    return
-  }
 
   if (req.query._summary === undefined) {
     if (req.query.search) {
+
       Employee.aggregate()
         .project({
           fullname: {
@@ -84,11 +71,17 @@ exports.employee_list = function (req, res) {
           }
         })
         .match({
-          fullname: getSearchReg(req.query.search)
+          fullname: new RegExp(req.query.search, 'ig')
         }).exec().then(results => {
-          search(req, filter);
+          console.log('results', getSearchReg(req.query.search));
+          const ids = getAggreateMatchedIds(results);
+          if (ids.length > 0) filter._id = {
+            $in: ids
+          }
+          search(req, res, filter);
         });
-    } else search(req, filter);
+    } else search(req, res, filter);
+    // search(req, res, filter);
     // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
     // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
 
@@ -120,27 +113,27 @@ exports.employee_list = function (req, res) {
   } else {
     console.log('doing aggregation', filter);
     Employee.aggregate([{
-          $match: filter
+      $match: filter
+    },
+    {
+      $group: {
+        _id: {
+          name: '$owner',
+          createdAt: '$createdAt'
         },
-        {
-          $group: {
-            _id: {
-              name: '$owner',
-              createdAt: '$createdAt'
-            },
-            count: {
-              $sum: 1
-            }
-          }
-        },
-      ]).exec().then(results => {
-        const stats = {};
-        results.forEach(result => {
-          if (!stats[result._id.owner]) stats[result._id.owner] = {};
-          stats[result._id.owner][result._id.status] = result.count;
-        });
-        res.json(stats);
-      })
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    ]).exec().then(results => {
+      const stats = {};
+      results.forEach(result => {
+        if (!stats[result._id.owner]) stats[result._id.owner] = {};
+        stats[result._id.owner][result._id.status] = result.count;
+      });
+      res.json(stats);
+    })
       .catch(error => {
         console.log(error);
         res.status(500).json({
@@ -246,15 +239,15 @@ exports.employee_update = function (req, res) {
   Employee.findByIdAndUpdate({
     _id: documentId
   }, employee, {
-    new: true
-  }).then(savedEmployee => {
-    res.json(savedEmployee);
-  }).catch(error => {
-    console.log(error);
-    res.status(500).json({
-      message: `Internal Server Error: ${error}`
+      new: true
+    }).then(savedEmployee => {
+      res.json(savedEmployee);
+    }).catch(error => {
+      console.log(error);
+      res.status(500).json({
+        message: `Internal Server Error: ${error}`
+      });
     });
-  });
 };
 
 // delete employee
@@ -311,10 +304,10 @@ exports.generate_employees = function (req, res) {
     employees.push(employee);
   }
   Employee.insertMany(employees).then(docs => {
-      res.json({
-        docs
-      });
-    })
+    res.json({
+      docs
+    });
+  })
     .catch(error => {
       console.error(`error: ${error}`);
     });

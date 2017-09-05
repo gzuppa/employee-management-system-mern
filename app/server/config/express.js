@@ -45,7 +45,7 @@ module.exports = function (db) {
             log: console.log
         }));
 
-        console.log('Enable webpackDevMiddleware and webpackHotMiddleware');
+        // console.log('Enable webpackDevMiddleware and webpackHotMiddleware');
     }
 
 
