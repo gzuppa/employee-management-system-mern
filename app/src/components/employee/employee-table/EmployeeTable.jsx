@@ -10,12 +10,14 @@ import { fetchEmployees, fetchEmployeesIfNeeded } from '../../../actions/employe
 import { Table, Button } from 'antd';
 
 import EnhancedTableHead from './EnhancedTableHead.jsx'
+import EmployeeTableActionMenu from './EmployeeTableActionMenu.jsx'
+
 
 const columns = [{
   title: 'Name',
   dataIndex: 'name',
   sorter: true,
-  render: (name, record) => <Link to={`/employee/${record._id}`}>{name.firstName} {name.lastName}</Link>,
+  render: (name, record) => `${name.firstName} ${name.lastName}`,
   width: 150,
 }, {
   title: 'Gender',
@@ -41,6 +43,13 @@ const columns = [{
   title: 'CreatedAt',
   render: createdAt => new Date(createdAt).toDateString(),
   dataIndex: 'createdAt',
+},
+{
+  title: 'Action',
+  key: 'action',
+  render: (text, record) => (
+    <EmployeeTableActionMenu />
+  ),
 }];
 
 
@@ -67,14 +76,13 @@ class EmployeeTable extends Component {
 
   componentDidUpdate(prevProps) {
     console.log('componentDidUpdate');
-    // if (prevProps.location.search != this.props.location.search
-    //   || prevProps.deletedEmployees.length != this.props.deletedEmployees.length) {
-    //   this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));
-    // }
+    if (prevProps.location.search != this.props.location.search) {
+      this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));
+    }
   }
   handleChange(pagination, filters, sorter) {
     const { total, current, pageSize } = pagination
-   
+
     // this.setState({
     //   filteredInfo: filters,
     //   sortedInfo: sorter,
@@ -85,7 +93,7 @@ class EmployeeTable extends Component {
       sortedInfo: sorter,
     });
     const { search } = this.props.location;
-    console.log('search',search);
+    console.log('search', search);
     const query = Object.assign(qs.parse(search), { _page: current });
     // this.props.history.push({ pathname: this.props.location.pathname, search: qs.stringify(query) });
     // // this.fetch({
@@ -96,10 +104,10 @@ class EmployeeTable extends Component {
     //   ...filters,
     // });
   }
-  clearFilters(){
+  clearFilters() {
     this.setState({ filteredInfo: null });
   }
-  clearAll(){
+  clearAll() {
     this.setState({
       filteredInfo: null,
       sortedInfo: null,
