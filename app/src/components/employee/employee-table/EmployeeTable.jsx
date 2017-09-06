@@ -5,13 +5,17 @@ import qs from 'query-string';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchEmployees, fetchEmployeesIfNeeded } from '../../../actions/employeeActions'
+import { fetchEmployees, fetchEmployeesIfNeeded } from '../../../actions/employeeActions';
 
 import { Table, Button } from 'antd';
+import QueueAnim from 'rc-queue-anim';
+import { TweenOneGroup } from 'rc-tween-one';
+
+import "./Table.css";
 
 import TableToolbar from './TableToolbar.jsx'
-import TableRowActionMenu from './TableRowActionMenu.jsx'
-
+import TableEditBtn from './TableEditBtn.jsx'
+import TableDeleteBtn from './TableDeleteBtn.jsx'
 
 const columns = [{
   title: 'Name',
@@ -48,12 +52,17 @@ const columns = [{
   title: 'Action',
   key: 'action',
   render: (text, record) => (
-    <TableRowActionMenu id={record._id} />
+    <span>
+      <TableEditBtn id={record._id} />
+      <span className="ant-divider" />
+      <TableDeleteBtn id={record._id} />
+    </span>
   ),
 }];
 
 
 class EmployeeTable extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -67,15 +76,37 @@ class EmployeeTable extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+
+    this.enterAnim = [
+      { opacity: 0, x: 30, backgroundColor: '#fffeee', duration: 0 },
+      {
+        height: 0,
+        duration: 200,
+        type: 'from',
+        delay: 250,
+        ease: 'easeOutQuad',
+        onComplete: this.onEnd,
+      },
+      { opacity: 1, x: 0, duration: 250, ease: 'easeOutQuad' },
+      { delay: 1000, backgroundColor: '#fff' },
+    ];
+    this.leaveAnim = [
+      { duration: 250, opacity: 0 },
+      { height: 0, duration: 200, ease: 'easeOutQuad' },
+    ];
+  }
+  onEnd(e) {
+    const dom = e.target;
+    dom.style.height = 'auto';
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
+    // console.log('componentDidMount');
     this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));
   }
 
   componentDidUpdate(prevProps) {
-    console.log('componentDidUpdate');
+    // console.log('componentDidUpdate');
     if (prevProps.location.search != this.props.location.search) {
       this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));
     }
@@ -95,7 +126,7 @@ class EmployeeTable extends Component {
     const { search } = this.props.location;
     console.log('search', search);
     const query = Object.assign(qs.parse(search), { _page: current });
-    // this.props.history.push({ pathname: this.props.location.pathname, search: qs.stringify(query) });
+    this.props.history.push({ pathname: this.props.location.pathname, search: qs.stringify(query) });
     // // this.fetch({
     //   results: pagination.pageSize,
     //   page: pagination.current,
@@ -122,6 +153,23 @@ class EmployeeTable extends Component {
     });
   }
 
+  getBodyWrapper(body) {
+    // 切换分页去除动画;
+    // if (this.currentPage !== this.newPage) {
+    //   this.currentPage = this.newPage;
+    //   return body;
+    // }
+    return (<TweenOneGroup
+      component="tbody"
+      className={body.props.className}
+      enter={this.enterAnim}
+      leave={this.leaveAnim}
+      appear={false}
+    >
+      {body.props.children}
+    </TweenOneGroup>);
+  }
+
   render() {
     const { classes, isFetching, employees, totalCount, pageNum } = this.props;
     const { order, orderBy, selected } = this.state;
@@ -129,19 +177,25 @@ class EmployeeTable extends Component {
     return (
       <div>
         <TableToolbar />
-        <Table
-          columns={columns}
-          rowKey={record => record._id}
-          dataSource={employees}
-          pagination={{ total: totalCount, current: pageNum, }}
-          loading={this.props.isFetching}
-          onChange={this.handleTableChange}
-        />
+        <div className={`${this.props.className}-table-wrapper`}>
+          <Table
+            className={`${this.props.className}-table`}
+            columns={columns}
+            rowKey={record => record._id}
+            dataSource={employees}
+            pagination={{ total: totalCount, current: pageNum, }}
+           
+            onChange={this.handleChange}
+            getBodyWrapper={this.getBodyWrapper.bind(this)}
+          />
+        </div>
       </div>
     );
   }
 }
-
+EmployeeTable.defaultProps = {
+  className: 'table-enter-leave-demo',
+};
 EmployeeTable.propTypes = {
   location: PropTypes.object.isRequired,
   employees: PropTypes.array.isRequired,
@@ -151,6 +205,7 @@ EmployeeTable.propTypes = {
 };
 const mapStateToProps = (state, ownProps) => {
   const { employees, totalCount, isFetching, lastUpdated, deletedEmployees, pageSize, pageNum, offset } = state.employeeState;
+  console.log('employees',employees);
   return {
     employees: employees,
     totalCount: totalCount,

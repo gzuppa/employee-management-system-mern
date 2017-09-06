@@ -13,5 +13,4 @@ router.get('/:id', employee_controller.employee_detail);
 router.put('/:id', employee_controller.employee_update);
 router.delete('/:id', employee_controller.employee_delete);
 
-
 module.exports = router;

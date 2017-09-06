@@ -16,11 +16,11 @@ export default class TableToolbar extends Component {
     render() {
         return (
             <div className="table-header">
-                <div className={classnames("table-header-menu", "table-header-item")}>
-                    <TableToolbarAdd />
-                </div>
                 <div className={classnames("table-header-item", "search-bar")}>
                     <TableToolbarSearch />
+                </div>
+                <div className={classnames("table-header-item", "table-header-menu" )}>
+                    <TableToolbarAdd />
                 </div>
 
             </div >

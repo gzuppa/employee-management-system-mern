@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames';
 
 import enUS from 'antd/lib/locale-provider/en_US';
-import { Layout, Menu, Icon, LocaleProvider } from 'antd';
+import { Layout, Menu, Icon, LocaleProvider, Breadcrumb } from 'antd';
 const { Content, Sider } = Layout;
 import "./App.css";
 
@@ -12,6 +12,16 @@ import SideMenu from "./SideMenu.jsx";
 import Header from "./Header.jsx";
 import Routes from "./Routes.jsx";
 import Notification from "./Notification.jsx";
+
+const ItemRender = (route, params, routes, paths) => {
+    console.log('route', route);
+    // const last = routes.indexOf(route) === routes.length - 1;
+    // return last ? <span>{route.breadcrumbName}</span> : <Link to={paths.join('/')}>{route.breadcrumbName}</Link>;
+
+    return (<div> <Breadcrumb.Item>Home</Breadcrumb.Item>
+        <Breadcrumb.Item>List</Breadcrumb.Item>
+        <Breadcrumb.Item>App</Breadcrumb.Item></div>);
+}
 
 // withRouter IssueList can use this.props.router to access the router object.(this.props.location)
 class App extends React.Component {

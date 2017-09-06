@@ -24,9 +24,9 @@ export const requestEmployeesSuccess = data => ({
   receivedAt: Date.now()
 });
 export const createEmployeeSuccess = (employee, history) => {
-  history.push({
-    pathname: `/employee/${employee._id}`
-  })
+  // history.push({
+  //   pathname: `/employee/${employee._id}`
+  // })
   return {
     type: types.CREATE_EMPLOYEE_SUCCESS,
     employee,
@@ -118,13 +118,13 @@ export const createEmployee = (employee, history) => {
       if (!response.ok) {
         return response.json().then(error => {
 
-          setTimeout(() => {
-            const errorMsg = `Failed to add employee: ${error.message}`;
+          // setTimeout(() => {
+            // const errorMsg = `Failed to add employee: ${error.message}`;
             dispatch(requestEmployeesError(errorMsg))
             notification.error({
               message: errorMsg
             });
-          }, 2000);
+          // }, 2000);
 
         });
       }
@@ -141,20 +141,25 @@ export const createEmployee = (employee, history) => {
     });
   }
 }
-export const deleteEmployee = (employee, history) => {
+export const deleteEmployee = (id, history) => {
   return dispatch => {
     dispatch(sendRequest());
-    employeeApi.deleteEmployee(employee).then(response => {
+    employeeApi.deleteEmployee(id).then(response => {
       if (!response.ok) {
         return response.json().then(error => {
-          const errorMsg = `Failed to delete employee`;
-          dispatch(requestEmployeesError(errorMsg))
+          const errorMsg = `Failed to delete employee ${error.message}`;
+          notification.error({
+            message: errorMsg
+          });
         });
       }
-      return dispatch(deleteEmployeeSuccess(employee, history));
+      return dispatch(deleteEmployeeSuccess(id, history));
     }).catch(error => {
       const errorMsg = `Error in sending data to server: ${error.message}`;
-      dispatch(requestEmployeesError(errorMsg))
+      notification.error({
+        message: errorMsg
+      });
+      // dispatch(requestEmployeesError(errorMsg))
     });
   }
 }

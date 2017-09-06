@@ -22,6 +22,15 @@ class EmployeeAddTableItem extends React.Component {
     this.handleCreate = this.handleCreate.bind(this);
     this.saveFormRef = this.saveFormRef.bind(this);
   }
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
+  componentDidUpdate(prevProps) {
+    console.log('componentDidUpdate');
+    if (prevProps.isFetching && !this.props.isFetching) {
+      this.setState({ visible: false });
+    }
+  }
   showModal() {
     this.setState({ visible: true });
   }

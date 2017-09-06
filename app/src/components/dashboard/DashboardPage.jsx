@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import qs from 'query-string';
+import { withRouter } from 'react-router-dom';
 
 import { Card, Row, Col } from 'antd';
 
@@ -36,8 +37,6 @@ class DashboardPage extends React.Component {
   }
 }
 DashboardPage.propTypes = {
-  location: PropTypes.object.isRequired,
-  router: PropTypes.object,
 };
 
-export default DashboardPage;
+export default withRouter(DashboardPage);

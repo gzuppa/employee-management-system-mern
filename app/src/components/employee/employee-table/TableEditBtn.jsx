@@ -20,7 +20,9 @@ class TableRowActionMenu extends Component {
     this.handleCreate = this.handleCreate.bind(this);
     this.saveFormRef = this.saveFormRef.bind(this);
   }
-  showModal() {
+  
+  showModal(e) {
+    e.preventDefault();
     this.setState({ visible: true });
   }
   handleCancel() {
@@ -50,9 +52,8 @@ class TableRowActionMenu extends Component {
   render() {
     const { visible, confirmLoading, ModalText } = this.state;
     return (
-      <div>
-        <Button type="primary" onClick={this.showModal}>Edit</Button>
-
+      <span>
+        <a href="#" onClick={this.showModal}>Edit</a>
         <ComplexForm
           id={this.props.id}
           ref={this.saveFormRef}
@@ -61,8 +62,7 @@ class TableRowActionMenu extends Component {
           onCancel={this.handleCancel}
           onCreate={this.handleCreate}
         />
-
-      </div>
+      </span>
     )
   }
 }

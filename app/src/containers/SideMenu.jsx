@@ -15,7 +15,7 @@ class SideMenu extends Component {
   
     this.handleClick = this.handleClick.bind(this);
   }
-
+ 
   handleClick(item) {
     this.props.history.push(`${item.key}`);
   }

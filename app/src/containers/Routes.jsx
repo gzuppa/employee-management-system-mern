@@ -1,8 +1,10 @@
 import React from 'react';
-import { Switch, Route, Redirect, withRouter, Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router'
 import { Breadcrumb, Alert } from 'antd';
+import { AnimatedSwitch } from 'react-router-transition';
 
-import App from './App.jsx';
+import './Route.css';
 
 import LoginPage from '../components/login/LoginPage.jsx';
 
@@ -23,37 +25,14 @@ import DashboardPage from '../components/dashboard/DashboardPage.jsx';
 
 const NoMatch = () => <p>Page Not Found</p>;
 
-function itemRender(route, params, routes, paths) {
-  // console.log('route', route);
-  // console.log('params', params);
-  // const last = routes.indexOf(route) === routes.length - 1;
-
-  // return last ? <span>{route.breadcrumbName}</span> : <Link to={paths.join('/')}>{route.breadcrumbName}</Link>;
-  return <Link to="/about">About</Link>;
-}
 
 const Routes = (props) => (
-
   <Switch>
-    <Redirect exact from="/" to="/employee" />
-    {/* <Route exact path="/login" component={withRouter(LoginPage)} /> */}
+    <Redirect exact from="/" to="/dashboard" />
+    <Route path="/dashboard" component={DashboardPage} />
 
-    <Route exact path="/dashboard" component={withRouter(DashboardPage)} />
-
-    <Route exact path="/employee" component={withRouter(EmployeePage)} />
-    <Route exact path="/employee/:id" component={withRouter(EmployeeEdit)} />
-
-    {/* <Redirect exact from="/" to="/department" /> */}
-    {/* <Route exact path="/dashboard" component={withRouter(IssueReport)} /> */}
-
-    {/* <Route exact path="/relation" component={RelationPage} /> */}
-
-    {/* <Route exact path="/department" component={withRouter(DeparmentPage)} /> */}
-    {/* <Route exact path="/department/:id" component={withRouter(DeparmentEdit)} />
-
-    <Route exact path="/employee" component={withRouter(EmployeePage)} />
-    
-    <Route exact path="/schedule" component={withRouter(SchedulePage)} /> */}
+    <Route exact path="/employee" component={EmployeePage} />
+    <Route exact path="/employee/:id" component={EmployeeEdit} />
 
     <Route component={NoMatch} />
   </Switch>

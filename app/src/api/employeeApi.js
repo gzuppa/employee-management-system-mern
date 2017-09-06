@@ -43,11 +43,11 @@ class employeeApi {
   }
 
 
-  static deleteEmployee(employee) {
+  static deleteEmployee(id) {
     const headers = Object.assign({
       'Content-Type': 'application/json'
     }, this.requestHeaders());
-    const request = new Request(`/api/employee/${employee._id}`, {
+    const request = new Request(`/api/employee/${id}`, {
       method: 'DELETE',
       headers: headers
     });

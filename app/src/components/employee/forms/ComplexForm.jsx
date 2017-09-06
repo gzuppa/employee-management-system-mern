@@ -30,11 +30,11 @@ export default class ComplexForm extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
   componentDidMount() {
-    console.log('ComplexForm componentDidMount');
+    // console.log('ComplexForm componentDidMount');
     // this.loadData();
   }
   componentDidUpdate(prevProps) {
-    console.log('ComplexForm componentDidMount');
+    // console.log('ComplexForm componentDidMount');
     // if (this.props.visible) {
     //   this.loadData();
     // }

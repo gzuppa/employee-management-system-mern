@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { submit } from 'redux-form';
 
 import EditEmployeeForm from './forms/EditEmployeeForm.jsx';
@@ -15,6 +16,8 @@ class EmployeeEdit extends React.Component {
 	}
 	constructor(props) {
 		super(props);
+		console.log('props',props);
+		
 		this.state = {
 			employee: {
 				title: '', name: '',
@@ -145,4 +148,4 @@ EmployeeEdit.propTypes = {
 	match: PropTypes.object.isRequired
 };
 
-export default connect()(EmployeeEdit);
+export default withRouter(connect()(EmployeeEdit));

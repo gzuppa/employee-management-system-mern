@@ -75,11 +75,7 @@
   right: 16px;
 }
 
-.highlight{
-  /* background-color: initial;
-  color: #108ee9;
-  font-weight: bold; */
-}
 .global-search.ant-select-auto-complete .Active {
   background-color: #108ee9;
 }
+

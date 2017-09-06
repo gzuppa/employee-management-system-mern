@@ -252,14 +252,14 @@ exports.employee_update = function (req, res) {
 
 // delete employee
 exports.employee_delete = function (req, res) {
+  console.log('employee_delete',req.params.id);
   let docId;
   try {
-    docId = new ObjectId(req.params.id);
+    docId = mongoose.Types.ObjectId(req.params.id);
   } catch (error) {
-    res.status(422).json({
+    return res.status(422).json({
       message: `Invalid issue ID format: ${error}`
     });
-    return;
   }
   Employee.deleteOne({
     _id: docId

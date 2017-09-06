@@ -46,8 +46,9 @@ const employees = (state = initEmployee, action) => {
       // console.log('CREATE_EMPLOYEE_SUCCESS');
       const updatedEmployee = action.employee;
       return Object.assign({}, state, {
-        employees: state.employees.concat(updatedEmployee),
-        receivedAt: action.receivedAt
+        employees:  [updatedEmployee, ...state.employees],
+        receivedAt: action.receivedAt,
+        isFetching: false,
       });
 
     case types.DELETE_EMPLOYEE_SUCCESS:

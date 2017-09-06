@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import qs from 'query-string';
 
 import EmployeeTable from './employee-table/EmployeeTable.jsx'
@@ -22,14 +22,13 @@ class EmployeePage extends React.Component {
         return (
             <div>
                 <h1 className="page-title">{"Employees"}</h1>
-                <EmployeeTable employees={this.props.employees} isFetching={this.props.isFetching} />
+                <EmployeeTable />
             </div>
 
         );
     }
 }
 EmployeePage.propTypes = {
-    location: PropTypes.object.isRequired,
     employees: PropTypes.array.isRequired,
     totalCount: PropTypes.number.isRequired,
     isFetching: PropTypes.bool.isRequired,
@@ -49,5 +48,5 @@ const mapStateToProps = (state, ownProps) => {
     }
 };
 
-export default connect(mapStateToProps)(EmployeePage);
+export default withRouter(connect(mapStateToProps)(EmployeePage));
 

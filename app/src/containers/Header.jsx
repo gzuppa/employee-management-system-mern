@@ -38,6 +38,7 @@ class AppHeader extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <Header style={{ background: '#fff', padding: 0 }}>
