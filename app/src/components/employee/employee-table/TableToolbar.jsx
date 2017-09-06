@@ -4,11 +4,11 @@ import classnames from 'classnames';
 
 import { Button } from 'antd';
 
-import EmployeeAddTableItem from "./EmployeeAddTableItem.jsx";
-import EmployeeSearch from "./EmployeeSearch.jsx";
+import TableToolbarAdd from "./TableToolbarAdd.jsx";
+import TableToolbarSearch from "./TableToolbarSearch.jsx";
 
 
-export default class EnhancedTableHead extends Component {
+export default class TableToolbar extends Component {
     constructor(props) {
         super(props);
     }
@@ -17,15 +17,15 @@ export default class EnhancedTableHead extends Component {
         return (
             <div className="table-header">
                 <div className={classnames("table-header-menu", "table-header-item")}>
-                    <EmployeeAddTableItem />
+                    <TableToolbarAdd />
                 </div>
                 <div className={classnames("table-header-item", "search-bar")}>
-                    <EmployeeSearch />
+                    <TableToolbarSearch />
                 </div>
 
             </div >
         );
     }
 }
-EnhancedTableHead.propTypes = {
+TableToolbar.propTypes = {
 };

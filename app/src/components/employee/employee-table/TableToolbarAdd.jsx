@@ -19,7 +19,6 @@ class EmployeeAddTableItem extends React.Component {
     };
     this.showModal = this.showModal.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
-    this.submit = this.submit.bind(this);
     this.handleCreate = this.handleCreate.bind(this);
     this.saveFormRef = this.saveFormRef.bind(this);
   }
@@ -50,19 +49,6 @@ class EmployeeAddTableItem extends React.Component {
     this.form = form;
   }
 
-  submit(values) {
-    // e.preventDefault();
-    this.handleCancel();
-
-    const newEmployee = {
-      name: values.name,
-      title: values.title,
-      status: 'New',
-      created: new Date(),
-    };
-
-    this.props.dispatch(createEmployee(newEmployee, this.props.history));
-  }
 
   render() {
 

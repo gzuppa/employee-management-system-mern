@@ -39,7 +39,7 @@ function renderOption(item) {
 }
 
 let lastFetchId = 0;
-class EmployeeSearch extends React.Component {
+class TableToolbarSearch extends React.Component {
   constructor(props) {
     super(props);
    
@@ -131,4 +131,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 
-export default withRouter(connect(mapStateToProps)(EmployeeSearch));
+export default withRouter(connect(mapStateToProps)(TableToolbarSearch));

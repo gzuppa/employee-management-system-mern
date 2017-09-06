@@ -9,8 +9,8 @@ import { fetchEmployees, fetchEmployeesIfNeeded } from '../../../actions/employe
 
 import { Table, Button } from 'antd';
 
-import EnhancedTableHead from './EnhancedTableHead.jsx'
-import EmployeeTableActionMenu from './EmployeeTableActionMenu.jsx'
+import TableToolbar from './TableToolbar.jsx'
+import TableRowActionMenu from './TableRowActionMenu.jsx'
 
 
 const columns = [{
@@ -48,7 +48,7 @@ const columns = [{
   title: 'Action',
   key: 'action',
   render: (text, record) => (
-    <EmployeeTableActionMenu />
+    <TableRowActionMenu id={record._id} />
   ),
 }];
 
@@ -128,7 +128,7 @@ class EmployeeTable extends Component {
 
     return (
       <div>
-        <EnhancedTableHead />
+        <TableToolbar />
         <Table
           columns={columns}
           rowKey={record => record._id}

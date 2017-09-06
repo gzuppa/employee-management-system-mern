@@ -3,6 +3,9 @@ import { Switch, Route, Redirect, withRouter, Link } from 'react-router-dom';
 import { Breadcrumb, Alert } from 'antd';
 
 import App from './App.jsx';
+
+import LoginPage from '../components/login/LoginPage.jsx';
+
 // import IssueList from './IssueList.jsx';
 // import DeparmentPage from '../components/department/DepartmentPage.jsx';
 // import DeparmentEdit from '../components/department/DepartmentEdit.jsx';
@@ -33,6 +36,8 @@ const Routes = (props) => (
 
   <Switch>
     <Redirect exact from="/" to="/employee" />
+    {/* <Route exact path="/login" component={withRouter(LoginPage)} /> */}
+
     <Route exact path="/dashboard" component={withRouter(DashboardPage)} />
 
     <Route exact path="/employee" component={withRouter(EmployeePage)} />
