@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { withRouter } from 'react-router-dom';
 
 import { Modal, Button, Icon } from 'antd';
 
 import ComplexForm from '../forms/ComplexForm.jsx';
 
 
-export default class TableRowActionMenu extends Component {
+class TableRowActionMenu extends Component {
   constructor(props) {
     super(props);
 
@@ -45,7 +46,7 @@ export default class TableRowActionMenu extends Component {
   saveFormRef(form) {
     this.form = form;
   }
-  
+
   render() {
     const { visible, confirmLoading, ModalText } = this.state;
     return (
@@ -53,7 +54,7 @@ export default class TableRowActionMenu extends Component {
         <Button type="primary" onClick={this.showModal}>Edit</Button>
 
         <ComplexForm
-          id = {this.props.id}
+          id={this.props.id}
           ref={this.saveFormRef}
           confirmLoading={this.props.isFetching}
           visible={this.state.visible}
@@ -68,3 +69,4 @@ export default class TableRowActionMenu extends Component {
 TableRowActionMenu.propTypes = {
   id: PropTypes.string.isRequired
 };
+export default withRouter(TableRowActionMenu);

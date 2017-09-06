@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Button, Modal, Tabs, message ,notification} from 'antd';
+import { Button, Modal, Tabs, message, notification } from 'antd';
 
 const TabPane = Tabs.TabPane;
 
@@ -30,12 +30,14 @@ export default class ComplexForm extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
   componentDidMount() {
+    console.log('ComplexForm componentDidMount');
     // this.loadData();
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.loadData();
-    }
+    console.log('ComplexForm componentDidMount');
+    // if (this.props.visible) {
+    //   this.loadData();
+    // }
   }
   loadData() {
     this.setState({ isFetching: true });
