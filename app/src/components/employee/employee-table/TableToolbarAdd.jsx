@@ -51,7 +51,6 @@ class EmployeeAddTableItem extends React.Component {
 
 
   render() {
-
     const { visible, confirmLoading, ModalText } = this.state;
     return (
       <div>

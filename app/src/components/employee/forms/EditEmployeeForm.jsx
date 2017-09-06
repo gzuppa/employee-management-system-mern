@@ -1,14 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types';
-
-import { Button, Form, Input, Radio, Modal, Select } from 'antd';
+import { Button, Form, Input, Radio, Select } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
 
 
 const EditEmployeeForm = (props) => {
-  const { visible, onCancel, onCreate, form, confirmLoading } = props;
+  const { form } = props;
   const { getFieldDecorator } = form;
   const formItemLayout = {
     labelCol: { span: 6 },
@@ -46,7 +44,5 @@ const EditEmployeeForm = (props) => {
     </Form>
   );
 };
-EditEmployeeForm.propTypes = {
-  id: PropTypes.string.isRequired
-};
+
 export default Form.create()(EditEmployeeForm);

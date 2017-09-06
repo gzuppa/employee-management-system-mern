@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 import { Modal, Button, Icon } from 'antd';
 
-import EditEmployeeForm from '../forms/EditEmployeeForm.jsx';
+import ComplexForm from '../forms/ComplexForm.jsx';
 
 
 export default class TableRowActionMenu extends Component {
@@ -12,53 +12,57 @@ export default class TableRowActionMenu extends Component {
     super(props);
 
     this.state = {
-      loading: false,
       visible: false,
-    }
-
+    };
     this.showModal = this.showModal.bind(this);
-    this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.handleCreate = this.handleCreate.bind(this);
+    this.saveFormRef = this.saveFormRef.bind(this);
   }
-  showModal(e) {
-    e.preventDefault();
-    this.setState({
-      visible: true,
-    });
-  }
-  handleOk() {
-    this.setState({ loading: true });
-    setTimeout(() => {
-      this.setState({ loading: false, visible: false });
-    }, 3000);
+  showModal() {
+    this.setState({ visible: true });
   }
   handleCancel() {
     this.setState({ visible: false });
   }
-  render() {
-    const { id } = this.props;
-    const { visible, loading } = this.state;
+  handleCreate() {
+    const form = this.form;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
 
+      const name = {
+        firstName: values.firstName,
+        lastName: values.lastName
+      }
+      const newEmployee = values;
+      newEmployee.name = name;
+
+      this.props.dispatch(createEmployee(newEmployee, this.props.history));
+    });
+  }
+  saveFormRef(form) {
+    this.form = form;
+  }
+  
+  render() {
+    const { visible, confirmLoading, ModalText } = this.state;
     return (
       <div>
-        <span>
-          <a href="#" onClick={this.showModal}>Edit</a>
-        </span>
-        <Modal
-          visible={visible}
-          onOk={this.handleOk}
+        <Button type="primary" onClick={this.showModal}>Edit</Button>
+
+        <ComplexForm
+          id = {this.props.id}
+          ref={this.saveFormRef}
+          confirmLoading={this.props.isFetching}
+          visible={this.state.visible}
           onCancel={this.handleCancel}
-          footer={[
-            <Button key="back" size="large" onClick={this.handleCancel}>Return</Button>,
-            <Button key="submit" type="primary" size="large" loading={loading} onClick={this.handleOk}>
-              Submit
-            </Button>,
-          ]}
-        >
-          <EditEmployeeForm id={id} />
-        </Modal>
+          onCreate={this.handleCreate}
+        />
+
       </div>
-    );
+    )
   }
 }
 TableRowActionMenu.propTypes = {
