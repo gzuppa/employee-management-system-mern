@@ -13,6 +13,7 @@
     "watch": "webpack-dev-server --progress",
     "dev-all-es6": "npm run watch & npm run watch-server & NODE_ENV=development npm run start-dist",
     "dev-all-hook": "npm run watch & npm run start-hook",
+    "deploy": "NODE_ENV=production webpack -p --config webpack.production.config.js",
     "lint": "eslint --ext jsx,js src server webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
