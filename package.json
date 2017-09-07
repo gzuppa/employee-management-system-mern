@@ -6,7 +6,7 @@
   "scripts": {
     "compile-server": "babel server --presets es2015-node6 --out-dir dist --source-maps",
     "compile-app": "webpack -p --config webpack.production.config.js",
-    "postuninstall": "npm run compile-server & npm run compile-app",
+    "postinstall": "npm run compile-server & npm run compile-app",
     "start": "NODE_ENV=production npm run start-dist",
     "start-dist": "dist/server.js",
     "watch-server": "babel server --presets es2015-node6 --out-dir dist --source-maps --watch",
