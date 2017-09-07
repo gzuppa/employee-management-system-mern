@@ -12,16 +12,16 @@ class SideMenu extends Component {
 
   constructor(props) {
     super(props);
-  
+
     this.handleClick = this.handleClick.bind(this);
   }
- 
+
   handleClick(item) {
     this.props.history.push(`${item.key}`);
   }
 
   render() {
-    const { history ,location} = this.props;
+    const { history, location } = this.props;
 
     return (
       <Sider
@@ -49,6 +49,10 @@ class SideMenu extends Component {
           <Menu.Item key="/employee">
             <Icon type="video-camera" />
             <span>Employees</span>
+          </Menu.Item>
+          <Menu.Item key="/schedule">
+            <Icon type="schedule" />
+            <span>Shedule</span>
           </Menu.Item>
         </Menu>
       </Sider>

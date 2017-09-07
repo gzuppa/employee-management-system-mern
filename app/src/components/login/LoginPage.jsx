@@ -17,7 +17,11 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <LoginForm />
+      <div className="wrapper">
+        <div className="login-form-wrapper">
+          <LoginForm />
+        </div>
+      </div>
     );
   }
 }

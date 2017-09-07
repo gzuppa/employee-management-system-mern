@@ -201,7 +201,7 @@ EmployeeTable.propTypes = {
 };
 const mapStateToProps = (state, ownProps) => {
   const { employees, totalCount, isFetching, lastUpdated, deletedEmployees, pageSize, pageNum, offset } = state.employeeState;
-  console.log('employees', employees);
+
   return {
     employees: employees,
     totalCount: totalCount,

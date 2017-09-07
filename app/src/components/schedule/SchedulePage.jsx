@@ -1,8 +1,6 @@
-import { Chart } from 'react-google-charts';
 import React from 'react';
 
-import ScheduleGanttChart from './ScheduleGanttChart.jsx';
-import GanttChart from './dhtmlxGantt/Gantt.jsx';
+import Schedule from './Schedule.jsx';
 
 class SchedulePage extends React.Component {
   constructor(props) {
@@ -10,7 +8,7 @@ class SchedulePage extends React.Component {
   }
   render() {
     return (
-      <GanttChart />
+      <Schedule />
     );
   }
 }

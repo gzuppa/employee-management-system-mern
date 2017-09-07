@@ -8,7 +8,13 @@ import { Modal, Button, Icon } from 'antd';
 import ComplexForm from '../forms/ComplexForm.jsx';
 
 
-class TableRowActionMenu extends Component {
+class TableEditBtn extends Component {
+  static dataFetcher({ params, urlBase }) {
+		return fetch(`${urlBase || ''}/api/employee/${params.id}`).then(response => {
+			if (!response.ok) return response.json().then(error => Promise.reject(error));
+			return response.json().then(data => ({ EmployeeEdit: data }));
+		});
+	}
   constructor(props) {
     super(props);
 
@@ -20,10 +26,11 @@ class TableRowActionMenu extends Component {
     this.handleCreate = this.handleCreate.bind(this);
     this.saveFormRef = this.saveFormRef.bind(this);
   }
-  
+
   showModal(e) {
     e.preventDefault();
     this.setState({ visible: true });
+    this.props.dispatch
   }
   handleCancel() {
     this.setState({ visible: false });
@@ -66,7 +73,7 @@ class TableRowActionMenu extends Component {
     )
   }
 }
-TableRowActionMenu.propTypes = {
+TableEditBtn.propTypes = {
   id: PropTypes.string.isRequired
 };
-export default withRouter(TableRowActionMenu);
+export default withRouter(TableEditBtn);
