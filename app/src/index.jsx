@@ -36,7 +36,8 @@ render(
   <Provider store={reduxStore}>
     <Router>
       <Switch>
-        <PrivateRoute path="/app" component={App} />
+        {/* <PrivateRoute path="/" component={App} /> */}
+        <Redirect exact from="/" to="/login" /> 
         <Route path="/login" component={LoginPage} />
       </Switch>
     </Router>
