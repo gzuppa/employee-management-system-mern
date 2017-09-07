@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 
 module.exports = {
@@ -17,6 +18,7 @@ module.exports = {
     sourceMapFilename: '[name].js.map',
   },
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
@@ -31,6 +33,7 @@ module.exports = {
       filename: '[name].js.map',
       exclude: ['vendor.bundle.js']
     }),
+    new UglifyJSPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
