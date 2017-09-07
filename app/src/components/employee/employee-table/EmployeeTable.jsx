@@ -155,10 +155,10 @@ class EmployeeTable extends Component {
 
   getBodyWrapper(body) {
     // 切换分页去除动画;
-    // if (this.currentPage !== this.newPage) {
-    //   this.currentPage = this.newPage;
-    //   return body;
-    // }
+    if (this.currentPage !== this.newPage) {
+      this.currentPage = this.newPage;
+      return body;
+    }
     return (<TweenOneGroup
       component="tbody"
       className={body.props.className}
@@ -177,18 +177,15 @@ class EmployeeTable extends Component {
     return (
       <div>
         <TableToolbar />
-        <div className={`${this.props.className}-table-wrapper`}>
-          <Table
-            className={`${this.props.className}-table`}
-            columns={columns}
-            rowKey={record => record._id}
-            dataSource={employees}
-            pagination={{ total: totalCount, current: pageNum, }}
-           
-            onChange={this.handleChange}
-            getBodyWrapper={this.getBodyWrapper.bind(this)}
-          />
-        </div>
+        <Table
+          columns={columns}
+          rowKey={record => record._id}
+          dataSource={employees}
+          pagination={{ total: totalCount, current: pageNum, }}
+
+          onChange={this.handleChange}
+          getBodyWrapper={this.getBodyWrapper.bind(this)}
+        />
       </div>
     );
   }
@@ -205,7 +202,7 @@ EmployeeTable.propTypes = {
 };
 const mapStateToProps = (state, ownProps) => {
   const { employees, totalCount, isFetching, lastUpdated, deletedEmployees, pageSize, pageNum, offset } = state.employeeState;
-  console.log('employees',employees);
+  console.log('employees', employees);
   return {
     employees: employees,
     totalCount: totalCount,

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Button, Modal, Tabs, message, notification } from 'antd';
+import { Button, Modal, Tabs, message, notification, Avatar } from 'antd';
 
 const TabPane = Tabs.TabPane;
 
@@ -11,8 +11,17 @@ const TabNames = {
   "2": "Position",
   "3": "Others"
 }
-const ModalTitle = () => {
-
+class ModalTitle extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <Avatar style={{ backgroundColor: '#f56a00' }} size="large">{"ML"}</Avatar>
+      </div >
+    );
+  }
 }
 export default class ComplexForm extends React.Component {
   static dataFetcher(id) {
@@ -65,7 +74,7 @@ export default class ComplexForm extends React.Component {
     return (
       <Modal
         visible={visible}
-        title={this.state.title}
+        title={<ModalTitle />}
         okText="Update"
         onCancel={onCancel}
         confirmLoading={confirmLoading}
