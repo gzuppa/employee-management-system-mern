@@ -1,1 +1,1 @@
-web: npm run dev-all-hook
+web: npm run deploy
