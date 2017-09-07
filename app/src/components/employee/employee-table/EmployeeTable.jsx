@@ -179,12 +179,11 @@ class EmployeeTable extends Component {
         <TableToolbar />
         <Table
           columns={columns}
+          loading={isFetching}
           rowKey={record => record._id}
           dataSource={employees}
           pagination={{ total: totalCount, current: pageNum, }}
-
           onChange={this.handleChange}
-          getBodyWrapper={this.getBodyWrapper.bind(this)}
         />
       </div>
     );

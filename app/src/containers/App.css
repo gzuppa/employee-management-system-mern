@@ -79,3 +79,6 @@
   background-color: #108ee9;
 }
 
+.form-header {
+  display: inline-flex;
+}

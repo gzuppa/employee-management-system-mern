@@ -17,8 +17,12 @@ class ModalTitle extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="form-header">
         <Avatar style={{ backgroundColor: '#f56a00' }} size="large">{"ML"}</Avatar>
+        <span style={{ paddingLeft: "15px" }}>
+          <div>Worker Account</div>
+          <div>Michael</div>
+        </span>
       </div >
     );
   }
