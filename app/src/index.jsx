@@ -1,7 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { BrowserRouter as Router, Route, Redirect ,Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux'
+import Animate from 'rc-animate';
 
 import App from './containers/App.jsx'
 import reduxStore from './store/reduxStore';
@@ -36,9 +37,13 @@ render(
   <Provider store={reduxStore}>
     <Router>
       <Switch>
-        {/* <PrivateRoute path="/" component={App} /> */}
-        <Redirect exact from="/" to="/login" /> 
-        <Route path="/login" component={LoginPage} />
+        <PrivateRoute exact path="/" component={App} />
+        <Animate
+          transitionName="fade"
+          transitionAppear
+        >
+          <Route exact path="/login" component={LoginPage} />
+        </Animate>
       </Switch>
     </Router>
   </Provider>,

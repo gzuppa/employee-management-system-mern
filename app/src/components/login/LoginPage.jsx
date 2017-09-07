@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 import qs from 'query-string';
+import Particles from 'react-particles-js';
+import { config } from "./ParticleConfig";
 
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
@@ -17,9 +20,12 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <div className={classnames("wrapper blend-gradient")}>
+        <Particles params={config} />
         <div className="login-form-wrapper">
-          <LoginForm />
+          <div className="login-form">
+            <LoginForm />
+          </div>
         </div>
       </div>
     );
