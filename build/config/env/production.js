@@ -2,6 +2,7 @@
 'use strict';
 
 // Set the 'production' environment configuration object
+
 module.exports = {
 	server: {
 		port: 8080
@@ -13,3 +14,4 @@ module.exports = {
 		}
 	}
 };
+//# sourceMappingURL=production.js.map

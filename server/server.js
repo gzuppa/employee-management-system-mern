@@ -1,3 +1,5 @@
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 import express from './config/express';
 // import mongoose from './config/mongoose';
 import mongoose from "mongoose";

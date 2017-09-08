@@ -1,22 +1,11 @@
 const webpack = require('webpack');
 const path = require('path');
+const common = require('./webpack.common.js');
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 
 module.exports = merge(common, {
-  entry: {
-    app: ['./src/index.jsx'],
-    vendor: ['react', 'react-dom', 'whatwg-fetch', 'react-router-dom',
-      'classnames'
-    ],
-  },
-  output: {
-    path: path.resolve(__dirname, "static"),
-    // filename: "[name].js"
-    filename: '[name].[hash].bundle.js',
-    sourceMapFilename: '[name].[hash].js.map',
-  },
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.CommonsChunkPlugin({

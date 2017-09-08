@@ -27,26 +27,26 @@ module.exports = function (db) {
     app.use('/api/employee', employee);
 
 
-    if (process.env.NODE_ENV !== 'production') {
-        // import only support top level
-        const webpack = require('webpack');
-        const webpackDevMiddleware = require('webpack-dev-middleware');
-        const webpackHotMiddleware = require('webpack-hot-middleware');
+    // if (process.env.NODE_ENV !== 'production') {
+    //     // import only support top level
+    //     const webpack = require('webpack');
+    //     const webpackDevMiddleware = require('webpack-dev-middleware');
+    //     const webpackHotMiddleware = require('webpack-hot-middleware');
 
-        const config = require('../../webpack.dev');
-        config.entry.app.push('webpack-hot-middleware/client', 'webpack/hot/only-dev-server');
-        config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    //     const config = require('../../webpack.dev');
+    //     config.entry.app.push('webpack-hot-middleware/client', 'webpack/hot/only-dev-server');
+    //     config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
-        const compiler = webpack(config);
-        app.use(webpackDevMiddleware(compiler, {
-            noInfo: true
-        }));
-        app.use(webpackHotMiddleware(compiler, {
-            log: console.log
-        }));
+    //     const compiler = webpack(config);
+    //     app.use(webpackDevMiddleware(compiler, {
+    //         noInfo: true
+    //     }));
+    //     app.use(webpackHotMiddleware(compiler, {
+    //         log: console.log
+    //     }));
 
-        // console.log('Enable webpackDevMiddleware and webpackHotMiddleware');
-    }
+    //     // console.log('Enable webpackDevMiddleware and webpackHotMiddleware');
+    // }
 
 
     return app;

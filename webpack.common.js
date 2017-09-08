@@ -10,22 +10,17 @@ module.exports = {
     ],
   },
   output: {
-    publicPath: '/static/',
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "static/dist"),
     // filename: "[name].js"
+    // chunkFilename: '[name].bundle.js',
     filename: '[name].bundle.js',
     sourceMapFilename: '[name].js.map',
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(["static/dist"]),
     new HtmlWebpackPlugin({
-      title: 'Production',
       template: './static/index.html',
       inject: 'body',
     })
-  ],
-  output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  }
+  ]
 };
