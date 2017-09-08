@@ -9,7 +9,7 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.db.uri, config.db.options).then(connection => {
-    app.listen(config.server.port || 5000, () => {
+    app.listen(process.env.PORT || config.server.port, () => {
         // console.log('App started on port ' + config.server.port);
         console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
     });

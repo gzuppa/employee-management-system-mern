@@ -74,4 +74,7 @@ module.exports = merge(common, {
     }
   },
   devtool: 'cheap-module-eval-source-map',
+  performance: {
+    hints: "error"
+  }
 });
