@@ -7,8 +7,19 @@ import Animate from 'rc-animate';
 import App from './containers/App.jsx'
 import reduxStore from './store/reduxStore';
 import LoginPage from "./components/login/LoginPage.jsx";
+import RegisterPage from "./components/login/RegisterPage.jsx";
 
-
+{/* <CSSTransitionGroup
+  transitionName='fade'
+  transitionEnterTimeout={500}
+  transitionLeaveTimeout={500}
+>
+  <Switch key={location.pathname} location={location}>
+    <Route path="/red" render={Red} />
+    <Route path="/green" render={Green} />
+    <Route path="/blue" render={Blue} />
+  </Switch>
+</CSSTransitionGroup> */}
 const fakeAuth = {
   isAuthenticated: false,
   authenticate(cb) {
@@ -38,12 +49,8 @@ render(
     <Router>
       <Switch>
         <PrivateRoute exact path="/" component={App} />
-        <Animate
-          transitionName="fade"
-          transitionAppear
-        >
-          <Route exact path="/login" component={LoginPage} />
-        </Animate>
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/register" component={RegisterPage} />
       </Switch>
     </Router>
   </Provider>,

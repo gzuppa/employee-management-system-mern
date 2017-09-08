@@ -22,7 +22,7 @@ class LoginForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <div>
+      <div className="login-form">
         <div className="login-form-header">
           <img src="/images/michael_icon.png"></img>
         </div>
