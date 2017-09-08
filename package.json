@@ -4,17 +4,14 @@
   "description": "ems beta",
   "main": "server.js",
   "scripts": {
-    "compile-server": "babel server --presets es2015-node6 --out-dir dist --source-maps",
-    "compile-app": "webpack -p --config webpack.production.config.js",
-    "build": "npm run compile-server & npm run compile-app",
-    "start": "npm run build && NODE_ENV=production npm run start-dist",
-    "start-dist": "dist/server.js",
+    "postinstall": "npm run build",
+    "build:server": "babel server --presets es2015-node6 --out-dir dist --source-maps",
+    "build:client": "webpack -p --config webpack.prod.js --progress",
+    "build": "npm run build:server && npm run build:client",
+    "start": "webpack-dev-server --progress --config webpack.dev.js",
     "watch-server": "babel server --presets es2015-node6 --out-dir dist --source-maps --watch",
     "start-hook": "nodemon -w server server/start_hook.js",
-    "compile": "webpack",
-    "watch": "webpack-dev-server --progress",
-    "dev-all-es6": "npm run watch & npm run watch-server & NODE_ENV=development npm run start-dist",
-    "dev-all-hook": "npm run watch & npm run start-hook",
+    "dev-all-hook": "npm start & npm run start-hook",
     "lint": "eslint --ext jsx,js src server webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -52,13 +49,9 @@
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "redux": "^3.7.2",
-    "redux-form": "^7.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "source-map-support": "^0.4.17",
-    "webpack": "^3.5.6",
-    "webpack-dev-middleware": "^1.12.0",
-    "webpack-hot-middleware": "^2.19.0"
+    "source-map-support": "^0.4.17"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -84,10 +77,9 @@
     "style-loader": "^0.18.2",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.5.2",
-    "webpack-dashboard": "^1.0.0-5",
-    "webpack-dev-middleware": "^1.11.0",
     "webpack-dev-server": "^2.7.1",
-    "webpack-hot-middleware": "^2.18.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.0",
     "whatwg-fetch": "^2.0.3"
   }
 }

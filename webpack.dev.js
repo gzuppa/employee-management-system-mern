@@ -2,26 +2,11 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
 
-
-module.exports = {
-  entry: {
-    app: ['./src/index.jsx'],
-    vendor: ['react', 'react-dom', 'whatwg-fetch', 'react-router-dom',
-      'classnames'
-    ],
-  },
-  output: {
-    path: path.resolve(__dirname, "static"),
-    // filename: "[name].js"
-    filename: '[name].bundle.js',
-    sourceMapFilename: '[name].js.map',
-  },
+module.exports = merge(common, {
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './static/index.html',
-      inject: 'body',
-    }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
@@ -42,28 +27,30 @@ module.exports = {
   ],
   module: {
     rules: [{
-      test: /\.jsx?$/,
-      exclude: /(node_modules|bower_components)/,
-      use: [{
-        loader: 'babel-loader',
-        options: {
-          presets: ['react', 'es2015'],
-          plugins: [require('babel-plugin-transform-object-rest-spread'),
-          ["import", { libraryName: "antd", style: "css" }]]
-        }
-      }]
-    },
-    {
-      test: /\.(png|jpg|jpeg|gif|svg)$/,
-      use: [{
-        loader: 'file-loader',
-        options: {}
-      }]
-    },
-    {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader']
-    }
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            presets: ['react', 'es2015'],
+            plugins: [require('babel-plugin-transform-object-rest-spread'), ["import", {
+              libraryName: "antd",
+              style: "css"
+            }]]
+          }
+        }]
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        use: [{
+          loader: 'file-loader',
+          options: {}
+        }]
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
     ]
   },
   resolve: {
@@ -87,4 +74,4 @@ module.exports = {
     }
   },
   devtool: 'cheap-module-eval-source-map',
-};
+});
