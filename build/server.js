@@ -16,9 +16,11 @@ require('babel-polyfill');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const app = (0, _express2.default)();
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 // import mongoose from './config/mongoose';
 
+
+const app = (0, _express2.default)();
 
 _mongoose2.default.Promise = global.Promise;
 _mongoose2.default.connect(_config2.default.db.uri, _config2.default.db.options).then(connection => {
