@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from "morgan";
-import compress from 'compression';
+import compression from 'compression';
 import path from 'path';
 
 import issue from '../routes/issue';
@@ -19,7 +19,7 @@ module.exports = function (db) {
         //use logger
         app.use(morgan('dev'));
     } else if (process.env.NODE_ENV === 'production') {
-        app.use(compress());
+        app.use(compression());
     }
 
     //add routes
