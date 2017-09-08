@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import morgan from "morgan"
+import morgan from "morgan";
+import compress from 'compression';
 import path from 'path';
 
 import issue from '../routes/issue';
