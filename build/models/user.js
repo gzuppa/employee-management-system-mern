@@ -1,44 +1,60 @@
-"use strict";
+'use strict';
 
-var bcrypt = require("bcrypt-nodejs");
-var mongoose = require("mongoose");
+var _mongoose = require('mongoose');
 
-const SALT_FACTOR = 10;
+var _mongoose2 = _interopRequireDefault(_mongoose);
 
-var userSchema = mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
+
+var Schema = _mongoose2.default.Schema;
+var userSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
   displayName: String,
   bio: String
+}, {
+  timestamps: true
 });
 
 var noop = function () {};
 
-userSchema.pre("save", function (done) {
+userSchema.pre("save", function (next) {
   var user = this;
 
   if (!user.isModified("password")) {
-    return done();
+    return next();
   }
 
-  bcrypt.genSalt(SALT_FACTOR, function (err, salt) {
+  bcrypt.genSalt(saltRounds, function (err, salt) {
     if (err) {
-      return done(err);
+      return next(err);
     }
-    bcrypt.hash(user.password, salt, noop, function (err, hashedPassword) {
+    bcrypt.hash(user.password, salt, function (err, hashedPassword) {
       if (err) {
-        return done(err);
+        return next(err);
       }
       user.password = hashedPassword;
-      done();
+      this.updatedAt = Date.now();
+      next();
     });
   });
 });
 
-userSchema.methods.checkPassword = function (guess, done) {
+userSchema.methods.checkPassword = function (guess, cb) {
   bcrypt.compare(guess, this.password, function (err, isMatch) {
-    done(err, isMatch);
+    cb(err, isMatch);
   });
 };
 
@@ -46,7 +62,6 @@ userSchema.methods.name = function () {
   return this.displayName || this.username;
 };
 
-var User = mongoose.model("User", userSchema);
-
+const User = _mongoose2.default.model("user", userSchema);
 module.exports = User;
 //# sourceMappingURL=user.js.map

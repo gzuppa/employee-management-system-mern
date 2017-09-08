@@ -16,10 +16,6 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _sourceMapSupport = require('source-map-support');
-
-var _sourceMapSupport2 = _interopRequireDefault(_sourceMapSupport);
-
 var _issue = require('../routes/issue');
 
 var _issue2 = _interopRequireDefault(_issue);
@@ -38,15 +34,17 @@ var _employee2 = _interopRequireDefault(_employee);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_sourceMapSupport2.default.install();
-
 module.exports = function (db) {
     const app = (0, _express2.default)();
     app.use(_express2.default.static('static'));
     app.use(_bodyParser2.default.json());
 
-    //use logger
-    app.use((0, _morgan2.default)("dev"));
+    if (process.env.NODE_ENV === 'development') {
+        //use logger
+        app.use((0, _morgan2.default)('dev'));
+    } else if (process.env.NODE_ENV === 'production') {
+        app.use(compress());
+    }
 
     //add routes
     // It has to be placed at the end of all routes
@@ -54,28 +52,6 @@ module.exports = function (db) {
     app.use('/api/issue', _issue2.default);
     app.use('/api/department', _department2.default);
     app.use('/api/employee', _employee2.default);
-
-    // if (process.env.NODE_ENV !== 'production') {
-    //     // import only support top level
-    //     const webpack = require('webpack');
-    //     const webpackDevMiddleware = require('webpack-dev-middleware');
-    //     const webpackHotMiddleware = require('webpack-hot-middleware');
-
-    //     const config = require('../../webpack.dev');
-    //     config.entry.app.push('webpack-hot-middleware/client', 'webpack/hot/only-dev-server');
-    //     config.plugins.push(new webpack.HotModuleReplacementPlugin());
-
-    //     const compiler = webpack(config);
-    //     app.use(webpackDevMiddleware(compiler, {
-    //         noInfo: true
-    //     }));
-    //     app.use(webpackHotMiddleware(compiler, {
-    //         log: console.log
-    //     }));
-
-    //     // console.log('Enable webpackDevMiddleware and webpackHotMiddleware');
-    // }
-
 
     return app;
 };
