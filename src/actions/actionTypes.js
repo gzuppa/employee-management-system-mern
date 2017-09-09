@@ -28,3 +28,12 @@ export const TURN_OFF_FILTER = 'TURN_OFF_FILTER';
 
 export const DOCKED_DRAWER = 'DOCKED_DRAWER';
 export const UNDOCKED_DRAWER = 'UNDOCKED_DRAWER';
+
+
+export const SIGN_IN = "SIGN_IN";
+export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
+export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
+
+export const SIGN_UP = "SIGN_UP";
+export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+export const SIGN_UP_ERROR = "SIGN_UP_ERROR";

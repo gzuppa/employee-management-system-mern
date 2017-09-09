@@ -14,7 +14,7 @@ module.exports = function (db) {
     app.use(express.static('static'));
     app.use(bodyParser.json());
 
-
+    console.log('process.env.NODE_ENV',process.env.NODE_ENV );
     if (process.env.NODE_ENV === 'development') {
         //use logger
         app.use(morgan('dev'));

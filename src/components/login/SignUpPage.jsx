@@ -11,13 +11,16 @@ import { config } from "./ParticleConfig";
 import { Card } from 'antd';
 
 
-import RegistrationForm from './forms/RegistrationForm.jsx';
+import SignUpForm from './forms/SignUpForm.jsx';
 
 import './Login.css';
 
-class RegisterPage extends React.Component {
+class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
+  }
+  signup() {
+
   }
   render() {
     return (
@@ -25,7 +28,7 @@ class RegisterPage extends React.Component {
         {/* <Particles params={config} /> */}
         <div className="login-form-wrapper">
           <Card title="Regitster" style={{width:"600px"}}>
-            <RegistrationForm />
+            <SignUpForm />
           </Card>
         </div>
       </div>
@@ -33,4 +36,4 @@ class RegisterPage extends React.Component {
   }
 }
 
-export default RegisterPage;
+export default SignUpPage;

@@ -10,7 +10,7 @@ const Option = Select.Option;
 
 
 
-class RegistrationForm extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,6 +18,11 @@ class RegistrationForm extends React.Component {
       confirmDirty: false,
       autoCompleteResult: [],
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleConfirmBlur = this.handleConfirmBlur.bind(this);
+    this.checkPassword = this.checkPassword.bind(this);
+    this.checkConfirm = this.checkConfirm.bind(this);
   }
 
   handleSubmit(e) {
@@ -26,6 +31,7 @@ class RegistrationForm extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values);
       }
+      else this.props.dispatch()
     });
   }
   handleConfirmBlur(e) {
@@ -46,16 +52,6 @@ class RegistrationForm extends React.Component {
       form.validateFields(['confirm'], { force: true });
     }
     callback();
-  }
-
-  handleWebsiteChange(value) {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-    }
-    this.setState({ autoCompleteResult });
   }
 
   render() {
@@ -162,7 +158,7 @@ class RegistrationForm extends React.Component {
               )}
           </FormItem>
 
-          <FormItem
+          {/* <FormItem
             {...formItemLayout}
             label="Phone Number"
           >
@@ -171,9 +167,9 @@ class RegistrationForm extends React.Component {
             })(
               <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
               )}
-          </FormItem>
+          </FormItem> */}
 
-          <FormItem
+          {/* <FormItem
             {...formItemLayout}
             label="Captcha"
             extra="We must make sure that your are a human."
@@ -190,7 +186,7 @@ class RegistrationForm extends React.Component {
                 <Button size="large">Get captcha</Button>
               </Col>
             </Row>
-          </FormItem>
+          </FormItem> */}
           <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
             Already have an account? <Link to="/login">Log in!</Link>
           </FormItem>
@@ -204,4 +200,4 @@ class RegistrationForm extends React.Component {
   }
 }
 
-export default Form.create()(RegistrationForm);
+export default connect()(Form.create()(SignUp));
