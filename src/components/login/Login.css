@@ -1,13 +1,17 @@
 .blend-gradient {
-  background: -webkit-radial-gradient(rgb(22, 135, 237), rgb(20, 55, 90));
-  background: radial-gradient(rgb(22, 135, 237), rgb(20, 55, 90));
+  /* background: -webkit-radial-gradient(rgb(22, 135, 237), rgb(20, 55, 90));
+  background: radial-gradient(rgb(22, 135, 237), rgb(20, 55, 90)); */
+  background: #485563;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
 }
 
 .wrapper {
   margin: 0 auto;
-  display: -ms-flexbox;
-  display: flex;
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
+  overflow-y: auto;
   padding: 0 16px;
 }
 
@@ -27,7 +31,9 @@
   height: 100%;
   width: 100%;
 }
-
+.login-form-wrapper .ant-card-head-title {
+  font-size: 20px;
+}
 .login-form {
   max-width: 350px;
   width: 100%;
@@ -36,7 +42,6 @@
 }
 
 .registration-form {
-  max-width: 450px;
   width: 100%;
   padding: 15px;
   background: white;

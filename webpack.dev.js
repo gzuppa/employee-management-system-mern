@@ -60,8 +60,6 @@ module.exports = merge(common, {
     hot: true,
     inline: true,
     open: true,
-    compress: true,
-    // host: "0.0.0.0",
     port: 8000,
     contentBase: path.join(__dirname, 'static'),
     proxy: {

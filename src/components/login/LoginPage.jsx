@@ -5,9 +5,9 @@ import { Link, Route, Switch } from 'react-router-dom';
 import classnames from 'classnames';
 import qs from 'query-string';
 import Particles from 'react-particles-js';
-import { config } from "./ParticleConfig";
+import { random } from "./ParticleConfig";
 
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Card } from 'antd';
 
 
 import LoginForm from './forms/LoginForm.jsx';
@@ -22,9 +22,11 @@ class LoginPage extends React.Component {
   render() {
     return (
       <div className={classnames("wrapper blend-gradient")}>
-        <Particles params={config} />
+        {/* <Particles params={random} /> */}
         <div className="login-form-wrapper">
-          <LoginForm />
+          <Card title="Login" >
+            <LoginForm />
+          </Card>
         </div>
       </div>
     );

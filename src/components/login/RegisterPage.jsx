@@ -8,7 +8,7 @@ import qs from 'query-string';
 import Particles from 'react-particles-js';
 import { config } from "./ParticleConfig";
 
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Card } from 'antd';
 
 
 import RegistrationForm from './forms/RegistrationForm.jsx';
@@ -22,9 +22,11 @@ class RegisterPage extends React.Component {
   render() {
     return (
       <div className={classnames("wrapper blend-gradient")}>
-        <Particles params={config} />
+        {/* <Particles params={config} /> */}
         <div className="login-form-wrapper">
-          <RegistrationForm />
+          <Card title="Regitster" style={{width:"600px"}}>
+            <RegistrationForm />
+          </Card>
         </div>
       </div>
     );

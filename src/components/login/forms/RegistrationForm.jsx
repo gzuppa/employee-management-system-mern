@@ -97,9 +97,6 @@ class RegistrationForm extends React.Component {
 
     return (
       <div className="registration-form">
-        <div className="registration-form-header">
-          <img src="/images/michael_icon.png"></img>
-        </div>
         <Form onSubmit={this.handleSubmit}>
           <FormItem
             {...formItemLayout}
@@ -195,15 +192,12 @@ class RegistrationForm extends React.Component {
             </Row>
           </FormItem>
           <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
-            {getFieldDecorator('agreement', {
-              valuePropName: 'checked',
-            })(
-              <Checkbox>I have read the <a href="">agreement</a></Checkbox>
-              )}
+            Already have an account? <Link to="/login">Log in!</Link>
           </FormItem>
           <FormItem {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">Register</Button>
           </FormItem>
+
         </Form>
       </div>
     );
