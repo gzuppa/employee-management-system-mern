@@ -163,3 +163,16 @@ exports.requiresLogin = function (req, res, next) {
     // Call the next middleware
     next();
 };
+exports.userByID = function(req, res, next, id) {
+    User.findOne({
+        _id: id
+    }, function(err, user) {
+        if (err) {
+            return next(err);
+        }
+        else {
+            req.user = user;
+            next();
+        }
+    });
+};

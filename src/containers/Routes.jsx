@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { Switch, Route } from 'react-router'
 import { Breadcrumb, Alert } from 'antd';
-import './Route.css';
 
 import LoginPage from '../components/login/LoginPage.jsx';
 import DashboardPage from '../components/dashboard/DashboardPage.jsx';
@@ -22,8 +21,6 @@ import SchedulePage from '../components/schedule/SchedulePage.jsx';
 
 
 const NoMatch = () => <p>Page Not Found</p>;
-
-
 const Routes = (props) => (
   <Switch>
     {/* <Redirect exact from="/" to="/dashboard" /> */}

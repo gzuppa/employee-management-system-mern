@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
 
+import { createUser } from '../../../actions/userActions';
+
+
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -30,8 +33,8 @@ class SignUp extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        this.props.dispatch(createUser(values));
       }
-      else this.props.dispatch()
     });
   }
   handleConfirmBlur(e) {
@@ -80,16 +83,14 @@ class SignUp extends React.Component {
         },
       },
     };
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '86',
-    })(
-      <Select style={{ width: 60 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-      );
-
-
+    // const prefixSelector = getFieldDecorator('prefix', {
+    //   initialValue: '86',
+    // })(
+    //   <Select style={{ width: 60 }}>
+    //     <Option value="86">+86</Option>
+    //     <Option value="87">+87</Option>
+    //   </Select>
+    //   );
 
     return (
       <div className="registration-form">
