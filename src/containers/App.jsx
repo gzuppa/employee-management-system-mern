@@ -10,7 +10,7 @@ import "./App.css";
 
 import SideMenu from "./SideMenu.jsx";
 import Header from "./Header.jsx";
-import Routes from "./Routes.jsx";
+import Routes from "../Routes/AppRoutes.jsx";
 
 
 const ItemRender = (route, params, routes, paths) => {

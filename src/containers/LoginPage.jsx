@@ -8,8 +8,8 @@ import Particles from 'react-particles-js';
 import { random } from "./ParticleConfig";
 
 
-import SignUpForm from './forms/SignUpForm.jsx';
-import LoginForm from './forms/LoginForm.jsx';
+import SignUpForm from '../components/login/forms/SignUpForm.jsx';
+import LoginForm from '../components/login/forms/LoginForm.jsx';
 
 import './Login.css';
 
