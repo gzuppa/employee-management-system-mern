@@ -6,6 +6,8 @@ import qs from 'query-string';
 import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
 const FormItem = Form.Item;
 
+import { signin } from '../../../actions/authActions';
+
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +16,7 @@ class LoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        this.props.dispatch(signin(values));
       }
     });
   }
@@ -61,4 +63,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default Form.create()(LoginForm);
+export default connect()(Form.create()(LoginForm));

@@ -23,11 +23,7 @@ class LoginPage extends React.Component {
       <div className={classnames("wrapper blend-gradient")}>
         {/* <Particles params={random} /> */}
         <div className="login-form-wrapper">
-          <Switch>
-            <Route exact path="/login" component={LoginForm} />
-            <Route exact path="/signup" component={SignUpForm} />
-          </Switch>
-          {/* <LoginForm /> */}
+          <LoginForm />
         </div>
       </div>
     );

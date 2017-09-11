@@ -1,5 +1,5 @@
 import * as types from './actionTypes'
-import userApi from '../api/userApi';
+import userApi from '../services/api/userApi';
 import queryString from 'query-string';
 import reduxStore from '../store/reduxStore';
 

@@ -2,7 +2,7 @@ import * as types from './actionTypes'
 import {
   addNotification
 } from './notificationActions'
-import departmentApi from '../api/departmentApi';
+import departmentApi from '../services/api/departmentApi';
 import queryString from 'query-string';
 
 

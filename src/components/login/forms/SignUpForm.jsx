@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
 
-import { createUser } from '../../../actions/userActions';
+import { signup } from '../../../actions/authActions';
 
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,Card } from 'antd';
 const FormItem = Form.Item;
@@ -32,7 +32,7 @@ class SignUp extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        this.props.dispatch(createUser(values));
+        this.props.dispatch(signup(values));
       }
     });
   }
@@ -82,14 +82,6 @@ class SignUp extends React.Component {
         },
       },
     };
-    // const prefixSelector = getFieldDecorator('prefix', {
-    //   initialValue: '86',
-    // })(
-    //   <Select style={{ width: 60 }}>
-    //     <Option value="86">+86</Option>
-    //     <Option value="87">+87</Option>
-    //   </Select>
-    //   );
 
     return (
       <Card title="Regitster" style={{ width: "600px" }}>
@@ -159,35 +151,6 @@ class SignUp extends React.Component {
                 )}
             </FormItem>
 
-            {/* <FormItem
-            {...formItemLayout}
-            label="Phone Number"
-          >
-            {getFieldDecorator('phone', {
-              rules: [{ required: true, message: 'Please input your phone number!' }],
-            })(
-              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-              )}
-          </FormItem> */}
-
-            {/* <FormItem
-            {...formItemLayout}
-            label="Captcha"
-            extra="We must make sure that your are a human."
-          >
-            <Row gutter={8}>
-              <Col span={12}>
-                {getFieldDecorator('captcha', {
-                  rules: [{ required: true, message: 'Please input the captcha you got!' }],
-                })(
-                  <Input size="large" />
-                  )}
-              </Col>
-              <Col span={12}>
-                <Button size="large">Get captcha</Button>
-              </Col>
-            </Row>
-          </FormItem> */}
             <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
               Already have an account? <Link to="/login">Log in!</Link>
             </FormItem>

@@ -25,9 +25,7 @@ class SignUpPage extends React.Component {
       <div className={classnames("wrapper blend-gradient")}>
         {/* <Particles params={config} /> */}
         <div className="login-form-wrapper">
-          
             <SignUpForm />
-         
         </div>
       </div>
     );

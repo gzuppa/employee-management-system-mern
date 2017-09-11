@@ -2,7 +2,7 @@ import * as types from './actionTypes'
 import {
   addNotification
 } from './notificationActions'
-import issueApi from '../api/IssuesApi';
+import issueApi from '../services/api/IssuesApi';
 import queryString from 'query-string';
 import reduxStore from '../store/reduxStore';
 
