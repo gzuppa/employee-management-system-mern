@@ -2,8 +2,11 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
+
+
 
 module.exports = merge(common, {
   plugins: [
@@ -22,26 +25,33 @@ module.exports = merge(common, {
       exclude: ['vendor.bundle.js']
     }),
     // webpack-dev-server enhancement plugins
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    }),
+    new DashboardPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         use: [{
           loader: 'babel-loader',
           options: {
             presets: ['react', 'es2015'],
-            plugins: [require('babel-plugin-transform-object-rest-spread'), ["import", {
-              libraryName: "antd",
-              style: "css"
-            }]]
+            plugins: [
+              require('babel-plugin-transform-object-rest-spread'),
+              ["import", {
+                libraryName: "antd",
+                style: "css"
+              }]]
           }
         }]
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        test: /\.(png|jpg|gif)$/,
         use: [{
           loader: 'file-loader',
           options: {}
@@ -54,7 +64,7 @@ module.exports = merge(common, {
     ]
   },
   resolve: {
-    modules: [path.resolve(__dirname, "src"), "node_modules"]
+    modules: [path.resolve(__dirname, "client"), "node_modules"]
   },
   devServer: {
     hot: true,
@@ -65,10 +75,9 @@ module.exports = merge(common, {
       '/api': 'http://localhost:8080'
     },
     historyApiFallback: true,
-    clientLogLevel: "none",
     watchOptions: {
       // poll: true
     }
   },
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-eval-source-map'
 });

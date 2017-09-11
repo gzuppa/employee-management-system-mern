@@ -13,6 +13,7 @@ module.exports = {
 		options: {
 			useMongoClient: true
 		}
-	}
+	},
+	sessionSecret: 'developmentSessionSecret'
 };
 //# sourceMappingURL=development.js.map

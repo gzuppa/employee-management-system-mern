@@ -56,6 +56,6 @@ module.exports = merge(common, {
     ]
   },
   resolve: {
-    modules: [path.resolve(__dirname, "src"), "node_modules"]
+    modules: [path.resolve(__dirname, "client"), "node_modules"]
   }
 });

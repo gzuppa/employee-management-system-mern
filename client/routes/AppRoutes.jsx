@@ -3,7 +3,6 @@ import { Redirect, Link } from 'react-router-dom';
 import { Switch, Route } from 'react-router'
 import { Breadcrumb, Alert } from 'antd';
 
-import LoginPage from '../components/login/LoginPage.jsx';
 import DashboardPage from '../components/dashboard/DashboardPage.jsx';
 // import IssueList from './IssueList.jsx';
 // import DeparmentPage from '../components/department/DepartmentPage.jsx';

@@ -22,7 +22,7 @@ var userSchema = new Schema({
     type: String,
     required: true
   },
-  displayName: String,
+  nikename: String,
   bio: String
 }, {
   timestamps: true

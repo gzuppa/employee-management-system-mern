@@ -9,7 +9,7 @@ import Particles from 'react-particles-js';
 import { config } from "./ParticleConfig";
 
 
-import SignUpForm from './forms/SignUpForm.jsx';
+import SignUpForm from '../components/login/forms/SignUpForm.jsx';
 
 import './Login.css';
 
