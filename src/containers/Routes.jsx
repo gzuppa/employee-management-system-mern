@@ -31,7 +31,7 @@ const Routes = (props) => (
 
     <Route exact path="/schedule" component={SchedulePage} />
 
-    <Route component={NoMatch} />
+    <Route path="*" component={NoMatch} />
   </Switch>
 )
 export default Routes;

@@ -6,8 +6,7 @@ import qs from 'query-string';
 
 import { createUser } from '../../../actions/userActions';
 
-
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,Card } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -93,73 +92,74 @@ class SignUp extends React.Component {
     //   );
 
     return (
-      <div className="registration-form">
-        <Form onSubmit={this.handleSubmit}>
-          <FormItem
-            {...formItemLayout}
-            label="E-mail"
-            hasFeedback
-          >
-            {getFieldDecorator('email', {
-              rules: [{
-                type: 'email', message: 'The input is not valid E-mail!',
-              }, {
-                required: true, message: 'Please input your E-mail!',
-              }],
-            })(
-              <Input />
-              )}
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="Password"
-            hasFeedback
-          >
-            {getFieldDecorator('password', {
-              rules: [{
-                required: true, message: 'Please input your password!',
-              }, {
-                validator: this.checkConfirm,
-              }],
-            })(
-              <Input type="password" />
-              )}
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="Confirm Password"
-            hasFeedback
-          >
-            {getFieldDecorator('confirm', {
-              rules: [{
-                required: true, message: 'Please confirm your password!',
-              }, {
-                validator: this.checkPassword,
-              }],
-            })(
-              <Input type="password" onBlur={this.handleConfirmBlur} />
-              )}
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={(
-              <span>
-                Nickname&nbsp;
+      <Card title="Regitster" style={{ width: "600px" }}>
+        <div className="registration-form">
+          <Form onSubmit={this.handleSubmit}>
+            <FormItem
+              {...formItemLayout}
+              label="E-mail"
+              hasFeedback
+            >
+              {getFieldDecorator('email', {
+                rules: [{
+                  type: 'email', message: 'The input is not valid E-mail!',
+                }, {
+                  required: true, message: 'Please input your E-mail!',
+                }],
+              })(
+                <Input />
+                )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="Password"
+              hasFeedback
+            >
+              {getFieldDecorator('password', {
+                rules: [{
+                  required: true, message: 'Please input your password!',
+                }, {
+                  validator: this.checkConfirm,
+                }],
+              })(
+                <Input type="password" />
+                )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="Confirm Password"
+              hasFeedback
+            >
+              {getFieldDecorator('confirm', {
+                rules: [{
+                  required: true, message: 'Please confirm your password!',
+                }, {
+                  validator: this.checkPassword,
+                }],
+              })(
+                <Input type="password" onBlur={this.handleConfirmBlur} />
+                )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label={(
+                <span>
+                  Nickname&nbsp;
               <Tooltip title="What do you want other to call you?">
-                  <Icon type="question-circle-o" />
-                </Tooltip>
-              </span>
-            )}
-            hasFeedback
-          >
-            {getFieldDecorator('nickname', {
-              rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
-            })(
-              <Input />
+                    <Icon type="question-circle-o" />
+                  </Tooltip>
+                </span>
               )}
-          </FormItem>
+              hasFeedback
+            >
+              {getFieldDecorator('nickname', {
+                rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+              })(
+                <Input />
+                )}
+            </FormItem>
 
-          {/* <FormItem
+            {/* <FormItem
             {...formItemLayout}
             label="Phone Number"
           >
@@ -170,7 +170,7 @@ class SignUp extends React.Component {
               )}
           </FormItem> */}
 
-          {/* <FormItem
+            {/* <FormItem
             {...formItemLayout}
             label="Captcha"
             extra="We must make sure that your are a human."
@@ -188,15 +188,16 @@ class SignUp extends React.Component {
               </Col>
             </Row>
           </FormItem> */}
-          <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
-            Already have an account? <Link to="/login">Log in!</Link>
-          </FormItem>
-          <FormItem {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">Register</Button>
-          </FormItem>
+            <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+              Already have an account? <Link to="/login">Log in!</Link>
+            </FormItem>
+            <FormItem {...tailFormItemLayout}>
+              <Button type="primary" htmlType="submit">Register</Button>
+            </FormItem>
 
-        </Form>
-      </div>
+          </Form>
+        </div>
+      </Card>
     );
   }
 }

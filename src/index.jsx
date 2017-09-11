@@ -45,8 +45,8 @@ render(
         className="switch-wrapper"
       >
         <PrivateRoute exact path="/" component={App} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/signup" component={SignUpPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/signup" component={SignUpPage} />
       </AnimatedSwitch>
     </Router>
   </Provider>,

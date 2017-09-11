@@ -3,7 +3,7 @@
 
 // Load the module dependencies
 var passport = require('passport');
-var	mongoose = require('mongoose');
+import User from "../models/user";
 
 // Define the Passport configuration method
 module.exports = function() {

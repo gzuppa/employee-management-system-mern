@@ -7,9 +7,8 @@ import qs from 'query-string';
 import Particles from 'react-particles-js';
 import { random } from "./ParticleConfig";
 
-import { Card } from 'antd';
 
-
+import SignUpForm from './forms/SignUpForm.jsx';
 import LoginForm from './forms/LoginForm.jsx';
 
 import './Login.css';
@@ -24,9 +23,11 @@ class LoginPage extends React.Component {
       <div className={classnames("wrapper blend-gradient")}>
         {/* <Particles params={random} /> */}
         <div className="login-form-wrapper">
-          <Card title="Login" >
-            <LoginForm />
-          </Card>
+          <Switch>
+            <Route exact path="/login" component={LoginForm} />
+            <Route exact path="/signup" component={SignUpForm} />
+          </Switch>
+          {/* <LoginForm /> */}
         </div>
       </div>
     );

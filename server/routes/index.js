@@ -10,14 +10,10 @@ router.get('/', (req, res) => {
 });
 
 
-router.route('/signup')
-  .get(user.renderSignup)
-  .post(user.signup);
+router.route('/signup').post(user.signup);
 
 // Set up the 'signin' routes
-router.route('/signin')
-  .get(user.renderSignin)
-  .post(passport.authenticate('local', {
+router.route('/signin').post(passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/signin',
     failureFlash: true
