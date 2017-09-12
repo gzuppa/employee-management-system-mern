@@ -14,4 +14,5 @@ module.exports = {
 		}
 	},
 	sessionSecret: 'developmentSessionSecret',
+	jwtSecret: "a secret phrase!!"
 };

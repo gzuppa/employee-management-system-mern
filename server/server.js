@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
+// import cookieParser from 'cookie-parser';
+// import session from 'express-session';
 import morgan from "morgan";
 import compression from 'compression';
 import mongoose from "mongoose";
@@ -16,9 +16,13 @@ initPassport();
 const app = express();
 app.use(express.static('static'));
 app.use(bodyParser.json());
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
+
+// pass the authorization checker middleware
+const authCheckMiddleware = require('./middleware/auth-check');
+app.use('/api', authCheckMiddleware);
 
 app.use(morgan('dev'));
 if (process.env.NODE_ENV === 'development') {
@@ -39,15 +43,15 @@ mongoose.connect(config.db.uri, config.db.options).then(connection => {
 });;
 
 
-const MongoStore = require('connect-mongo')(session);
-app.use(session({
-    saveUninitialized: true,
-    resave: true,
-    secret: config.sessionSecret,
-    store: new MongoStore({
-        mongooseConnection: mongoose.connection
-    })
-}));
+// const MongoStore = require('connect-mongo')(session);
+// app.use(session({
+//     saveUninitialized: true,
+//     resave: true,
+//     secret: config.sessionSecret,
+//     store: new MongoStore({
+//         mongooseConnection: mongoose.connection
+//     })
+// }));
 
 //add routes
 import index from './routes/index';

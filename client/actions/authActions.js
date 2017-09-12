@@ -51,4 +51,32 @@ export const signin = (user, history) => {
       });
     });
   }
-}
+};
+
+export const signup = (user, history) => {
+  return dispatch => {
+    dispatch(authRequest());
+
+    auth.signup(user).then(response => {
+      if (!response.ok) {
+        return response.json().then(error => {
+          notification.error({
+            message: error.message
+          });
+        });
+      }
+      response.json().then(user => {
+        dispatch(signupSuccess(user, history));
+        notification.success({
+          message: 'Sign Up successfully'
+        });
+      })
+    }).catch(error => {
+      const errorMsg = `Error in sending data to server: ${error.message}`;
+      // dispatch(authRequestError(errorMsg))
+      notification.error({
+        message: errorMsg
+      });
+    });
+  }
+};

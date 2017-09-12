@@ -73,7 +73,7 @@ exports.signin = function (req, res, next) {
                 message: 'user not found'
             });
         }
-        console.log('authenticate',err );
+        console.log('authenticate', err);
         req.logIn(user, function (err) {
             if (err) {
                 return next(err);
@@ -84,6 +84,7 @@ exports.signin = function (req, res, next) {
 }
 // Create a new controller method that creates new 'regular' users
 exports.signup = function (req, res, next) {
+
     // If user is not connected, create and login a new user, otherwise redirect the user back to the main application page
     if (!req.user) {
         // Create a new 'User' model instance
@@ -100,11 +101,9 @@ exports.signup = function (req, res, next) {
                 // Use the error handling method to get the error message
                 var message = getErrorMessage(err);
 
-                // Set the flash messages
-                // req.flash('error', message);
-
-                // Redirect the user back to the signup page
-                return res.redirect('/signup');
+                return res.status(400).json({
+                    message: message
+                });
             }
 
             // If the user was created successfully use the Passport 'login' method to login
@@ -112,8 +111,9 @@ exports.signup = function (req, res, next) {
                 // If a login error occurs move to the next middleware
                 if (err) return next(err);
 
-                // Redirect the user back to the main application page
-                return res.redirect('/');
+                return res.status(200).json({
+                    message: "User was created successfully"
+                });
             });
         });
     } else {

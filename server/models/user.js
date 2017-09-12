@@ -7,7 +7,7 @@ const someOtherPlaintextPassword = 'not_bacon';
 
 var Schema = mongoose.Schema;
 var userSchema = new Schema({
-  username: {
+  email: {
     type: String,
     required: true,
     unique: true

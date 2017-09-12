@@ -6,25 +6,30 @@ class auth {
   }
 
   static signin(user) {
-    const headers = this.requestHeaders();
+    const headers = Object.assign({
+      'Content-Type': 'application/json'
+    }, this.requestHeaders());
     const request = new Request(`/api/user/signin`, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(user)
     });
 
-    console.log('signin', user);
     return fetch(request);
   }
 
   static signup(newUser) {
-    const headers = this.requestHeaders();
+    const headers = Object.assign({
+      'Content-Type': 'application/json'
+    }, this.requestHeaders());
     const request = new Request(`/api/user/signup`, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(newUser)
     });
 
+
+    console.log('signup', newUser);
     return fetch(request);
   }
 

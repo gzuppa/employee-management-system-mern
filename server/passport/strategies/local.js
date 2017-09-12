@@ -9,7 +9,12 @@ import User from "../../models/user";
 // Create the Local strategy configuration method
 module.exports = function () {
 	// Use the Passport's Local strategy 
-	passport.use(new LocalStrategy(function (username, password, done) {
+	passport.use(new LocalStrategy({
+		usernameField: 'email',
+		passwordField: 'password',
+		session: false,
+		passReqToCallback: true
+	}, function (username, password, done) {
 		// Use the 'User' model 'findOne' method to find a user with the current username
 		User.findOne({
 			username: username
