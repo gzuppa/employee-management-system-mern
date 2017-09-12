@@ -3,7 +3,9 @@
 
 // Load the module dependencies
 import User from "../models/user";
-var passport = require('passport');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 // Create a new error handling controller method
 var getErrorMessage = function (err) {
@@ -32,37 +34,6 @@ var getErrorMessage = function (err) {
     // Return the message error
     return message;
 };
-// Create a new controller method that renders the signin page
-exports.renderSignin = function (req, res, next) {
-    // If user is not connected render the signin page, otherwise redirect the user back to the main application page
-    if (!req.user) {
-        // Use the 'response' object to render the signin page
-        // res.render('signin', {
-        // 	// Set the page title variable
-        // 	title: 'Sign-in Form',
-        // 	// Set the flash message variable
-        // 	messages: req.flash('error') || req.flash('info')
-        // });
-    } else {
-        return res.redirect('/');
-    }
-};
-
-// Create a new controller method that renders the signup page
-exports.renderSignup = function (req, res, next) {
-    // If user is not connected render the signup page, otherwise redirect the user back to the main application page
-    if (!req.user) {
-        // Use the 'response' object to render the signup page
-        // res.render('signup', {
-        // 	// Set the page title variable
-        // 	title: 'Sign-up Form',
-        // 	// Set the flash message variable
-        // 	messages: req.flash('error')
-        // });
-    } else {
-        return res.redirect('/');
-    }
-};
 exports.signin = function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
         if (err) {
@@ -73,12 +44,27 @@ exports.signin = function (req, res, next) {
                 message: 'user not found'
             });
         }
-        console.log('authenticate', err);
+
+        const payload = {
+            sub: user._id
+        };
+
+        // create a token string
+        const token = jwt.sign(payload, config.jwtSecret);
+        const data = {
+            name: user.name
+        };
+
         req.logIn(user, function (err) {
             if (err) {
                 return next(err);
             }
-            return res.redirect('/users/' + user.username);
+            return res.json({
+                success: true,
+                message: 'You have successfully logged in!',
+                token,
+                user: data
+            });
         });
     })(req, res, next);
 }

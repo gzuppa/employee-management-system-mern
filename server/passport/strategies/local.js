@@ -2,18 +2,16 @@
 'use strict';
 
 // Load the module dependencies
-var passport = require('passport'),
-	LocalStrategy = require('passport-local').Strategy;
-import User from "../../models/user";
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const User = require("../../models/user");
 
 // Create the Local strategy configuration method
 module.exports = function () {
 	// Use the Passport's Local strategy 
 	passport.use(new LocalStrategy({
 		usernameField: 'email',
-		passwordField: 'password',
-		session: false,
-		passReqToCallback: true
+		passwordField: 'password'
 	}, function (username, password, done) {
 		// Use the 'User' model 'findOne' method to find a user with the current username
 		User.findOne({
