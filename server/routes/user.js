@@ -2,25 +2,14 @@ var express = require('express');
 var fs = require("fs");
 var path = require('path');
 var userController = require('../controllers/user');
-var passport = require('passport');
+
 var router = express.Router();
 
 
-router.post('/signup', userController.signup);
 // Set up the 'signin' routes
-router.post('/signin', passport.authenticate('local', {
-  successRedirect: '/successjson',
-  failureRedirect: '/failurejson'
-}));
-// Set up the 'signout' route
-router.get('/signout', userController.signout);
-router.get('/successjson', function(req, res) {
-  res.sendfile('public/index.htm');
-});
+router.post('/signin', userController.signin);
 
-router.get('/failurejson', function(req, res) {
-  res.json({ message: 'hello' });
-});
+router.post('/signup', userController.signup);
 
 /* GET userController listing. */
 router.get('/', function (req, res, next) {

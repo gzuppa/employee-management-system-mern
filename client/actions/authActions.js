@@ -32,15 +32,12 @@ export const signin = (user, history) => {
     auth.signin(user).then(response => {
       if (!response.ok) {
         return response.json().then(error => {
-          dispatch(authRequestError(errorMsg))
           notification.error({
-            message: errorMsg
+            message: error.message
           });
         });
       }
-      console.log(response);
       response.json().then(user => {
-        user = convertedUser(user);
         dispatch(signinSuccess(user, history));
         notification.success({
           message: 'Sign In successfully'

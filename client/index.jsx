@@ -39,19 +39,19 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 render(
   <Provider store={reduxStore}>
     <Router>
-      {/* <AnimatedSwitch
+      <AnimatedSwitch
         atEnter={{ opacity: 0 }}
         atLeave={{ opacity: 0 }}
         atActive={{ opacity: 1 }}
         className="switch-wrapper"
-      > */}
+      >
 
-      <Switch>
-        {/* <PrivateRoute path="/" component={App} /> */}
+      {/* <Switch> */}
+        <PrivateRoute exact path="/" component={App} />
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignUpPage} />
-      </Switch>
-      {/* </AnimatedSwitch> */}
+      {/* </Switch> */}
+      </AnimatedSwitch>
     </Router>
   </Provider>,
   document.getElementById('contents')
