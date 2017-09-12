@@ -7,8 +7,6 @@ import User from "../models/user";
 
 // Define the Passport configuration method
 module.exports = function() {
-	// Load the 'User' model
-	var User = mongoose.model('User');
 
 	// Use Passport's 'serializeUser' method to serialize the user id
 	passport.serializeUser(function(user, done) {
@@ -26,7 +24,7 @@ module.exports = function() {
 
 	// Load Passport's strategies configuration files
 	require('./strategies/local.js')();
-	require('./strategies/twitter.js')();
-	require('./strategies/facebook.js')();
-	require('./strategies/google.js')();
+	// require('./strategies/twitter.js')();
+	// require('./strategies/facebook.js')();
+	// require('./strategies/google.js')();
 };

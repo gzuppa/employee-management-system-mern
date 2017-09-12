@@ -7,7 +7,7 @@ import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
 const FormItem = Form.Item;
 
 import { signin } from '../../../actions/authActions';
-// import img from './michael_icon.png';
+
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -27,9 +27,9 @@ class LoginForm extends React.Component {
       <div>
         <Card title="Login" >
           <div className="login-form">
-            {/* <div className="login-form-header">
+            <div className="login-form-header">
               <img src="/images/michael_icon.png"></img>
-            </div> */}
+            </div>
             <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
               <FormItem>
                 {getFieldDecorator('username', {

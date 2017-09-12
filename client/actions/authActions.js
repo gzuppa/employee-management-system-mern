@@ -38,16 +38,17 @@ export const signin = (user, history) => {
           });
         });
       }
+      console.log(response);
       response.json().then(user => {
         user = convertedUser(user);
         dispatch(signinSuccess(user, history));
         notification.success({
-          message: 'Create user successfully'
+          message: 'Sign In successfully'
         });
       })
     }).catch(error => {
       const errorMsg = `Error in sending data to server: ${error.message}`;
-      dispatch(authRequestError(errorMsg))
+      // dispatch(authRequestError(errorMsg))
       notification.error({
         message: errorMsg
       });

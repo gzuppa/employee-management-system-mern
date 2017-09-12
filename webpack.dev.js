@@ -33,8 +33,7 @@ module.exports = merge(common, {
     new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         use: [{
@@ -42,20 +41,20 @@ module.exports = merge(common, {
           options: {
             presets: ['react', 'es2015'],
             plugins: [
-              require('babel-plugin-transform-object-rest-spread'),
-              ["import", {
+              require('babel-plugin-transform-object-rest-spread'), ["import", {
                 libraryName: "antd",
                 style: "css"
-              }]]
+              }]
+            ]
           }
         }]
       },
       {
-        test: /\.(png|jpg|gif)$/,
-        use: [{
-          loader: 'file-loader',
-          options: {}
-        }]
+        test: /\.(jpg|png|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]'
+        }
       },
       {
         test: /\.css$/,

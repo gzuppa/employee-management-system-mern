@@ -6,12 +6,13 @@ import morgan from "morgan";
 import compression from 'compression';
 import mongoose from "mongoose";
 import passport from "passport";
+import initPassport from "./passport";
 import config from './config';
 import path from "path";
 import 'babel-polyfill';
 
 
-
+initPassport();
 const app = express();
 app.use(express.static('static'));
 app.use(bodyParser.json());

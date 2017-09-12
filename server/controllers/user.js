@@ -32,8 +32,37 @@ var getErrorMessage = function (err) {
     // Return the message error
     return message;
 };
+// Create a new controller method that renders the signin page
+exports.renderSignin = function(req, res, next) {
+	// If user is not connected render the signin page, otherwise redirect the user back to the main application page
+	if (!req.user) {
+		// Use the 'response' object to render the signin page
+		// res.render('signin', {
+		// 	// Set the page title variable
+		// 	title: 'Sign-in Form',
+		// 	// Set the flash message variable
+		// 	messages: req.flash('error') || req.flash('info')
+		// });
+	} else {
+		return res.redirect('/');
+	}
+};
 
-
+// Create a new controller method that renders the signup page
+exports.renderSignup = function(req, res, next) {
+	// If user is not connected render the signup page, otherwise redirect the user back to the main application page
+	if (!req.user) {
+		// Use the 'response' object to render the signup page
+		// res.render('signup', {
+		// 	// Set the page title variable
+		// 	title: 'Sign-up Form',
+		// 	// Set the flash message variable
+		// 	messages: req.flash('error')
+		// });
+	} else {
+		return res.redirect('/');
+	}
+};
 // Create a new controller method that creates new 'regular' users
 exports.signup = function (req, res, next) {
     // If user is not connected, create and login a new user, otherwise redirect the user back to the main application page
@@ -53,7 +82,7 @@ exports.signup = function (req, res, next) {
                 var message = getErrorMessage(err);
 
                 // Set the flash messages
-                req.flash('error', message);
+                // req.flash('error', message);
 
                 // Redirect the user back to the signup page
                 return res.redirect('/signup');
