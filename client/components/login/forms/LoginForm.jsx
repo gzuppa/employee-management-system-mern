@@ -8,7 +8,6 @@ const FormItem = Form.Item;
 
 import { signin } from '../../../actions/authActions';
 
-
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
