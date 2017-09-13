@@ -1,15 +1,8 @@
 var express = require('express');
-var fs = require("fs");
-var path = require('path');
-var userController = require('../controllers/user');
-
 var router = express.Router();
 
+var userController = require('../controllers/user');
 
-// Set up the 'signin' routes
-router.post('/signin', userController.signin);
-
-router.post('/signup', userController.signup);
 
 /* GET userController listing. */
 router.get('/', function (req, res, next) {

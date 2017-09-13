@@ -45,7 +45,6 @@ export const signin = (user, history) => {
       })
     }).catch(error => {
       const errorMsg = `Error in sending data to server: ${error.message}`;
-      // dispatch(authRequestError(errorMsg))
       notification.error({
         message: errorMsg
       });

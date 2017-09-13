@@ -9,8 +9,9 @@ class auth {
     const headers = Object.assign({
       'Content-Type': 'application/json'
     }, this.requestHeaders());
-    const request = new Request(`/api/user/signin`, {
+    const request = new Request(`http://localhost:8080/auth/signin`, {
       method: 'POST',
+      mode: 'cors',
       headers: headers,
       body: JSON.stringify(user)
     });
@@ -22,8 +23,9 @@ class auth {
     const headers = Object.assign({
       'Content-Type': 'application/json'
     }, this.requestHeaders());
-    const request = new Request(`/api/user/signup`, {
+    const request = new Request(`http://localhost:8080/auth/signup`, {
       method: 'POST',
+      mode: 'cors',
       headers: headers,
       body: JSON.stringify(newUser)
     });
@@ -37,8 +39,9 @@ class auth {
     const headers = Object.assign({
       'Content-Type': 'application/json'
     }, this.requestHeaders());
-    const request = new Request(`/api/user/signout`, {
+    const request = new Request(`http://localhost:8080/auth/signout`, {
       method: 'POST',
+      mode: 'cors',
       headers: headers
     });
 

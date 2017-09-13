@@ -20,9 +20,9 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 // app.use(passport.session());
 
-// pass the authorization checker middleware
-const authCheckMiddleware = require('./middleware/auth-check');
-app.use('/api', authCheckMiddleware);
+// enable server cors mode
+const cors = require('./middleware/cors');
+app.use(cors);
 
 app.use(morgan('dev'));
 if (process.env.NODE_ENV === 'development') {
@@ -40,7 +40,7 @@ mongoose.connect(config.db.uri, config.db.options).then(connection => {
     });
 }).catch(error => {
     console.log('ERROR:', error);
-});;
+});
 
 
 // const MongoStore = require('connect-mongo')(session);
@@ -53,14 +53,17 @@ mongoose.connect(config.db.uri, config.db.options).then(connection => {
 //     })
 // }));
 
-//add routes
-import index from './routes/index';
+const auth = require('./routes/auth');
+app.use('/auth', auth);
+
+
 import user from './routes/user';
 import department from './routes/department';
 import employee from './routes/employee';
 
-// It has to be placed at the end of all routes
-app.get('/', index);
+// pass the authorization checker middleware
+const authCheckMiddleware = require('./middleware/auth-check');
+app.use('/api', authCheckMiddleware);
 app.use('/api/user', user);
 app.use('/api/department', department);
 app.use('/api/employee', employee);

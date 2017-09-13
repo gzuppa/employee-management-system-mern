@@ -11,12 +11,11 @@ module.exports = function () {
 	// Use the Passport's Local strategy 
 	passport.use(new LocalStrategy({
 		usernameField: 'email',
-		passwordField: 'password'
-	}, function (username, password, done) {
+		passwordField: 'password',
+		session: false,
+	}, function (email, password, done) {
 		// Use the 'User' model 'findOne' method to find a user with the current username
-		User.findOne({
-			username: username
-		}, function (err, user) {
+		User.findOne({email: email}, (err, user) => {
 			// If an error occurs continue to the next middleware
 			if (err) {
 				return done(err);

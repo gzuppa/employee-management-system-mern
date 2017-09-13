@@ -32,10 +32,10 @@ class LoginForm extends React.Component {
             </div>
             <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
               <FormItem>
-                {getFieldDecorator('username', {
-                  rules: [{ required: true, message: 'Please input your username!' }],
+                {getFieldDecorator('email', {
+                  rules: [{ required: true, message: 'Please input your email!' }],
                 })(
-                  <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />
+                  <Input prefix={<Icon type="mail" style={{ fontSize: 13 }} />} placeholder="Email" />
                   )}
               </FormItem>
               <FormItem>
