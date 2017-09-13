@@ -16,18 +16,20 @@ import './Login.css';
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
   }
   render() {
     return (
       <div className={classnames("wrapper blend-gradient")}>
         {/* <Particles params={random} /> */}
         <div className="login-form-wrapper">
-          <LoginForm />
+          <LoginForm history={this.props.history}/>
         </div>
       </div>
     );
   }
+}
+LoginPage.prototypes = {
+  history: PropTypes.object.isRequired,
 }
 
 export default LoginPage;

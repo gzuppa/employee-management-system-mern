@@ -16,7 +16,7 @@ class LoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.dispatch(signin(values));
+        this.props.dispatch(signin(values,this.props.history));
       }
     });
   }
@@ -63,6 +63,9 @@ class LoginForm extends React.Component {
       </div>
     );
   }
+}
+LoginForm.prototypes = {
+  history: PropTypes.object.isRequired,
 }
 
 export default connect()(Form.create()(LoginForm));

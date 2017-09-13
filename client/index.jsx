@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import reduxStore from './store/reduxStore';
 
 import "./index.css";
+import Auth from './modules/Auth';
 // import Routes from "./Routes/IndexRoutes.jsx";
 import { AnimatedSwitch } from 'react-router-transition';
 
@@ -12,21 +13,10 @@ import App from './containers/App.jsx'
 import LoginPage from "./containers/LoginPage.jsx";
 import SignUpPage from "./containers/SignUpPage.jsx";
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true
-    setTimeout(cb, 100) // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false
-    setTimeout(cb, 100)
-  }
-}
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    fakeAuth.isAuthenticated ? (
+    Auth.isUserAuthenticated() ? (
       <Component {...props} />
     ) : (
         <Redirect to={{
@@ -47,7 +37,7 @@ render(
       >
 
       {/* <Switch> */}
-        <PrivateRoute exact path="/" component={App} />
+        <PrivateRoute path="/" component={App} />
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignUpPage} />
       {/* </Switch> */}
