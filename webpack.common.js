@@ -12,14 +12,13 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, "static/dist"),
+    path: path.resolve(__dirname, "static"),
     // filename: "[name].js"
     // chunkFilename: '[name].bundle.js',
     filename: '[name].bundle.js',
     sourceMapFilename: '[name].js.map',
   },
   plugins: [
-    new CleanWebpackPlugin(["static/dist"]),
     new HtmlWebpackPlugin({
       template: './static/index.html',
       inject: 'body',
