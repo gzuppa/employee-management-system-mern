@@ -1,16 +1,13 @@
 import mongoose from "mongoose";
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
 
 
 var Schema = mongoose.Schema;
 var userSchema = new Schema({
   email: {
     type: String,
-    required: true,
-    unique: true
+    index: { unique: true }
   },
   password: {
     type: String,
@@ -22,7 +19,6 @@ var userSchema = new Schema({
   timestamps: true
 });
 
-var noop = function () {};
 
 userSchema.pre("save", function (next) {
   var user = this;

@@ -5,40 +5,57 @@ import { connect } from 'react-redux';
 
 import { Layout, Menu, Icon, Badge } from 'antd';
 const { Header, Sider, Content } = Layout;
-
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
+import AuthStore from "../store/auth";
+
 import "./Header.css";
 
-const AdminMenu = (props) => {
-  return (
-    <Menu
-      mode="horizontal"
-      defaultSelectedKeys={['2']}
-      className="header-item"
-    >
-      <Menu.Item key="mail">
-        <Badge count={5}>
-          <Icon type="mail" />
-        </Badge>
-      </Menu.Item>
-      <Menu.Item key="user">
-        <Icon type="user" />{"guest"}
-      </Menu.Item>
-
-    </Menu>
-  );
+class AdminMenu extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <Menu
+        mode="horizontal"
+        defaultSelectedKeys={['2']}
+        className="header-item"
+        onClick={this.props.handleClick}
+      >
+        <Menu.Item key="mail">
+          <Badge count={5}>
+            <Icon type="mail" />
+          </Badge>
+        </Menu.Item>
+        <SubMenu title={<span><Icon type="user" />{"guest"}</span>}>
+          <Menu.Item key="logout">
+            {"Logout"}
+          </Menu.Item>
+        </SubMenu>
+      </Menu>
+    );
+  }
 }
-
+AdminMenu.prototypes = {
+  history: PropTypes.object.isRequired,
+}
 
 
 class AppHeader extends React.Component {
 
   constructor(props) {
     super(props);
-  }
+    this.handleClick = this.handleClick.bind(this);
 
+  }
+  handleClick() {
+    AuthStore.deauthenticateUser();
+    this.props.history.replace({
+      pathname: `/`
+    })
+  }
   render() {
     return (
       <Header style={{ background: '#fff', padding: 0 }}>
@@ -48,25 +65,16 @@ class AppHeader extends React.Component {
           onClick={this.props.toggleMenu}
         />
         <span className="header-title">{"Employee Management"}</span>
-        <AdminMenu />
+        <AdminMenu handleClick={this.handleClick} />
       </Header>
     );
   }
 }
 
-
 AppHeader.prototypes = {
   toggleMenu: PropTypes.func.isRequired,
   collapsed: PropTypes.bool.isRequired,
-  isDocked: PropTypes.bool.isRequired,
-  adjustWidth: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
 }
-const mapStateToProps = (state, ownProps) => {
-  const interfaceState = state.interfaceState;
-  return {
-    adjustWidth: interfaceState.adjustWidth,
-    isDocked: interfaceState.isDocked,
-  }
-};
 
-export default withRouter(connect(mapStateToProps)(AppHeader));
+export default withRouter(AppHeader);

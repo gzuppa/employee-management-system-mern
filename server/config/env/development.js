@@ -12,7 +12,5 @@ module.exports = {
 		options: {
 			useMongoClient: true
 		}
-	},
-	sessionSecret: 'developmentSessionSecret',
-	jwtSecret: "a secret phrase!!"
+	}
 };

@@ -17,15 +17,13 @@ class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
   }
-  signup() {
 
-  }
   render() {
     return (
       <div className={classnames("wrapper blend-gradient")}>
         {/* <Particles params={config} /> */}
         <div className="login-form-wrapper">
-            <SignUpForm />
+            <SignUpForm history={this.props.history}/>
         </div>
       </div>
     );

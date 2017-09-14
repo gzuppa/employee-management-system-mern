@@ -81,59 +81,30 @@ exports.employee_list = function (req, res) {
           search(req, res, filter);
         });
     } else search(req, res, filter);
-    // search(req, res, filter);
-    // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
-    // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
-
-    // console.log('offset', offset);
-    // console.log('limit', limit);
-    // console.log('filter', filter);
-
-    // if (limit > 50) limit = 50;
-    // const cursor = Employee.find(filter).sort({
-    //   createdAt: -1
-    // }).skip(offset).limit(limit);
-
-    // // ensures that the effects of skip() and limit() will be ignored
-    // cursor.exec().then(emploees => {
-    //   Employee.count().then(totalCount => {
-    //     res.json({
-    //       metadata: {
-    //         totalCount
-    //       },
-    //       records: emploees
-    //     });
-    //   });
-    // }).catch(error => {
-    //   console.log(error);
-    //   res.status(500).json({
-    //     message: `Internal Server Error: ${error}`
-    //   });
-    // });
   } else {
     console.log('doing aggregation', filter);
     Employee.aggregate([{
-      $match: filter
-    },
-    {
-      $group: {
-        _id: {
-          name: '$owner',
-          createdAt: '$createdAt'
+          $match: filter
         },
-        count: {
-          $sum: 1
-        }
-      }
-    },
-    ]).exec().then(results => {
-      const stats = {};
-      results.forEach(result => {
-        if (!stats[result._id.owner]) stats[result._id.owner] = {};
-        stats[result._id.owner][result._id.status] = result.count;
-      });
-      res.json(stats);
-    })
+        {
+          $group: {
+            _id: {
+              name: '$owner',
+              createdAt: '$createdAt'
+            },
+            count: {
+              $sum: 1
+            }
+          }
+        },
+      ]).exec().then(results => {
+        const stats = {};
+        results.forEach(result => {
+          if (!stats[result._id.owner]) stats[result._id.owner] = {};
+          stats[result._id.owner][result._id.status] = result.count;
+        });
+        res.json(stats);
+      })
       .catch(error => {
         console.log(error);
         res.status(500).json({
@@ -239,20 +210,20 @@ exports.employee_update = function (req, res) {
   Employee.findByIdAndUpdate({
     _id: documentId
   }, employee, {
-      new: true
-    }).then(savedEmployee => {
-      res.json(savedEmployee);
-    }).catch(error => {
-      console.log(error);
-      res.status(500).json({
-        message: `Internal Server Error: ${error}`
-      });
+    new: true
+  }).then(savedEmployee => {
+    res.json(savedEmployee);
+  }).catch(error => {
+    console.log(error);
+    res.status(500).json({
+      message: `Internal Server Error: ${error}`
     });
+  });
 };
 
 // delete employee
 exports.employee_delete = function (req, res) {
-  console.log('employee_delete',req.params.id);
+  console.log('employee_delete', req.params.id);
   let docId;
   try {
     docId = mongoose.Types.ObjectId(req.params.id);
@@ -304,10 +275,10 @@ exports.generate_employees = function (req, res) {
     employees.push(employee);
   }
   Employee.insertMany(employees).then(docs => {
-    res.json({
-      docs
-    });
-  })
+      res.json({
+        docs
+      });
+    })
     .catch(error => {
       console.error(`error: ${error}`);
     });

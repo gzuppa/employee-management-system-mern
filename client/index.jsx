@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import reduxStore from './store/reduxStore';
 
 import "./index.css";
-import Auth from './modules/Auth';
+import Auth from './store/auth';
 // import Routes from "./Routes/IndexRoutes.jsx";
 import { AnimatedSwitch } from 'react-router-transition';
 
@@ -35,17 +35,14 @@ render(
         atActive={{ opacity: 1 }}
         className="switch-wrapper"
       >
-
-      {/* <Switch> */}
-        <PrivateRoute path="/" component={App} />
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignUpPage} />
-      {/* </Switch> */}
+        <PrivateRoute path="/" component={App} />
       </AnimatedSwitch>
     </Router>
   </Provider>,
   document.getElementById('contents')
 )
-// if (module.hot) {
-//   module.hot.accept();
-// }
+if (module.hot) {
+  module.hot.accept();
+}

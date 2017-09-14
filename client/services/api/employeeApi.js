@@ -1,7 +1,10 @@
+import Auth from '../../store/auth';
+
 class employeeApi {
 
   static requestHeaders() {
-    // return {'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`}
+    const jwt = Auth.getToken();
+    return {'AUTHORIZATION': `Bearer ${jwt}`}
     return {};
   }
 

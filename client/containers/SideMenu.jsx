@@ -14,6 +14,8 @@ class SideMenu extends Component {
     super(props);
 
     this.handleClick = this.handleClick.bind(this);
+
+    console.log(this.props.location.pathname);
   }
 
   handleClick(item) {

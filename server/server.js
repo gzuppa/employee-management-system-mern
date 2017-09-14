@@ -1,7 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-// import cookieParser from 'cookie-parser';
-// import session from 'express-session';
 import morgan from "morgan";
 import compression from 'compression';
 import mongoose from "mongoose";
@@ -41,17 +39,7 @@ mongoose.connect(config.db.uri, config.db.options).then(connection => {
 }).catch(error => {
     console.log('ERROR:', error);
 });
-
-
-// const MongoStore = require('connect-mongo')(session);
-// app.use(session({
-//     saveUninitialized: true,
-//     resave: true,
-//     secret: config.sessionSecret,
-//     store: new MongoStore({
-//         mongooseConnection: mongoose.connection
-//     })
-// }));
+// mongoose.set('debug', true);
 
 const auth = require('./routes/auth');
 app.use('/auth', auth);

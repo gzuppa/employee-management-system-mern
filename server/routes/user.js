@@ -28,8 +28,5 @@ router.delete('/:userId', function (req, res) {
   //  res.send("delete");
 })
 
-// try to get the user details from the User model and attach it to the request object
-router.param('userId', userController.userByID);
-
 
 module.exports = router;

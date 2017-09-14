@@ -1,7 +1,7 @@
 import * as types from './actionTypes'
 import auth from '../services/auth';
 import queryString from 'query-string';
-import AuthStore from '../modules/Auth';
+import AuthStore from '../store/auth';
 
 import {
   notification,
@@ -17,7 +17,7 @@ export const authRequestError = error => ({
   receivedAt: Date.now()
 });
 
-export const signinSuccess = (data,history) => {
+export const signinSuccess = (data, history) => {
   // save the token
   AuthStore.authenticateUser(data.token);
   history.replace({
@@ -28,10 +28,15 @@ export const signinSuccess = (data,history) => {
     data
   }
 };
-export const signupSuccess = (data) => ({
-  type: types.SIGN_UP_SUCCESS,
-  data
-});
+export const signupSuccess = (data, history) => {
+  history.replace({
+    pathname: `/`
+  })
+  return {
+    type: types.SIGN_UP_SUCCESS,
+    data
+  }
+};
 export const signoutSuccess = () => ({
   type: types.SIGN_OUT_SUCCESS,
 })
