@@ -22,7 +22,7 @@ const cors = require('./middleware/cors');
 app.use(cors);
 
 if (process.env.NODE_ENV === 'development') {
-    import morgan from "morgan";
+    const morgan = require("morgan");
     //use logger
     app.use(morgan('dev'));
 } else if (process.env.NODE_ENV === 'production') {

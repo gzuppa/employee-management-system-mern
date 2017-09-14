@@ -8,10 +8,6 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _morgan = require('morgan');
-
-var _morgan2 = _interopRequireDefault(_morgan);
-
 var _compression = require('compression');
 
 var _compression2 = _interopRequireDefault(_compression);
@@ -65,8 +61,9 @@ const cors = require('./middleware/cors');
 app.use(cors);
 
 if (process.env.NODE_ENV === 'development') {
+    const morgan = require("morgan");
     //use logger
-    app.use((0, _morgan2.default)('dev'));
+    app.use(morgan('dev'));
 } else if (process.env.NODE_ENV === 'production') {
     app.use((0, _compression2.default)());
 }

@@ -7,7 +7,6 @@ import qs from 'query-string';
 import Particles from 'react-particles-js';
 import { random } from "./ParticleConfig";
 
-
 import SignUpForm from '../components/login/forms/SignUpForm.jsx';
 import LoginForm from '../components/login/forms/LoginForm.jsx';
 
@@ -16,11 +15,10 @@ import './Login.css';
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
   }
   render() {
     return (
-      <div className={classnames("wrapper blend-gradient")}>
+      <div className={classnames("wrapper")}>
         {/* <Particles params={random} /> */}
         <div className="login-form-wrapper">
           <LoginForm history={this.props.history}/>

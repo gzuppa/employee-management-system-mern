@@ -23,8 +23,7 @@ class LoginForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <div>
-        <Card title="Login" >
+        <Card title="Login" style={{ width: "400px" }}>
           <div className="login-form">
             <div className="login-form-header">
               <img src="/images/michael_icon.png"></img>
@@ -60,7 +59,6 @@ class LoginForm extends React.Component {
             </Form>
           </div>
         </Card>
-      </div>
     );
   }
 }
