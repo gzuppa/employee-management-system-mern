@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const User = require("../models/user");
 const config = require('../config');
+const fs = require('fs');
 
 
 /**
@@ -15,8 +16,9 @@ module.exports = (req, res, next) => {
   // get the last part from a authorization header string like "bearer token-value"
   const token = req.headers.authorization.split(' ')[1];
 
+  const cert = fs.readFileSync('../config/jwtRS256.key.pub');  // get public key
   // decode the token using a secret key-phrase
-  return jwt.verify(token, config.jwtSecret, (err, decoded) => {
+  return jwt.verify(token, ccert, (err, decoded) => {
     // the 401 code is for unauthorized status
     if (err) {
       return res.status(401).end();

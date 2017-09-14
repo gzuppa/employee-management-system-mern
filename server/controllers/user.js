@@ -6,6 +6,7 @@ import User from "../models/user";
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+const fs = require('fs');
 
 // Create a new error handling controller method
 var getErrorMessage = function (err) {
@@ -80,8 +81,11 @@ exports.signin = function (req, res, next) {
             sub: user._id
         };
 
+        // sign with RSA SHA256
+        var cert = fs.readFileSync('../confi/jwtRS256.key'); // get private key
+        
         // create a token string
-        const token = jwt.sign(payload, config.jwtSecret);
+        const token = jwt.sign(payload, cert);
         const data = {
             name: user.name
         };
