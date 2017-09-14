@@ -22,7 +22,6 @@ app.use(passport.initialize());
 const cors = require('./middleware/cors');
 app.use(cors);
 
-app.use(morgan('dev'));
 if (process.env.NODE_ENV === 'development') {
     //use logger
     app.use(morgan('dev'));

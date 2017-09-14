@@ -25,7 +25,7 @@ const AppRoutes = (props) => (
     <Redirect exact from="/" to="/dashboard" />
     <Route exact path="/dashboard" component={DashboardPage} />
     <Route exact path="/employee" component={EmployeePage} />
-    <Route exact path="/employee/:id" component={EmployeeEdit} />
+    <Route path="/employee/:id" component={EmployeeEdit} />
     <Route exact path="/schedule" component={SchedulePage} />
     <Route component={NoMatch} />
   </Switch>

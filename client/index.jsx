@@ -12,7 +12,7 @@ import { AnimatedSwitch } from 'react-router-transition';
 import App from './containers/App.jsx'
 import LoginPage from "./containers/LoginPage.jsx";
 import SignUpPage from "./containers/SignUpPage.jsx";
-
+import AuthExample from "./AuthExample.jsx";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
@@ -29,16 +29,21 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 render(
   <Provider store={reduxStore}>
     <Router>
-      <AnimatedSwitch
+      {/* if you use Switch, it will go directional from top to bottom and render the first hit */}
+      {/* <AnimatedSwitch
         atEnter={{ opacity: 0 }}
         atLeave={{ opacity: 0 }}
         atActive={{ opacity: 1 }}
         className="switch-wrapper"
-      >
+      > */}
+      <Switch>
+
+        {/* <Redirect exact from='/' to='/login' /> */}
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignUpPage} />
         <PrivateRoute path="/" component={App} />
-      </AnimatedSwitch>
+      </Switch>
+      {/* <AuthExample /> */}
     </Router>
   </Provider>,
   document.getElementById('contents')

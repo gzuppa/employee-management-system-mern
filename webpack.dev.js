@@ -28,7 +28,7 @@ module.exports = merge(common, {
     new webpack.LoaderOptionsPlugin({
       debug: true
     }),
-    new DashboardPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
@@ -48,13 +48,6 @@ module.exports = merge(common, {
             ]
           }
         }]
-      },
-      {
-        test: /\.(jpg|png|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[path][name].[ext]'
-        }
       },
       {
         test: /\.css$/,

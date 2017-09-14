@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classNames from 'classnames';
 
+
 import enUS from 'antd/lib/locale-provider/en_US';
 import { Layout, Menu, Icon, LocaleProvider, Breadcrumb } from 'antd';
 const { Content, Sider } = Layout;
@@ -33,6 +34,7 @@ class App extends React.Component {
         };
 
         this.toggle = this.toggle.bind(this);
+        console.log(this.props);
     }
     toggle() {
         this.setState({
@@ -44,7 +46,7 @@ class App extends React.Component {
         this.setState({ date });
     }
     render() {
-        const classes = this.props.classes;
+        const { history, location } = this.props;
 
         return (
             <LocaleProvider locale={enUS}>

@@ -26,7 +26,6 @@ const auth = (state = init, action) => {
     case types.SIGN_UP_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        token: action.data.token,
         receivedAt: action.receivedAt
       });
 
