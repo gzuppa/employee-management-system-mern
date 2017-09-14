@@ -4,12 +4,15 @@ class auth {
     // return {'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`}
     return {};
   }
-
+  static getEndPoint() {
+    return process.env.NODE_ENV == "development" ? "http://localhost:8080" : "";
+  }
   static signin(user) {
     const headers = Object.assign({
       'Content-Type': 'application/json'
     }, this.requestHeaders());
-    const request = new Request(`http://localhost:8080/auth/signin`, {
+    const url = this.getEndPoint();
+    const request = new Request(`${url}/auth/signin`, {
       method: 'POST',
       mode: 'cors',
       headers: headers,
@@ -23,7 +26,8 @@ class auth {
     const headers = Object.assign({
       'Content-Type': 'application/json'
     }, this.requestHeaders());
-    const request = new Request(`http://localhost:8080/auth/signup`, {
+    const url = this.getEndPoint();
+    const request = new Request(`${url}/auth/signup`, {
       method: 'POST',
       mode: 'cors',
       headers: headers,
@@ -39,7 +43,8 @@ class auth {
     const headers = Object.assign({
       'Content-Type': 'application/json'
     }, this.requestHeaders());
-    const request = new Request(`http://localhost:8080/auth/signout`, {
+    const url = this.getEndPoint();
+    const request = new Request(`${url}/auth/signout`, {
       method: 'POST',
       mode: 'cors',
       headers: headers
