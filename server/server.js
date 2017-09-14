@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import morgan from "morgan";
 import compression from 'compression';
 import mongoose from "mongoose";
 import passport from "passport";
@@ -23,6 +22,7 @@ const cors = require('./middleware/cors');
 app.use(cors);
 
 if (process.env.NODE_ENV === 'development') {
+    import morgan from "morgan";
     //use logger
     app.use(morgan('dev'));
 } else if (process.env.NODE_ENV === 'production') {
