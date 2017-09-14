@@ -35,7 +35,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         }} />
       )
   )} />
-)
+);
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -46,17 +46,21 @@ class HomePage extends React.Component {
 
     return (
       <div className="main">
-        <Particles params={config} />
-        <TransitionGroup>
-          <PageFade key={location.pathname}>
-            {/* if you use Switch, it will go directional from top to bottom and render the first hit */}
-            <Switch location={location}>
-              <Route path="/login" component={LoginPage} />
-              <Route path="/signup" component={SignUpPage} />
-              <PrivateRoute path="/" component={App} />
-            </Switch>
-          </PageFade>
-        </TransitionGroup>
+        {Auth.isUserAuthenticated()
+          ? <div><PrivateRoute path="/" component={App} /> </div>
+          : <div>
+            <Particles params={config} />
+            <TransitionGroup>
+              <PageFade key={location.pathname}>
+                <Switch location={location}>
+                  <Route path="/login" component={LoginPage} />
+                  <Route path="/signup" component={SignUpPage} />
+                  <Redirect path="/" to="/login" />
+                </Switch>
+              </PageFade>
+            </TransitionGroup>
+          </div>
+        }
       </div>
     );
   }

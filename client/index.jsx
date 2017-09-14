@@ -6,12 +6,14 @@ import reduxStore from './store/reduxStore';
 
 
 import Main from './containers/Main.jsx'
+import Example from './AnimationExample.jsx'
 
 render(
   <Provider store={reduxStore}>
     <Router>
       <Main />
     </Router>
+    {/* <Example /> */}
   </Provider>,
   document.getElementById('contents')
 )

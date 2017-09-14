@@ -19,9 +19,5 @@ module.exports = {
     sourceMapFilename: '[name].js.map',
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './static/index.html',
-      inject: 'body',
-    })
   ]
 };
