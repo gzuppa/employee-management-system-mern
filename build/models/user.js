@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-var _mongoose = require('mongoose');
+var _mongoose = require("mongoose");
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
 
@@ -8,15 +8,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
 
 var Schema = _mongoose2.default.Schema;
 var userSchema = new Schema({
-  username: {
+  email: {
     type: String,
-    required: true,
-    unique: true
+    index: { unique: true }
   },
   password: {
     type: String,
@@ -27,8 +24,6 @@ var userSchema = new Schema({
 }, {
   timestamps: true
 });
-
-var noop = function () {};
 
 userSchema.pre("save", function (next) {
   var user = this;
@@ -52,10 +47,8 @@ userSchema.pre("save", function (next) {
   });
 });
 
-userSchema.methods.checkPassword = function (guess, cb) {
-  bcrypt.compare(guess, this.password, function (err, isMatch) {
-    cb(err, isMatch);
-  });
+userSchema.methods.authenticate = function (password, cb) {
+  return bcrypt.compareSync(password, this.password);
 };
 
 userSchema.methods.name = function () {

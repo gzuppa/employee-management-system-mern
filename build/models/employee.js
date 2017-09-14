@@ -31,12 +31,29 @@ var employeeSchema = new Schema({
   startDate: Date,
   leaveData: Date,
   nationality: String
-}, { timestamps: true });
+}, {
+  timestamps: true
+});
+
+employeeSchema.virtual('fullName').get(function () {
+  return this.name.first + ' ' + this.name.last;
+}).set(function (v) {
+  this.name.first = v.substr(0, v.indexOf(' '));
+  this.name.last = v.substr(v.indexOf(' ') + 1);
+});;
 employeeSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });
-employeeSchema.index({ name: 'text' });
+employeeSchema.index({
+  name: 'text'
+});
+// Configure the 'employeeSchema' to use getters and virtuals when transforming to JSON
+employeeSchema.set('toJSON', {
+  getters: true,
+  virtuals: true
+});
+
 const Employee = _mongoose2.default.model("employees", employeeSchema);
 
 module.exports = Employee;

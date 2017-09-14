@@ -8,14 +8,6 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _cookieParser = require('cookie-parser');
-
-var _cookieParser2 = _interopRequireDefault(_cookieParser);
-
-var _expressSession = require('express-session');
-
-var _expressSession2 = _interopRequireDefault(_expressSession);
-
 var _morgan = require('morgan');
 
 var _morgan2 = _interopRequireDefault(_morgan);
@@ -32,6 +24,10 @@ var _passport = require('passport');
 
 var _passport2 = _interopRequireDefault(_passport);
 
+var _passport3 = require('./passport');
+
+var _passport4 = _interopRequireDefault(_passport3);
+
 var _config = require('./config');
 
 var _config2 = _interopRequireDefault(_config);
@@ -41,10 +37,6 @@ var _path = require('path');
 var _path2 = _interopRequireDefault(_path);
 
 require('babel-polyfill');
-
-var _index = require('./routes/index');
-
-var _index2 = _interopRequireDefault(_index);
 
 var _user = require('./routes/user');
 
@@ -60,14 +52,18 @@ var _employee2 = _interopRequireDefault(_employee);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+(0, _passport4.default)();
 const app = (0, _express2.default)();
 app.use(_express2.default.static('static'));
 app.use(_bodyParser2.default.json());
-app.use((0, _cookieParser2.default)());
+// app.use(cookieParser());
 app.use(_passport2.default.initialize());
-app.use(_passport2.default.session());
+// app.use(passport.session());
 
-app.use((0, _morgan2.default)('dev'));
+// enable server cors mode
+const cors = require('./middleware/cors');
+app.use(cors);
+
 if (process.env.NODE_ENV === 'development') {
     //use logger
     app.use((0, _morgan2.default)('dev'));
@@ -83,23 +79,15 @@ _mongoose2.default.connect(_config2.default.db.uri, _config2.default.db.options)
     });
 }).catch(error => {
     console.log('ERROR:', error);
-});;
+});
+// mongoose.set('debug', true);
 
-const MongoStore = require('connect-mongo')(_expressSession2.default);
-app.use((0, _expressSession2.default)({
-    saveUninitialized: true,
-    resave: true,
-    secret: _config2.default.sessionSecret,
-    store: new MongoStore({
-        mongooseConnection: _mongoose2.default.connection
-    })
-}));
+const auth = require('./routes/auth');
+app.use('/auth', auth);
 
-//add routes
-
-
-// It has to be placed at the end of all routes
-app.get('/', _index2.default);
+// pass the authorization checker middleware
+const authCheckMiddleware = require('./middleware/auth-check');
+app.use('/api', authCheckMiddleware);
 app.use('/api/user', _user2.default);
 app.use('/api/department', _department2.default);
 app.use('/api/employee', _employee2.default);

@@ -9,7 +9,11 @@ var _user2 = _interopRequireDefault(_user);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var passport = require('passport');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
+const fs = require('fs');
+const path = require('path');
 
 // Create a new error handling controller method
 var getErrorMessage = function (err) {
@@ -38,11 +42,83 @@ var getErrorMessage = function (err) {
     // Return the message error
     return message;
 };
+/**
+ * Validate the login form
+ *
+ * @param {object} payload - the HTTP body message
+ * @returns {object} The result of validation. Object contains a boolean validation result,
+ *                   errors tips, and a global message for the whole form.
+ */
+function validateLoginForm(payload) {
+    const errors = {};
+    let isFormValid = true;
+    let message = '';
 
+    if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
+        isFormValid = false;
+        errors.email = 'Please provide your email address.';
+    }
+
+    if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
+        isFormValid = false;
+        errors.password = 'Please provide your password.';
+    }
+
+    if (!isFormValid) {
+        message = 'Check the form for errors.';
+    }
+
+    return {
+        success: isFormValid,
+        message,
+        errors
+    };
+}
+exports.signin = function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.status(400).json(info);
+        }
+
+        const payload = {
+            sub: user._id
+        };
+
+        try {
+            // sign with RSA SHA256
+            var cert = fs.readFileSync(path.join(__dirname, '/../config/key/jwtRS256.key')); // get private key
+
+            // create a token string
+            const token = jwt.sign(payload, cert, {
+                algorithm: 'RS256'
+            });
+            const data = {
+                name: user.name
+            };
+
+            return res.json({
+                success: true,
+                message: 'You have successfully logged in!',
+                token,
+                user: data
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({
+                message: `Internal Server Error: ${err}`
+            });
+        }
+    })(req, res, next);
+};
 // Create a new controller method that creates new 'regular' users
 exports.signup = function (req, res, next) {
-    // If user is not connected, create and login a new user, otherwise redirect the user back to the main application page
-    if (!req.user) {
+    passport.authenticate('local', function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
         // Create a new 'User' model instance
         var user = new _user2.default(req.body);
         var message = null;
@@ -52,30 +128,21 @@ exports.signup = function (req, res, next) {
 
         // Try saving the new user document
         user.save(function (err) {
+            console.error(err);
             // If an error occurs, use flash messages to report the error
             if (err) {
                 // Use the error handling method to get the error message
                 var message = getErrorMessage(err);
 
-                // Set the flash messages
-                req.flash('error', message);
-
-                // Redirect the user back to the signup page
-                return res.redirect('/signup');
+                return res.status(400).json({
+                    message: message
+                });
             }
-
-            // If the user was created successfully use the Passport 'login' method to login
-            req.login(user, function (err) {
-                // If a login error occurs move to the next middleware
-                if (err) return next(err);
-
-                // Redirect the user back to the main application page
-                return res.redirect('/');
+            return res.status(200).json({
+                message: "User was created successfully"
             });
         });
-    } else {
-        return res.redirect('/');
-    }
+    })(req, res, next);
 };
 
 // Create a new controller method that creates new 'OAuth' users
@@ -112,40 +179,6 @@ exports.saveOAuthUserProfile = function (req, profile, done) {
                 // Continue to the next middleware
                 return done(err, user);
             }
-        }
-    });
-};
-
-// Create a new controller method for signing out
-exports.signout = function (req, res) {
-    // Use the Passport 'logout' method to logout
-    req.logout();
-
-    // Redirect the user back to the main application page
-    res.redirect('/');
-};
-
-// Create a new controller middleware that is used to authorize authenticated operations
-exports.requiresLogin = function (req, res, next) {
-    // If a user is not authenticated send the appropriate error message
-    if (!req.isAuthenticated()) {
-        return res.status(401).send({
-            message: 'User is not logged in'
-        });
-    }
-
-    // Call the next middleware
-    next();
-};
-exports.userByID = function (req, res, next, id) {
-    _user2.default.findOne({
-        _id: id
-    }, function (err, user) {
-        if (err) {
-            return next(err);
-        } else {
-            req.user = user;
-            next();
         }
     });
 };

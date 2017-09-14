@@ -12,6 +12,7 @@ module.exports = {
 		options: {
 			useMongoClient: true
 		}
-	}
+	},
+	jwtSecret: "a secret phrase!!"
 };
 //# sourceMappingURL=production.js.map

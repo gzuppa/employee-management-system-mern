@@ -3,24 +3,20 @@
 
 // Load the module dependencies
 
-var _user = require('../../models/user');
-
-var _user2 = _interopRequireDefault(_user);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy;
-
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const User = require("../../models/user");
 
 // Create the Local strategy configuration method
 module.exports = function () {
 	// Use the Passport's Local strategy 
-	passport.use(new LocalStrategy(function (username, password, done) {
+	passport.use(new LocalStrategy({
+		usernameField: 'email',
+		passwordField: 'password',
+		session: false
+	}, function (email, password, done) {
 		// Use the 'User' model 'findOne' method to find a user with the current username
-		_user2.default.findOne({
-			username: username
-		}, function (err, user) {
+		User.findOne({ email: email }, (err, user) => {
 			// If an error occurs continue to the next middleware
 			if (err) {
 				return done(err);

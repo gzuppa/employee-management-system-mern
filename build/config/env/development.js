@@ -8,12 +8,11 @@ module.exports = {
 		port: 8080
 	},
 	db: {
-		// uri: 'mongodb://localhost:27018/EMS',
-		uri: 'mongodb://michael:michael@ds163053.mlab.com:63053/ems-mern',
+		uri: 'mongodb://localhost:27018/EMS',
+		// uri: 'mongodb://michael:michael@ds163053.mlab.com:63053/ems-mern',
 		options: {
 			useMongoClient: true
 		}
-	},
-	sessionSecret: 'developmentSessionSecret'
+	}
 };
 //# sourceMappingURL=development.js.map

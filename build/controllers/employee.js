@@ -89,35 +89,6 @@ exports.employee_list = function (req, res) {
         search(req, res, filter);
       });
     } else search(req, res, filter);
-    // search(req, res, filter);
-    // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
-    // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
-
-    // console.log('offset', offset);
-    // console.log('limit', limit);
-    // console.log('filter', filter);
-
-    // if (limit > 50) limit = 50;
-    // const cursor = Employee.find(filter).sort({
-    //   createdAt: -1
-    // }).skip(offset).limit(limit);
-
-    // // ensures that the effects of skip() and limit() will be ignored
-    // cursor.exec().then(emploees => {
-    //   Employee.count().then(totalCount => {
-    //     res.json({
-    //       metadata: {
-    //         totalCount
-    //       },
-    //       records: emploees
-    //     });
-    //   });
-    // }).catch(error => {
-    //   console.log(error);
-    //   res.status(500).json({
-    //     message: `Internal Server Error: ${error}`
-    //   });
-    // });
   } else {
     console.log('doing aggregation', filter);
     _employee2.default.aggregate([{
