@@ -47,7 +47,7 @@ class HomePage extends React.Component {
     return (
       <div className="main">
         {Auth.isUserAuthenticated()
-          ? <div><PrivateRoute path="/" component={App} /> </div>
+          ? <PrivateRoute path="/" component={App} />
           : <div>
             <Particles params={config} />
             <TransitionGroup>

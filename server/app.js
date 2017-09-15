@@ -13,9 +13,7 @@ initPassport();
 const app = express();
 app.use(express.static('static'));
 app.use(bodyParser.json());
-// app.use(cookieParser());
 app.use(passport.initialize());
-// app.use(passport.session());
 
 // enable server cors mode
 const cors = require('./middleware/cors');

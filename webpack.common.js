@@ -18,6 +18,5 @@ module.exports = {
     filename: '[name].bundle.js',
     sourceMapFilename: '[name].js.map',
   },
-  plugins: [
-  ]
+  plugins: []
 };

@@ -28,8 +28,7 @@ module.exports = merge(common, {
       debug: true
     }),
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     rules: [{
