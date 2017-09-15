@@ -2,6 +2,7 @@
 'use strict';
 
 // Set the 'development' environment configuration object
+
 module.exports = {
 	server: {
 		port: 8080
@@ -14,3 +15,4 @@ module.exports = {
 		}
 	}
 };
+//# sourceMappingURL=development.js.map
