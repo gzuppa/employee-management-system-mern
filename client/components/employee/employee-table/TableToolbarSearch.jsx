@@ -9,7 +9,7 @@ import debounce from 'lodash.debounce';
 const Option = Select.Option;
 
 import Highlighter from 'react-highlight-words';
-
+import Auth from '../../../store/auth';
 
 function getRandomInt(max, min = 0) {
   return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
@@ -38,6 +38,11 @@ function renderOption(item) {
 
 let lastFetchId = 0;
 class TableToolbarSearch extends React.Component {
+  static requestHeaders() {
+    const jwt = Auth.getToken();
+    return {'AUTHORIZATION': `Bearer ${jwt}`}
+  }
+
   constructor(props) {
     super(props);
    
@@ -60,7 +65,19 @@ class TableToolbarSearch extends React.Component {
     const fetchId = lastFetchId;
     this.setState({ fetching: true });
 
-    fetch(`/api/employee?_limit=5&search=${value}`)
+    const headers = Object.assign({
+      'Content-Type': 'application/json'
+    }, this.requestHeaders());
+    const request = new Request(`/api/employee/?_limit=5&search=${value}`, {
+      method: 'PUT',
+      headers: headers,
+      body: JSON.stringify({
+        employee: employee
+      })
+    });
+
+
+    fetch(request)
       .then(response => response.json())
       .then((body) => {
         // if (fetchId !== lastFetchId) { // for fetch callback order

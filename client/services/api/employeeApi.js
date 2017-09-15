@@ -5,7 +5,6 @@ class employeeApi {
   static requestHeaders() {
     const jwt = Auth.getToken();
     return {'AUTHORIZATION': `Bearer ${jwt}`}
-    return {};
   }
 
   static getAllEmployees(search) {
