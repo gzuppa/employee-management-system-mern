@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
 
   try {
-    const cert = fs.readFileSync(path.join(__dirname, '/../config/key/jwtRS256.pem')); // get public key
+    const cert = fs.readFileSync(path.join(__dirname, '/../../key/jwtRS256.pem')); // get public key
     // decode the token using a secret key-phrase
     return jwt.verify(token, cert, { algorithm: 'RS256'}, (err, decoded) => {
       // the 401 code is for unauthorized status
