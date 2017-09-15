@@ -6,6 +6,7 @@ import passport from "passport";
 import initPassport from "./passport";
 import config from './config';
 import path from "path";
+import favicon from 'serve-favicon';
 import 'babel-polyfill';
 
 
@@ -14,6 +15,7 @@ const app = express();
 app.use(express.static('static'));
 app.use(bodyParser.json());
 app.use(passport.initialize());
+app.use(favicon(path.join('static', 'images', 'favicon.ico')));
 
 // enable server cors mode
 const cors = require('./middleware/cors');

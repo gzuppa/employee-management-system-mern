@@ -66,7 +66,7 @@ module.exports = merge(common, {
     },
     historyApiFallback: true,
     watchOptions: {
-      // poll: true
+      poll: true
     }
   },
   devtool: 'cheap-module-eval-source-map'

@@ -5,13 +5,12 @@
   "main": "server.js",
   "scripts": {
     "build:client": "webpack -p --config webpack.prod.js --progress",
-    "build:server": "babel server --presets es2015-node6 --out-dir build --source-maps",
-    "build": "npm run build:server & npm run build:client",
+    "build:server": "babel server --presets=es2015-node6 --out-dir build --source-maps",
+    "build": "npm run build:client && npm run build:server",
     "start": "node build/app.js",
     "dev:client": "webpack-dev-server --progress --config webpack.dev.js --host 0.0.0.0",
     "dev:server": "NODE_ENV=development nodemon --watch server server/app.js --exec babel-node --presets es2015",
-    "dev": " npm run dev:server && npm run dev:client",
-    "watch-server": "babel server --presets es2015-node6 --out-dir build --source-maps --watch",
+    "watch-server": "babel server --presets=es2015-node6 --out-dir build --source-maps --watch",
     "lint": "eslint --ext jsx,js client server webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -60,7 +59,8 @@
     "react-router-transition": "^1.0.1",
     "react-transition-group": "^2.2.0",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "serve-favicon": "^2.4.4"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

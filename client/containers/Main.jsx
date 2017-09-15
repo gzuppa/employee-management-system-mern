@@ -41,6 +41,9 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
   }
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps);
+  }
   render() {
     const { match, history, location } = this.props;
 
@@ -55,7 +58,7 @@ class HomePage extends React.Component {
                 <Switch location={location}>
                   <Route path="/login" component={LoginPage} />
                   <Route path="/signup" component={SignUpPage} />
-                  <Redirect path="/" to="/login" />
+                  <Redirect exact path="/" to='/login' />
                 </Switch>
               </PageFade>
             </TransitionGroup>

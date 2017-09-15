@@ -3,6 +3,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
+let pathsToClean = [
+  'static/dist',
+  'build'
+];
 
 module.exports = {
   entry: {
@@ -12,11 +16,12 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, "static"),
-    // filename: "[name].js"
-    // chunkFilename: '[name].bundle.js',
+    path: path.resolve(__dirname, "static/dist"),
+    chunkFilename: '[name].bundle.js',
     filename: '[name].bundle.js',
     sourceMapFilename: '[name].js.map',
   },
-  plugins: []
+  plugins: [
+    new CleanWebpackPlugin(pathsToClean),
+  ]
 };
