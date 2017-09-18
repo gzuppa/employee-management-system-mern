@@ -112,13 +112,13 @@ class EmployeeEdit extends React.Component {
 			employee.completionDate = completionDate;
 		}
 		const headers = Object.assign({
-      'Content-Type': 'application/json'
-    }, this.requestHeaders());
-    const request = new Request(`/api/employee/${this.props.match.params.id}`, {
-      method: 'PUT',
+			'Content-Type': 'application/json'
+		}, this.requestHeaders());
+		const request = new Request(`/api/employee/${this.props.match.params.id}`, {
+			method: 'PUT',
 			headers: headers,
 			body: JSON.stringify(employee),
-    });
+		});
 
 		fetch(request).then(response => {
 			if (response.ok) {

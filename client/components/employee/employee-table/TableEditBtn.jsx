@@ -8,7 +8,6 @@ const TabPane = Tabs.TabPane;
 
 import EditEmployeeForm from '../forms/EditEmployeeForm.jsx';
 import { updateEmployee, readEmployee } from '../../../actions/employeeActions'
-import Auth from '../../../store/auth';
 
 
 const TabNames = {
@@ -114,7 +113,6 @@ class TableEditBtn extends Component {
             <TabPane tab={TabNames["2"]} key="2">Content of Tab Pane 2</TabPane>
             <TabPane tab={TabNames["3"]} key="3">Content of Tab Pane 3</TabPane>
           </Tabs>
-
         </Modal>
       </span>
     )

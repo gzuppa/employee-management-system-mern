@@ -8,7 +8,7 @@ class SchedulePage extends React.Component {
   }
   render() {
     return (
-      <Schedule />
+      <Schedule history={this.props.history}/>
     );
   }
 }
