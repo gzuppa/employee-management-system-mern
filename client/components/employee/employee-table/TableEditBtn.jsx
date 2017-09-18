@@ -7,7 +7,7 @@ import { Modal, Button, Icon, Tabs, message, notification, Avatar } from 'antd';
 const TabPane = Tabs.TabPane;
 
 import EditEmployeeForm from '../forms/EditEmployeeForm.jsx';
-import { updateEmployee } from '../../../actions/employeeActions'
+import { updateEmployee, readEmployee } from '../../../actions/employeeActions'
 import Auth from '../../../store/auth';
 
 
@@ -42,27 +42,27 @@ class TableEditBtn extends Component {
       visible: false,
     };
     this.showModal = this.showModal.bind(this);
-    this.onCancel = this.onCancel.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onCreate = this.onCreate.bind(this);
     this.saveFormRef = this.saveFormRef.bind(this);
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.updatedEmployee && this.props.id == nextProps.updatedEmployee._id) {
-      this.setState({ visible: false });
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.visible) {
+      console.log('componentDidUpdate');
     }
   }
   showModal(e) {
     e.preventDefault();
     this.setState({ visible: true });
-    this.props.dispatch
+
+    const { dispatch, id } = this.props;
+    dispatch(readEmployee(id));
   }
-  onCancel() {
+  onClose() {
     this.setState({ visible: false });
   }
-  requestHeaders() {
-    const jwt = Auth.getToken();
-    return { 'AUTHORIZATION': `Bearer ${jwt}` }
-  }
+
   onCreate() {
     const form = this.form;
     form.validateFields((err, values) => {
@@ -85,6 +85,8 @@ class TableEditBtn extends Component {
         employee.completionDate = completionDate;
       }
       this.props.dispatch(updateEmployee(employee, this.props.history));
+
+      this.onClose();
     });
   }
   saveFormRef(form) {
@@ -100,7 +102,7 @@ class TableEditBtn extends Component {
           visible={visible}
           title={<ModalTitle />}
           okText="Update"
-          onCancel={this.onCancel}
+          onCancel={this.onClose}
           confirmLoading={confirmLoading}
           onOk={this.onCreate}
           closable={false}

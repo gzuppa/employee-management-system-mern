@@ -23,6 +23,11 @@ export const requestEmployeesSuccess = data => ({
   data,
   receivedAt: Date.now()
 });
+export const readEmployeeSuccess = data => ({
+  type: types.READ_EMPLOYEE_SUCCESS,
+  data,
+  receivedAt: Date.now()
+});
 export const createEmployeeSuccess = (employee, history) => {
   // history.push({
   //   pathname: `/employee/${employee._id}`
@@ -119,15 +124,10 @@ export const createEmployee = (employee, history) => {
     employeeApi.createEmployee(employee).then(response => {
       if (!response.ok) {
         return response.json().then(error => {
-
-          // setTimeout(() => {
-          // const errorMsg = `Failed to add employee: ${error.message}`;
           dispatch(requestEmployeesError(errorMsg))
           notification.error({
             message: errorMsg
           });
-          // }, 2000);
-
         });
       }
       response.json().then(updatedEmployee => {
@@ -142,7 +142,32 @@ export const createEmployee = (employee, history) => {
       dispatch(requestEmployeesError(errorMsg))
     });
   }
-}
+};
+
+export const readEmployee = (id) => {
+  return dispatch => {
+    dispatch(sendRequest());
+    employeeApi.readEmployee(id).then(response => {
+      if (!response.ok) {
+        return response.json().then(error => {
+          dispatch(requestEmployeesError(errorMsg))
+          notification.error({
+            message: errorMsg
+          });
+        });
+      }
+      response.json().then(employee => {
+        console.log('employee', employee);
+        employee = convertedEmployee(employee);
+        dispatch(readEmployeeSuccess(employee, history));
+      })
+    }).catch(error => {
+      const errorMsg = `Error in sending data to server: ${error.message}`;
+      dispatch(requestEmployeesError(errorMsg))
+    });
+  }
+};
+
 export const updateEmployee = (employee, history) => {
   return dispatch => {
     dispatch(sendRequest());
@@ -155,10 +180,13 @@ export const updateEmployee = (employee, history) => {
           });
         });
       }
-      notification.success({
-        message: 'Update employee successfully'
+      response.json().then(updatedEmployee => {
+        updatedEmployee = convertedEmployee(updatedEmployee);
+        notification.success({
+          message: 'Update employee successfully'
+        });
+        return dispatch(updateEmployeeSuccess(updatedEmployee, history));
       });
-      return dispatch(updateEmployeeSuccess(employee, history));
     }).catch(error => {
       const errorMsg = `Error in sending data to server: ${error.message}`;
       notification.error({

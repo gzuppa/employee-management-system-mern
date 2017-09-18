@@ -213,15 +213,16 @@ exports.employee_update = function (req, res) {
   const employee = req.body;
   employee.updatedAt = new Date();
 
-  Employee.findById(_id, function (err, _employee) {
+  Employee.findOneAndUpdate({
+    "_id": _id
+  }, {
+    "$set": employee
+  }, {
+    new: true
+  }, function (err, updatedEmployee) {
     if (err) return handleError(err, res);
-
-    _employee.set(employee);
-    _employee.save(function (err, updatedEmployee) {
-      if (err) return handleError(err, res);
-      res.json(updatedEmployee);
-    });
-  });
+    res.json(updatedEmployee);
+  })
 };
 
 // delete employee

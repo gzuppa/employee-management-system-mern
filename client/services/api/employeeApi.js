@@ -28,6 +28,17 @@ class employeeApi {
 
     return fetch(request);
   }
+  static readEmployee(id) {
+    const headers = Object.assign({
+      'Content-Type': 'application/json'
+    }, this.requestHeaders());
+    const request = new Request(`/api/employee/${id}`, {
+      method: 'GET',
+      headers: headers,
+    });
+
+    return fetch(request);
+  }
 
   static updateEmployee(employee) {
     const headers = Object.assign({

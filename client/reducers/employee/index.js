@@ -50,9 +50,21 @@ const employees = (state = initEmployee, action) => {
         receivedAt: action.receivedAt,
         isFetching: false,
       });
-
-    case types.UPDATE_EMPLOYEE_SUCCESS:
+    case types.READ_EMPLOYEE_SUCCESS:
       return Object.assign({}, state, {
+        currentEmployee: action.employee,
+        receivedAt: action.receivedAt,
+        isFetching: false,
+      });
+    case types.UPDATE_EMPLOYEE_SUCCESS:
+      const updatedEmployees = state.employees.map(employee => {
+        if (employee._id === action.employee._id) {
+          return action.employee;
+        }
+        return employee;
+      });
+      return Object.assign({}, state, {
+        employees: updatedEmployees,
         updatedEmployee: action.employee,
         receivedAt: action.receivedAt,
         isFetching: false,
