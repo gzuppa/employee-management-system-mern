@@ -115,19 +115,22 @@ class TableToolbarSearch extends React.Component {
     const { fetching, data, value } = this.state;
 
     return (
-      <Select
-        mode="multiple"
-        labelInValue
-        value={value}
-        placeholder="Select users"
-        notFoundContent={fetching ? <Spin size="small" /> : null}
-        filterOption={false}
-        onSearch={this.fetchUser.bind(this)}
-        onChange={this.handleChange}
-        style={{ width: '100%' }}
-      >
-        {data.map(d => <Option key={d.value}>{d.text}</Option>)}
-      </Select>
+      <span>
+        <Select
+          mode="multiple"
+          labelInValue
+          value={value}
+          placeholder="Select users"
+          notFoundContent={fetching ? <Spin size="small" /> : null}
+          filterOption={false}
+          onSearch={this.fetchUser.bind(this)}
+          onChange={this.handleChange}
+          style={{ width: '100%' }}
+        >
+          {data.map(d => <Option key={d.value}>{d.text}</Option>)}
+        </Select>
+        <Icon type="search" />
+      </span>
     );
   }
 }

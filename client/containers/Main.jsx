@@ -58,7 +58,7 @@ class HomePage extends React.Component {
                 <Switch location={location}>
                   <Route path="/login" component={LoginPage} />
                   <Route path="/signup" component={SignUpPage} />
-                  <Redirect exact path="/" to='/login' />
+                  <Route exact path="/" component={LoginPage}  />
                 </Switch>
               </PageFade>
             </TransitionGroup>
