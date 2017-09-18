@@ -13,7 +13,6 @@ render(
     <Router>
       <Main />
     </Router>
-    {/* <Example /> */}
   </Provider>,
   document.getElementById('contents')
 )

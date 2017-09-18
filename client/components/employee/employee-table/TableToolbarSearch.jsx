@@ -3,11 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import qs from 'query-string';
-
 import { Select, Spin, Icon, Button, Input, AutoComplete } from 'antd';
 import debounce from 'lodash.debounce';
 const Option = Select.Option;
-
 import Highlighter from 'react-highlight-words';
 import Auth from '../../../store/auth';
 
@@ -38,14 +36,11 @@ function renderOption(item) {
 
 let lastFetchId = 0;
 class TableToolbarSearch extends React.Component {
-  static requestHeaders() {
-    const jwt = Auth.getToken();
-    return {'AUTHORIZATION': `Bearer ${jwt}`}
-  }
+
 
   constructor(props) {
     super(props);
-   
+
     this.state = {
       data: [],
       value: [],
@@ -59,6 +54,10 @@ class TableToolbarSearch extends React.Component {
     this.findEmployee = this.findEmployee.bind(this);
   }
 
+  requestHeaders() {
+    const jwt = Auth.getToken();
+    return { 'AUTHORIZATION': `Bearer ${jwt}` }
+  }
   fetchUser(value) {
     console.log('fetching user', value);
     lastFetchId += 1;
@@ -69,11 +68,8 @@ class TableToolbarSearch extends React.Component {
       'Content-Type': 'application/json'
     }, this.requestHeaders());
     const request = new Request(`/api/employee/?_limit=5&search=${value}`, {
-      method: 'PUT',
-      headers: headers,
-      body: JSON.stringify({
-        employee: employee
-      })
+      method: 'GET',
+      headers: headers
     });
 
 
@@ -90,8 +86,8 @@ class TableToolbarSearch extends React.Component {
           text: `${user.name.firstName} ${user.name.lastName}`,
           fetching: false,
         }));
-        console.log('data',data)
-        this.setState({ data});
+        console.log('data', data)
+        this.setState({ data });
       });
   }
   handleSearch(value) {

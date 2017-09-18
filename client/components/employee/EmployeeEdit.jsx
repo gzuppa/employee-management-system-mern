@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { submit } from 'redux-form';
 
 import EditEmployeeForm from './forms/EditEmployeeForm.jsx';
 
@@ -16,8 +15,8 @@ class EmployeeEdit extends React.Component {
 	}
 	constructor(props) {
 		super(props);
-		console.log('props',props);
-		
+		console.log('props', props);
+
 		this.state = {
 			employee: {
 				title: '', name: '',
@@ -99,6 +98,12 @@ class EmployeeEdit extends React.Component {
 		this.setState({ open: false });
 		this.props.history.push('/employee')
 	};
+
+	requestHeaders() {
+		const jwt = Auth.getToken();
+		return { 'AUTHORIZATION': `Bearer ${jwt}` }
+	}
+
 	onSubmit(values) {
 		console.log('values', values);
 		const employee = Object.assign({}, values);
@@ -106,14 +111,16 @@ class EmployeeEdit extends React.Component {
 			const completionDate = new Date(values.completionDate);
 			employee.completionDate = completionDate;
 		}
-		console.log('employee', employee);
-
-
-		fetch(`/api/employee/${this.props.match.params.id}`, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json' },
+		const headers = Object.assign({
+      'Content-Type': 'application/json'
+    }, this.requestHeaders());
+    const request = new Request(`/api/employee/${this.props.match.params.id}`, {
+      method: 'PUT',
+			headers: headers,
 			body: JSON.stringify(employee),
-		}).then(response => {
+    });
+
+		fetch(request).then(response => {
 			if (response.ok) {
 				response.json().then(updatedEmployee => {
 					// convert to MongoDB Date object type

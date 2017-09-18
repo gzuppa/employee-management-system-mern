@@ -13,7 +13,7 @@ const EditEmployeeForm = (props) => {
     wrapperCol: { span: 14 },
   };
   return (
-    <Form layout={'horizontal'}>
+    <Form layout={'horizontal'} onSubmit={props.onSubmit}>
       <FormItem label="First Name"  {...formItemLayout}>
         {getFieldDecorator('firstName', {
           rules: [{ required: true, message: 'Please Enter your first name' }],

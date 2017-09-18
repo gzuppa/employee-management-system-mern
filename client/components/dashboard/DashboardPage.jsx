@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { Card, Row, Col } from 'antd';
 
 import EventTracker from './event/EventTracker.jsx'
-
+import RecentLeaves from './charts/RecentLeaves.jsx'
 
 class DashboardPage extends React.Component {
 
@@ -30,7 +30,8 @@ class DashboardPage extends React.Component {
 
         </Row>
         <Row>
-          <Col span={24}> <EventTracker /></Col>
+          <Col span={12}> <EventTracker /></Col>
+          <Col span={12}> <RecentLeaves /></Col>
         </Row>
       </div >
     );

@@ -48,10 +48,10 @@ class HomePage extends React.Component {
     const { match, history, location } = this.props;
 
     return (
-      <div className="main">
+      <div>
         {Auth.isUserAuthenticated()
           ? <PrivateRoute path="/" component={App} />
-          : <div>
+          : <div className="main">
             <Particles params={config} />
             <TransitionGroup>
               <PageFade key={location.pathname}>

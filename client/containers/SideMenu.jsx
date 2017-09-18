@@ -34,12 +34,12 @@ class SideMenu extends Component {
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={[location.pathname == "/" ? "/dashboard" : location.pathname]} onClick={item => this.handleClick(item)}>
           <Menu.Item key="/dashboard">
-            <Icon type="user" />
+            <Icon type="appstore-o" />
             <span>Dashboard</span>
           </Menu.Item>
 
           <Menu.Item key="/employee">
-            <Icon type="video-camera" />
+            <Icon type="team" />
             <span>Employees</span>
           </Menu.Item>
           <Menu.Item key="/schedule">
