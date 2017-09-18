@@ -105,7 +105,7 @@ class EmployeeTable extends Component {
     this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     // console.log('componentDidUpdate');
     if (prevProps.location.search != this.props.location.search) {
       this.props.dispatch(fetchEmployees(this.props.location, this.state.pageSize));

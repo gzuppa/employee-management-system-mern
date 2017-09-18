@@ -46,7 +46,14 @@ const employees = (state = initEmployee, action) => {
       // console.log('CREATE_EMPLOYEE_SUCCESS');
       const updatedEmployee = action.employee;
       return Object.assign({}, state, {
-        employees:  [updatedEmployee, ...state.employees],
+        employees: [updatedEmployee, ...state.employees],
+        receivedAt: action.receivedAt,
+        isFetching: false,
+      });
+
+    case types.UPDATE_EMPLOYEE_SUCCESS:
+      return Object.assign({}, state, {
+        updatedEmployee: action.employee,
         receivedAt: action.receivedAt,
         isFetching: false,
       });

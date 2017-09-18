@@ -33,12 +33,10 @@ class employeeApi {
     const headers = Object.assign({
       'Content-Type': 'application/json'
     }, this.requestHeaders());
-    const request = new Request(`/api/employee/${employee.id}`, {
+    const request = new Request(`/api/employee/${employee._id}`, {
       method: 'PUT',
       headers: headers,
-      body: JSON.stringify({
-        employee: employee
-      })
+      body: JSON.stringify(employee)
     });
 
     return fetch(request);

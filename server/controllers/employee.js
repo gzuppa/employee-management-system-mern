@@ -193,30 +193,33 @@ exports.employee_detail = function (req, res) {
   });
 };
 
+const handleError = (error, res) => {
+  console.error(error);
+  return res.status(500).json({
+    message: `Internal Server Error: ${error}`
+  });
+}
 // update employee
 exports.employee_update = function (req, res) {
-  let documentId;
+  let _id;
   try {
-    documentId = mongoose.Types.ObjectId(req.params.id);
+    _id = mongoose.Types.ObjectId(req.params.id);
   } catch (error) {
-    res.status(422).json({
+    return res.status(422).json({
       message: `Invalid issue ID format: ${error}`
     });
-    return;
   }
-  const employee = req.body;
-  employee.updatedAt = new Date;
 
-  Employee.findByIdAndUpdate({
-    _id: documentId
-  }, employee, {
-    new: true
-  }).then(savedEmployee => {
-    res.json(savedEmployee);
-  }).catch(error => {
-    console.log(error);
-    res.status(500).json({
-      message: `Internal Server Error: ${error}`
+  const employee = req.body;
+  employee.updatedAt = new Date();
+
+  Employee.findById(_id, function (err, _employee) {
+    if (err) return handleError(err, res);
+
+    _employee.set(employee);
+    _employee.save(function (err, updatedEmployee) {
+      if (err) return handleError(err, res);
+      res.json(updatedEmployee);
     });
   });
 };

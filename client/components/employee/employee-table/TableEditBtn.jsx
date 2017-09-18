@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Modal, Button, Icon, Tabs, message, notification, Avatar } from 'antd';
 const TabPane = Tabs.TabPane;
 
 import EditEmployeeForm from '../forms/EditEmployeeForm.jsx';
-import { createEmployee } from '../../../actions/employeeActions'
+import { updateEmployee } from '../../../actions/employeeActions'
 import Auth from '../../../store/auth';
 
 
@@ -45,7 +46,11 @@ class TableEditBtn extends Component {
     this.onCreate = this.onCreate.bind(this);
     this.saveFormRef = this.saveFormRef.bind(this);
   }
-
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.updatedEmployee && this.props.id == nextProps.updatedEmployee._id) {
+      this.setState({ visible: false });
+    }
+  }
   showModal(e) {
     e.preventDefault();
     this.setState({ visible: true });
@@ -69,48 +74,17 @@ class TableEditBtn extends Component {
         firstName: values.firstName,
         lastName: values.lastName
       }
+      delete values.firstName;
+      delete values.lastName;
       values.name = name;
+      values._id = this.props.id;
 
       const employee = Object.assign({}, values);
       if (values.completionDate) {
         const completionDate = new Date(values.completionDate);
         employee.completionDate = completionDate;
       }
-      const headers = Object.assign({
-        'Content-Type': 'application/json'
-      }, this.requestHeaders());
-      const request = new Request(`/api/employee/${this.props.id}`, {
-        method: 'PUT',
-        headers: headers,
-        body: JSON.stringify(employee),
-      });
-
-      fetch(request).then(response => {
-        if (response.ok) {
-          response.json().then(updatedEmployee => {
-            // convert to MongoDB Date object type
-            updatedEmployee.createdAt = new Date(updatedEmployee.createdAt);
-
-            this.setState({ employee: updatedEmployee });
-            this.setState({
-              visible: false,
-            });
-            notification.success({
-              message: 'Updated employee successfully'
-            });
-          });
-        } else {
-          response.json().then(error => {
-            notification.error({
-              message: `Failed to update employee: ${error.message}`
-            });
-          });
-        }
-      }).catch(err => {
-        notification.error({
-          message: `Failed to update employee: ${error.message}`
-        });
-      });
+      this.props.dispatch(updateEmployee(employee, this.props.history));
     });
   }
   saveFormRef(form) {
@@ -144,7 +118,22 @@ class TableEditBtn extends Component {
     )
   }
 }
+
 TableEditBtn.propTypes = {
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired
 };
-export default withRouter(TableEditBtn);
+
+const mapStateToProps = (state, ownProps) => {
+  const { updatedEmployee, error, isFetching } = state.employeeState;
+  return {
+    updatedEmployee: updatedEmployee,
+    isFetching: isFetching,
+    error: error,
+  }
+};
+export default withRouter(connect(mapStateToProps)(TableEditBtn));

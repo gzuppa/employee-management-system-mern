@@ -33,17 +33,19 @@ export const createEmployeeSuccess = (employee, history) => {
     receivedAt: Date.now()
   }
 };
+export const updateEmployeeSuccess = (employee, history) => {
+  return {
+    type: types.UPDATE_EMPLOYEE_SUCCESS,
+    employee,
+    receivedAt: Date.now()
+  }
+};
 export const deleteEmployeeSuccess = (employeeIds) => ({
   type: types.DELETE_EMPLOYEE_SUCCESS,
   employeeIds,
   receivedAt: Date.now()
 });
-export const turnOnFilter = () => ({
-  type: types.TURN_ON_FILTER
-})
-export const turnOffFilter = () => ({
-  type: types.TURN_OFF_FILTER
-})
+
 
 const convertedEmployee = employee => {
   employee.createdAt = new Date(employee.createdAt);
@@ -81,7 +83,7 @@ export const fetchEmployees = (location, page_size) => dispatch => {
         employees,
         totalCount: data.metadata.totalCount
       }));
-      message.success( 'Load employees successfull');
+      message.success('Load employees successfull');
     });
   }).catch(err => {
     const errorMsg = `Error in fetching data from server: ${err.message}`;
@@ -119,11 +121,11 @@ export const createEmployee = (employee, history) => {
         return response.json().then(error => {
 
           // setTimeout(() => {
-            // const errorMsg = `Failed to add employee: ${error.message}`;
-            dispatch(requestEmployeesError(errorMsg))
-            notification.error({
-              message: errorMsg
-            });
+          // const errorMsg = `Failed to add employee: ${error.message}`;
+          dispatch(requestEmployeesError(errorMsg))
+          notification.error({
+            message: errorMsg
+          });
           // }, 2000);
 
         });
@@ -138,6 +140,30 @@ export const createEmployee = (employee, history) => {
     }).catch(error => {
       const errorMsg = `Error in sending data to server: ${error.message}`;
       dispatch(requestEmployeesError(errorMsg))
+    });
+  }
+}
+export const updateEmployee = (employee, history) => {
+  return dispatch => {
+    dispatch(sendRequest());
+    employeeApi.updateEmployee(employee).then(response => {
+      if (!response.ok) {
+        return response.json().then(error => {
+          const errorMsg = `Failed to update employee ${error.message}`;
+          notification.error({
+            message: errorMsg
+          });
+        });
+      }
+      notification.success({
+        message: 'Update employee successfully'
+      });
+      return dispatch(updateEmployeeSuccess(employee, history));
+    }).catch(error => {
+      const errorMsg = `Error in sending data to server: ${error.message}`;
+      notification.error({
+        message: errorMsg
+      });
     });
   }
 }
