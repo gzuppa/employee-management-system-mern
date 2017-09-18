@@ -30,7 +30,7 @@ class SideMenu extends Component {
       >
         <div className="logo">
           <img src="/images/michael_icon.png"></img>
-          {this.props.collapsed ? "" : <span>{"ANTD ADMIN"}</span>}
+          {this.props.collapsed ? "" : <span>{"EMS ADMIN"}</span>}
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={[location.pathname == "/" ? "/dashboard" : location.pathname]} onClick={item => this.handleClick(item)}>
           <Menu.Item key="/dashboard">
