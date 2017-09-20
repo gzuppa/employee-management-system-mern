@@ -13,7 +13,8 @@ var passport = require('passport');
 
 
 // Define the Passport configuration method
-module.exports = function () {
+module.exports = function (app) {
+	app.use(passport.initialize());
 
 	// Use Passport's 'serializeUser' method to serialize the user id
 	passport.serializeUser(function (user, done) {
@@ -35,4 +36,4 @@ module.exports = function () {
 	// require('./strategies/facebook.js')();
 	// require('./strategies/google.js')();
 };
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=passport.js.map

@@ -11,7 +11,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const config = require('../config');
 const fs = require('fs');
 const path = require('path');
 

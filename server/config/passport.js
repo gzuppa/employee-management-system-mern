@@ -6,7 +6,8 @@ var passport = require('passport');
 import User from "../models/user";
 
 // Define the Passport configuration method
-module.exports = function() {
+module.exports = function(app) {
+	app.use(passport.initialize());
 
 	// Use Passport's 'serializeUser' method to serialize the user id
 	passport.serializeUser(function(user, done) {
