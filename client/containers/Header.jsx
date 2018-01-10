@@ -50,11 +50,13 @@ class AppHeader extends React.Component {
     this.handleClick = this.handleClick.bind(this);
 
   }
-  handleClick() {
-    AuthStore.deauthenticateUser();
-    this.props.history.replace({
-      pathname: `/`
-    })
+  handleClick(e) {
+    if(e.key == 'logout') {
+      AuthStore.deauthenticateUser();
+      this.props.history.replace({
+        pathname: `/`
+      })
+    }
   }
   render() {
     return (
