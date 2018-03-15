@@ -26,7 +26,7 @@ class LoginForm extends React.Component {
         <Card title="Login" style={{ width: "400px" }}>
           <div className="login-form">
             <div className="login-form-header">
-              <img src="/images/michael_icon.png"></img>
+              <img src="/images/logo.svg"></img>
             </div>
             <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
               <FormItem>
